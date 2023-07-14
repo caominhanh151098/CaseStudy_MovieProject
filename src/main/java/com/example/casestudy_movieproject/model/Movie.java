@@ -17,15 +17,22 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String name;
-    private String studio;
+    @Column(nullable = false)
     private LocalDate airedDate;
     private double scoreIMDb;
     private int duration;
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EQuality quality;
+    @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String description;
+    @Column(columnDefinition = "LONGTEXT")
     private String url;
+    @Column(columnDefinition = "LONGTEXT")
+    private String urlTrailer;
+    @Column(nullable = false)
     private String img;
     private String img2;
 
