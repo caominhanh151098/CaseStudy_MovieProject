@@ -26,6 +26,8 @@ public class Movie {
     private EQuality quality;
     private String description;
     private String url;
+    private String img;
+    private String img2;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private Set<MovieGenre> movieGenres;
