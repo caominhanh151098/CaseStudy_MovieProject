@@ -22,8 +22,10 @@ public class Movie {
     private LocalDate airedDate;
     private double scoreIMDb;
     private int duration;
+    @Enumerated(EnumType.STRING)
     private EQuality quality;
     private String description;
+    private String url;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private Set<MovieGenre> movieGenres;
@@ -39,4 +41,7 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie")
     private Set<View> views;
+
+    @OneToMany(mappedBy = "movie")
+    private Set<EKip> eKips;
 }
