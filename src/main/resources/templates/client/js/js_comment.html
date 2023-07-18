@@ -1,0 +1,61 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="js">
+    <script th:inline="javascript">
+        let commentArea = document.getElementById("review");
+        let comments = [];
+        let soft = {
+            sortField: "timeComment",
+            sortBy: "desc",
+        }
+        renderComment();
+
+        function renderComment() {
+            $.ajax({
+                url: `http://localhost:8080/api/phim/comment/${id}?sort=${soft.sortField},${soft.sortBy}`,
+                method: "GET"
+            }).done(data => {
+                comments = data.content;
+                commentArea.innerHTML = "";
+                comments.forEach(c => {
+                    let time = checkDifferenceTime(c.timeComment);
+                    console.log(checkDifferenceTime(c.timeComment))
+                    commentArea.innerHTML += `
+                        <div class="anime__review__item">
+                            <div class="anime__review__item__pic">
+                                <img src="${c.user.avatar || ""}" alt="avatar">
+                            </div>
+                            <div class="anime__review__item__text">
+                                <h6>${c.user.name} - <span>${time}</span></h6>
+                                <p>${c.content}</p>
+                            </div>
+                        </div>`;
+                })
+            })
+        }
+
+        function countDownTime(sec) {
+            const rtf1 = new Intl.RelativeTimeFormat('vi', {style: 'short'});
+            let numAbs = Math.abs(sec);
+            if (numAbs < 60)
+                return rtf1.format(sec, 'second');
+            if (numAbs < 3600)
+                return rtf1.format(Math.floor(sec / 60) + 1, 'minute');
+            if (numAbs < 86400)
+                return rtf1.format(Math.floor(sec / 3600) + 1, 'hour');
+            if (numAbs < 604800)
+                return rtf1.format(Math.floor(sec / 86400) + 1, 'day');
+            if (numAbs < 2505600)
+                return rtf1.format(Math.floor(sec / 604800) + 1, 'week');
+            if (numAbs < 31536000)
+                return rtf1.format(Math.floor(sec / 2505600) + 1, 'month');
+            return rtf1.format(Math.floor(sec / 31536000) + 1, 'year');
+        }
+
+        function checkDifferenceTime(time) {
+            let timeComment = new Date(time);
+            let now = new Date();
+            let diff = (timeComment.getTime() - now.getTime()) / 1000;
+            return countDownTime(Math.floor(diff));
+        }
+    </script>
+</div>

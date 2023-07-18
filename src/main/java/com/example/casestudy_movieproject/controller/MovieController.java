@@ -1,10 +1,9 @@
 package com.example.casestudy_movieproject.controller;
 
-import com.example.casestudy_movieproject.service.MovieService;
+import com.example.casestudy_movieproject.service.movie.MovieService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 

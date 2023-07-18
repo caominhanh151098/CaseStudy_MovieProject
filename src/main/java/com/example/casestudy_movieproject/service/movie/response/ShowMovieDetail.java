@@ -9,13 +9,14 @@ import lombok.NoArgsConstructor;
 @Data
 public class ShowMovieDetail {
     private String name;
-    private String airedDate;
+    private String airedYear;
     private String scoreIMDb;
     private String duration;
     private String quality;
     private String description;
-    private String img;
+    private String img_poster;
     private String movieGenres;
     private String directors;
     private String actors;
+    private String commentNum;
 }

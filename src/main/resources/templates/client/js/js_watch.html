@@ -13,11 +13,11 @@
         method: "GET"
       }).done(data => {
         film = data;
-        let imgUrl = "&quot;" + film.img + "&quot;";
+        let imgUrl = "&quot;" + film.img_poster + "&quot;";
         showDetail.innerHTML = `
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="anime__details__pic set-bg" data-setbg="${film.img}"
+                    <div class="anime__details__pic set-bg" data-setbg="${film.img_poster}"
                          style="background-image: url(${imgUrl});">
                         <div class="comment"><i class="fa fa-comments"></i> 11</div>
                         <div class="view"><i class="fa fa-eye"></i> 9141</div>

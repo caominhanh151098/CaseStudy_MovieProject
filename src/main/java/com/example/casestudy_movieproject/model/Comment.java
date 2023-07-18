@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,4 +25,5 @@ public class Comment {
     @MapsId("movieId")
     @JoinColumn(name = "movie_Id")
     private Movie movie;
+    private LocalDateTime timeComment;
 }
