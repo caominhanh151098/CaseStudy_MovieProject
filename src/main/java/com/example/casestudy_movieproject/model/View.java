@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,9 +18,6 @@ public class View {
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movie;
-    private int viewDaily;
-    private int viewWeekly;
-    private int viewMonthly;
-    private int viewYearly;
-    private int viewTotal;
+    private String id_session;
+    private LocalDateTime time = LocalDateTime.now();
 }

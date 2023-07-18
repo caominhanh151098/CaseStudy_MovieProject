@@ -1,26 +1,35 @@
 package com.example.casestudy_movieproject.model;
 
 import com.example.casestudy_movieproject.model.enums.EQuality;
+import com.example.casestudy_movieproject.model.enums.EStatus;
+import com.example.casestudy_movieproject.model.enums.EType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
-import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Where(clause = "status = 0")
+@SQLDelete(sql = "UPDATE movie  SET status = 1 WHERE (`id` = ?);")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @ManyToOne
+    @JoinColumn(name = "id_series")
+    private Movie series;
+    @OneToMany(mappedBy = "series")
+    private Set<Movie> series_movie;
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
-    private LocalDate airedDate;
+    private int airedYear;
     private double scoreIMDb;
     private int duration;
     @Column(nullable = false)
@@ -32,9 +41,9 @@ public class Movie {
     private String url;
     @Column(columnDefinition = "LONGTEXT")
     private String urlTrailer;
-    @Column(nullable = false)
-    private String img;
-    private String img2;
+    @Column(name = "poster",nullable = false)
+    private String img_poster;
+    private String img_movie;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private Set<MovieGenre> movieGenres;
@@ -53,4 +62,11 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie")
     private Set<EKip> eKips;
+
+    @Enumerated(EnumType.STRING)
+    private EStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EType type;
 }

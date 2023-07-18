@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zxx">
+
+<head th:replace="client/layout.html :: header_layout">
+</head>
+
+<body>
+<!-- Page Preloder -->
+<th:block th:replace="client/layout.html :: head_bar"></th:block>
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                    <a href="./categories.html">Categories</a>
+                    <a href="#">Romance</a>
+                    <span>Fate Stay Night: Unlimited Blade</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Anime Section Begin -->
+<section class="anime-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="anime__video__player" id="play-video">
+                    <div id="player"
+                         class="jwplayer jw-reset jw-state-paused jw-stretch-uniform jw-breakpoint-5 jw-floating-dismissible jw-flag-user-inactive"
+                         tabindex="0" aria-label="Trình phát video" role="application"
+                         style="width: 847px; height: 477px;">
+                        <iframe src="//haivan.xyz/player/?d=v99Ndg1&amp;v=p&amp;mad=1&amp;ref=https://motchill.info/xem-phim/nguoi-nhen-du-hanh-vu-tru-tap-full-11381_135084.html"
+                                width="847" height="476.4375" frameborder="0" allowfullscreen=""></iframe>
+                    </div>
+                </div>
+                <div class="anime__details__episodes">
+                    <div class="section-title">
+                        <h5>List Name</h5>
+                    </div>
+                    <a href="#">Ep 01</a>
+                    <a href="#">Ep 02</a>
+                    <a href="#">Ep 03</a>
+                    <a href="#">Ep 04</a>
+                    <a href="#">Ep 05</a>
+                    <a href="#">Ep 06</a>
+                    <a href="#">Ep 07</a>
+                    <a href="#">Ep 08</a>
+                    <a href="#">Ep 09</a>
+                    <a href="#">Ep 10</a>
+                    <a href="#">Ep 11</a>
+                    <a href="#">Ep 12</a>
+                    <a href="#">Ep 13</a>
+                    <a href="#">Ep 14</a>
+                    <a href="#">Ep 15</a>
+                    <a href="#">Ep 16</a>
+                    <a href="#">Ep 17</a>
+                    <a href="#">Ep 18</a>
+                    <a href="#">Ep 19</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="anime__details__review">
+                    <div class="section-title">
+                        <h5>Reviews</h5>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="../assets/client/img/film/review-1.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Chris Curry - <span>1 Hour ago</span></h6>
+                            <p>whachikan Just noticed that someone categorized this as belonging to the genre
+                                "demons" LOL</p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="../assets/client/img/film/review-2.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Lewis Mann - <span>5 Hour ago</span></h6>
+                            <p>Finally it came out ages ago</p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="../assets/client/img/film/review-3.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Louis Tyler - <span>20 Hour ago</span></h6>
+                            <p>Where is the episode 15 ? Slow update! Tch</p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="../assets/client/img/film/review-4.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Chris Curry - <span>1 Hour ago</span></h6>
+                            <p>whachikan Just noticed that someone categorized this as belonging to the genre
+                                "demons" LOL</p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="../assets/client/img/film/review-5.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Lewis Mann - <span>5 Hour ago</span></h6>
+                            <p>Finally it came out ages ago</p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="../assets/client/img/film/review-6.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Louis Tyler - <span>20 Hour ago</span></h6>
+                            <p>Where is the episode 15 ? Slow update! Tch</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="anime__details__form">
+                    <div class="section-title">
+                        <h5>Your Comment</h5>
+                    </div>
+                    <form action="#">
+                        <textarea placeholder="Your Comment"></textarea>
+                        <button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Anime Section End -->
+
+<!-- Footer Section Begin -->
+<th:block th:replace="client/layout.html :: footer_layout"></th:block>
+<th:block th:replace="client/js/js_watch.html :: js"></th:block>
+</body>
+
+</html>

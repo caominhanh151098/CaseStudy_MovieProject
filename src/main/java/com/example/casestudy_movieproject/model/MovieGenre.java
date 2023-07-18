@@ -21,6 +21,4 @@ public class MovieGenre {
     @MapsId("genreId")
     @JoinColumn(name = "genre_id")
     private Genre genre;
-
-
 }
