@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class MovieController {
     private final MovieService movieService;
 
+
     @GetMapping("/*")
     public ModelAndView movieDetail() {
         ModelAndView model = new ModelAndView("client/film_details");
@@ -25,4 +26,11 @@ public class MovieController {
         ModelAndView model = new ModelAndView("client/watch-film");
         return model;
     }
+
+//    @GetMapping("/admin/showMovie")
+//    public ModelAndView showMovieList(){
+//        ModelAndView model = new ModelAndView("/admin/showMovie");
+////        model.addObject("movies",movieService.findAll());
+//        return model;
+//    }
 }

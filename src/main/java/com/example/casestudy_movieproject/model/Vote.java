@@ -13,7 +13,7 @@ public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private double score;
+    private int score;
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name ="user_Id")
