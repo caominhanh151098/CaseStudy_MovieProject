@@ -25,5 +25,6 @@ public class Comment {
     @MapsId("movieId")
     @JoinColumn(name = "movie_Id")
     private Movie movie;
+
     private LocalDateTime timeComment;
 }

@@ -2,7 +2,9 @@ package com.example.casestudy_movieproject.controller.rest;
 
 
 import com.example.casestudy_movieproject.model.Movie;
+import com.example.casestudy_movieproject.repository.GenreRepository;
 import com.example.casestudy_movieproject.repository.MovieRepository;
+
 import com.example.casestudy_movieproject.service.movie.MovieService;
 import com.example.casestudy_movieproject.service.comment.CommentService;
 import com.example.casestudy_movieproject.service.comment.response.ShowCommentResponse;
@@ -26,7 +28,18 @@ public class FilmRestController {
     public List<Movie> getAll() {
         return movieRepository.findAll();
     }
+//    @GetMapping
+//    public Page<MovieListResponse> showAll(@RequestParam(defaultValue = "") String search,
+//                                           Pageable pageable){
+//        List<Movie> movieList = movieRepository.findAll();
+//        return movieService.findAllWithSearchAndPaging(search,pageable);
+//    }
 
+//    @GetMapping
+//    public List<Movie> showAll(){
+//        List<Movie> movieList = movieService.findAll();
+//        return movieService.findAll();
+//    }
     @GetMapping("/{id}")
     public ShowMovieDetail getDetail(@PathVariable int id) {
         return movieService.showDetail(id);

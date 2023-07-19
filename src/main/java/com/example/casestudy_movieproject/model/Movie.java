@@ -16,8 +16,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Where(clause = "status != 0")
-@SQLDelete(sql = "UPDATE movie  SET status = 1 WHERE (`id` = ?);")
+@Where(clause = "status != '1'")
+@SQLDelete(sql = "UPDATE movie  SET status = '1' WHERE (`id` = ?);")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
