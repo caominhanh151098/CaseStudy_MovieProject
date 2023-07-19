@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface MovieGenreRepository extends JpaRepository<MovieGenre, Integer> {
     List<MovieGenre> findAllByMovie_Id(int id);
+
+    MovieGenre findTopByMovie_Id(int id);
 }

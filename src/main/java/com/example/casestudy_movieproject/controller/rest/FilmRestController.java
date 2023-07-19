@@ -7,6 +7,7 @@ import com.example.casestudy_movieproject.service.movie.MovieService;
 import com.example.casestudy_movieproject.service.comment.CommentService;
 import com.example.casestudy_movieproject.service.comment.response.ShowCommentResponse;
 import com.example.casestudy_movieproject.service.movie.response.ShowMovieDetail;
+import com.example.casestudy_movieproject.service.movie.response.ShowUrlMovieResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,9 +33,8 @@ public class FilmRestController {
     }
 
     @GetMapping("/xem-phim/{id}")
-    public ShowMovieDetail watchMovie(@PathVariable int id) {
-//        return movieService.showDetail(id);
-        return null;
+    public ShowUrlMovieResponse watchMovie(@PathVariable int id) {
+        return movieService.watchMovie(id);
     }
 
     @GetMapping("/comment/{id}")

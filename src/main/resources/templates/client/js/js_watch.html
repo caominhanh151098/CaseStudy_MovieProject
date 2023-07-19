@@ -1,73 +1,30 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <div th:fragment="js">
-  <script th:inline="javascript">
-    let playVideo = document.getElementById("play-video");
-    let url = location.href;
-    let id = url.slice(31);
-    let film;
-    initData();
+    <script th:inline="javascript">
+        let playVideo = document.getElementById("player");
+        let genreMovie = document.getElementById("genre");
+        let url = location.href;
+        let id = url.slice(31);
+        let film;
+        initData();
 
-    function initData() {
-      $.ajax({
-        url: `http://localhost:8080/api/phim/${id}`,
-        method: "GET"
-      }).done(data => {
-        film = data;
-        let imgUrl = "&quot;" + film.img_poster + "&quot;";
-        showDetail.innerHTML = `
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="anime__details__pic set-bg" data-setbg="${film.img_poster}"
-                         style="background-image: url(${imgUrl});">
-                        <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                        <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="anime__details__text">
-                        <div class="anime__details__title">
-                            <h3>${film.name}</h3>
-                            <span></span>
-                        </div>
-                        <div class="anime__details__rating">
-                            <div class="rating">
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star-half-o"></i></a>
-                            </div>
-                            <span>1.029 Votes</span>
-                        </div>
-                        <p>${film.description}</p>
-                        <div class="anime__details__widget">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6">
-                                    <ul>
-                                        <li><span>Năm phát hành:</span>${film.airedDate}</li>
-                                        <li><span>Thể loại:</span>${film.movieGenres}</li>
-                                        <li><span>Thời lượng:</span>${film.duration}</li>
-                                        <li><span>Chất lượng:</span>${film.quality}</li>
-                                    </ul>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <ul>
-                                        <li><span>Điểm:</span>${film.scoreIMDb + ' / 10.0 IMDb'}</li>
-                                        <li><span>Đạo diễn:</span>${film.directors}</li>
-                                        <li><span>Diễn viên:</span>${film.actors}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="anime__details__btn">
-                            <a href="#" class="follow-btn"><i class="fa fa-heart-o"></i> Follow</a>
-                            <a class="watch-btn" onclick="watchFilm()"><span>Watch Now</span> <i
-                                    class="fa fa-angle-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>`
-      })
-    }
-  </script>
+        function initData() {
+            $.ajax({
+                url: `http://localhost:8080/api/phim/xem-phim/${id}`,
+                method: "GET"
+            }).done(data => {
+                film = data;
+                genreMovie.innerHTML = `
+                 <div class="breadcrumb__links">
+                    <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                    <a href="./categories.html">Thể loại</a>
+                    <a href="#">${film.genre}</a>
+                    <span>${film.name}</span>
+                </div>`
+                playVideo.innerHTML = `
+                <iframe src="${film.url}"
+                                width="847" height="476.4375" frameborder="0" allowfullscreen=""></iframe>`
+            })
+        }
+    </script>
 </div>

@@ -22,23 +22,19 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
-    @JoinColumn(name = "id_series")
-    private Movie series;
-    @OneToMany(mappedBy = "series")
-    private Set<Movie> series_movie;
+    @OneToMany(mappedBy = "movie")
+    private Set<UrlMovie> seriesMovie;
+    private int airedYear;
+    private int duration;
+    @Column(nullable = true)
+    private double scoreIMDb;
     @Column(nullable = false)
     private String name;
-    private int airedYear;
-    private double scoreIMDb;
-    private int duration;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EQuality quality;
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String description;
-    @Column(columnDefinition = "LONGTEXT")
-    private String url;
     @Column(columnDefinition = "LONGTEXT")
     private String urlTrailer;
     @Column(name = "poster",nullable = false)
