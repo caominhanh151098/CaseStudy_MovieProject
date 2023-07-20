@@ -20,12 +20,6 @@ public class MovieController {
         return model;
     }
 
-    @GetMapping("/xem-phim/*")
-    public ModelAndView watchMovie() {
-        ModelAndView model = new ModelAndView("client/watch-film");
-        return model;
-    }
-
 //    @GetMapping("/admin/showMovie")
 //    public ModelAndView showMovieList(){
 //        ModelAndView model = new ModelAndView("/admin/showMovie");

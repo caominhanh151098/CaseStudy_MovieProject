@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ShowMovieDetail {
+public class ShowMovieDetailResponse {
     private String name;
     private String airedYear;
     private String scoreIMDb;
@@ -19,4 +19,5 @@ public class ShowMovieDetail {
     private String directors;
     private String actors;
     private String commentNum;
+    private String status;
 }

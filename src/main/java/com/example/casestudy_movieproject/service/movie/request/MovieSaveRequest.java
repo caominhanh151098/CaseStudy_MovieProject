@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -18,25 +17,63 @@ public class MovieSaveRequest {
     private String duration;
     private String img_movie;
     private String img_poster;
+    private String scoreIMDb;
+    private String totalEp;
+    private String urlTrailer;
     private SelectOptionRequest type;
     private SelectOptionRequest status;
     private SelectOptionRequest quality;
+    private List<EkipSaveRequest> eKips;
+    private List<UrlMovieSaveRequest> seriesMovie;
     private List<MovieGenreSaveRequest> movieGenres;
-    private List<EKipSaveRequest> eKips;
+
+    public List<EkipSaveRequest> geteKips() {
+        return eKips;
+    }
+
+    public void seteKips(List<EkipSaveRequest> eKips) {
+        this.eKips = eKips;
+    }
 
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    static class MovieGenreSaveRequest{
+    public static class UrlMovieSaveRequest {
+        private String name;
+        private String url;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class MovieGenreSaveRequest {
         private SelectOptionRequest genre;
     }
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    static class EKipSaveRequest{
-        private String person;
+    public static class EkipSaveRequest {
+
+        private List<PersonSaveRequest> person;
         private SelectOptionRequest role;
 
+        public List<PersonSaveRequest> getPerson() {
+            return person;
+        }
+
+        public void setPerson(List<PersonSaveRequest> person) {
+            this.person = person;
+        }
+
+
+        @Data
+        @AllArgsConstructor
+        @NoArgsConstructor
+        public static class PersonSaveRequest {
+            private String id;
+            private String name;
+        }
     }
 }

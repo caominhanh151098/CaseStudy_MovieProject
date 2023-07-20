@@ -1,6 +1,12 @@
 package com.example.casestudy_movieproject.controller;
 
+import com.example.casestudy_movieproject.model.enums.EQuality;
+import com.example.casestudy_movieproject.model.enums.ERoleEKip;
+import com.example.casestudy_movieproject.model.enums.EStatus;
+import com.example.casestudy_movieproject.model.enums.EType;
+import com.example.casestudy_movieproject.service.genre.GenreService;
 import com.example.casestudy_movieproject.service.movie.request.MovieSaveRequest;
+import com.example.casestudy_movieproject.service.person.PersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 @AllArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
+
+    private final PersonService personService;
+    private final GenreService genreService;
 
     @GetMapping
     public ModelAndView adminPage(){
@@ -30,6 +39,12 @@ public class AdminController {
     public ModelAndView showMovieCreate(){
         ModelAndView model = new ModelAndView("/admin/createMovie");
         model.addObject("movie",new MovieSaveRequest());
+        model.addObject("persons",personService.findAll());
+        model.addObject("qualities", EQuality.values());
+        model.addObject("types", EType.values());
+        model.addObject("statuses", EStatus.values());
+        model.addObject("genres",genreService.findAll());
+        model.addObject("roles", ERoleEKip.values());
         return model;
     }
 }

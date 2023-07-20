@@ -5,13 +5,12 @@ import com.example.casestudy_movieproject.model.Movie;
 
 import com.example.casestudy_movieproject.model.MovieGenre;
 import com.example.casestudy_movieproject.model.enums.ERoleEKip;
-import com.example.casestudy_movieproject.repository.CommentRepository;
-import com.example.casestudy_movieproject.repository.EKipRepository;
-import com.example.casestudy_movieproject.repository.MovieGenreRepository;
-import com.example.casestudy_movieproject.repository.MovieRepository;
+import com.example.casestudy_movieproject.repository.*;
 import com.example.casestudy_movieproject.service.movie.response.MovieListResponse;
-import com.example.casestudy_movieproject.service.movie.response.ShowMovieDetail;
+import com.example.casestudy_movieproject.service.movie.response.ShowListMovieResponse;
+import com.example.casestudy_movieproject.service.movie.response.ShowMovieDetailResponse;
 import com.example.casestudy_movieproject.service.movie.response.ShowUrlMovieResponse;
+import com.example.casestudy_movieproject.service.ep_movie.reponse.ShowListEpisodeResponse;
 import com.example.casestudy_movieproject.util.AppUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,9 +28,10 @@ public class MovieService {
     private final MovieGenreRepository movieGenreRepository;
     private final EKipRepository eKipRepository;
     private final CommentRepository commentRepository;
+    private final EpMovieRepository epMovieRepository;
 
-    public ShowMovieDetail showDetail(int id) {
-        ShowMovieDetail showMovieDetail = AppUtils.mapper.map(movieRepository.findById(id), ShowMovieDetail.class);
+    public ShowMovieDetailResponse showDetail(int id) {
+        ShowMovieDetailResponse showMovieDetail = AppUtils.mapper.map(movieRepository.findById(id), ShowMovieDetailResponse.class);
         List<MovieGenre> movieGenres = movieGenreRepository.findAllByMovie_Id(id);
         List<String> ListGenre = movieGenres.stream().map(e -> e.getGenre().getName()).collect(Collectors.toList());
         List<EKip> eKips = eKipRepository.findAllByMovie_Id(id);
@@ -52,9 +52,13 @@ public class MovieService {
         return String.join(", ", listActor);
     }
 
-    public ShowUrlMovieResponse watchMovie(int id) {
+    public ShowUrlMovieResponse showMovie(int id) {
         ShowUrlMovieResponse movie = AppUtils.mapper.map(movieRepository.findById(id), ShowUrlMovieResponse.class);
         movie.setGenre(movieGenreRepository.findTopByMovie_Id(id).getGenre().getName());
+        List<ShowListEpisodeResponse> list = epMovieRepository.findAllByMovie_Id(id).stream()
+                .map(e ->AppUtils.mapper.map(e, ShowListEpisodeResponse.class))
+                .collect(Collectors.toList());
+        movie.setSeriesMovie(list);
         return movie;
     }
 
@@ -99,5 +103,14 @@ public class MovieService {
         }
 
         return responses;
+    }
+
+    public Page<ShowListMovieResponse> showListMovie(Pageable pageable) {
+        Page<ShowListMovieResponse> movies = movieRepository.findAll(pageable).map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+        return movies;
+    }
+
+    public Page<ShowListMovieResponse> showListMovieByGenre(String idGenre, Pageable pageable) {
+        return movieRepository.getMovieByGenre(idGenre, pageable).map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
     }
 }
