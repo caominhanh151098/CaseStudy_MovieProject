@@ -13,7 +13,7 @@ import java.util.List;
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
     Movie findById(int id);
 
-    List<Movie> findAll();
+
     @Query(value = "SELECT m FROM Movie m left join EKip e on m.id = e.movie.id " +
             " left join Person p on e.person.id = p.id " +
             "   left join MovieGenre mg on m.id = mg.movie.id " +
