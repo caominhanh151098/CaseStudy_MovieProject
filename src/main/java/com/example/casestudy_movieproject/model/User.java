@@ -27,8 +27,6 @@ public class User {
     private String avatar;
     @Column(nullable = false)
     private String name;
-    private String address;
-    private String phone;
 
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments;
