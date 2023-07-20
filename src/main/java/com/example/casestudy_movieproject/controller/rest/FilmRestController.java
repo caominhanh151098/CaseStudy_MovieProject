@@ -1,61 +1,56 @@
 package com.example.casestudy_movieproject.controller.rest;
 
 
-import com.example.casestudy_movieproject.model.Movie;
-import com.example.casestudy_movieproject.repository.GenreRepository;
-import com.example.casestudy_movieproject.repository.MovieRepository;
+import com.example.casestudy_movieproject.model.EpMovie;
 
 import com.example.casestudy_movieproject.service.movie.MovieService;
 import com.example.casestudy_movieproject.service.comment.CommentService;
 import com.example.casestudy_movieproject.service.comment.response.ShowCommentResponse;
-import com.example.casestudy_movieproject.service.movie.response.ShowMovieDetail;
+import com.example.casestudy_movieproject.service.movie.response.ShowListMovieResponse;
+import com.example.casestudy_movieproject.service.movie.response.ShowMovieDetailResponse;
 import com.example.casestudy_movieproject.service.movie.response.ShowUrlMovieResponse;
+import com.example.casestudy_movieproject.service.ep_movie.EpMovieService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/phim")
+@RequestMapping("/api/movie")
 public class FilmRestController {
     private final MovieService movieService;
-    private final CommentService commentService;
-    private final MovieRepository movieRepository;
-    @GetMapping
-    public List<Movie> getAll() {
-        return movieRepository.findAll();
-    }
-//    @GetMapping
-//    public Page<MovieListResponse> showAll(@RequestParam(defaultValue = "") String search,
-//                                           Pageable pageable){
-//        List<Movie> movieList = movieRepository.findAll();
-//        return movieService.findAllWithSearchAndPaging(search,pageable);
-//    }
+    private final EpMovieService epMovieService;
 
 //    @GetMapping
-//    public List<Movie> showAll(){
-//        List<Movie> movieList = movieService.findAll();
-//        return movieService.findAll();
+//    public List<Movie> getAll() {
+//        return movieRepository.findAll();
 //    }
+
     @GetMapping("/{id}")
-    public ShowMovieDetail getDetail(@PathVariable int id) {
+    public ShowMovieDetailResponse getDetail(@PathVariable int id) {
         return movieService.showDetail(id);
     }
 
-    @GetMapping("/xem-phim/{id}")
+    @GetMapping("/watch/{id}")
     public ShowUrlMovieResponse watchMovie(@PathVariable int id) {
-        return movieService.watchMovie(id);
+        return movieService.showMovie(id);
     }
 
-    @GetMapping("/comment/{id}")
-    public Page<ShowCommentResponse> commentAtMovie(@PathVariable int id, Pageable pageable) {
-        return commentService.getCommentByMovieId(id, pageable);
+    @GetMapping("/watch_url/{id}")
+    public EpMovie urlMovie(@PathVariable int id) {
+        return epMovieService.getMovie(id);
     }
 
+    @GetMapping("/show/all")
+    public Page<ShowListMovieResponse> showListMovie(@PageableDefault(size = 12) Pageable pageable) {
+        return movieService.showListMovie(pageable);
+    }
 
-
+    @GetMapping("/show/{idGenre}")
+    public Page<ShowListMovieResponse> showMoviesByGenre(@PathVariable String idGenre, @PageableDefault(size = 6) Pageable pageable) {
+        return movieService.showListMovieByGenre(idGenre, pageable);
+    }
 
 }

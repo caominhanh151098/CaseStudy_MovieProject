@@ -1,0 +1,57 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="js">
+    <script th:inline="javascript">
+        let playVideo = document.getElementById("player");
+        let genreMovie = document.getElementById("genre");
+        let episode = document.getElementById("episode");
+        let url = location.href;
+        let id = url.slice(31);
+        idSeries = id.split('-')[0];
+        let idMovie = id.split('-')[1];
+        let film = undefined;
+        initData();
+
+        function initData() {
+            $.ajax({
+                url: `http://localhost:8080/api/movie/watch/${idSeries}`,
+                method: "GET"
+            }).done(data => {
+                film = data;
+                genreMovie.innerHTML = `
+                 <div class="breadcrumb__links">
+                    <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                    <a href="./categories.html">Thể loại</a>
+                    <a href="#">${film.genre}</a>
+                    <span>${film.name}</span>
+                </div>`
+                let episodeMovie = "";
+                film.seriesMovie.forEach(f => {
+                    episodeMovie += `<a href="${f.id}">${f.name}</a>`;
+                })
+                episode.innerHTML = episodeMovie;
+                if (!checkIdMovie(idMovie))
+                    location.href = "/";
+            })
+
+            $.ajax({
+                url: `http://localhost:8080/api/movie/watch_url/${idMovie}`,
+                method: "GET"
+            }).done(data => {
+                let url = data.url;
+                playVideo.innerHTML = `
+                <iframe src="${url}"
+                                width="847" height="476.4375" frameborder="0" allowfullscreen=""></iframe>`
+
+            })
+        }
+
+        function checkIdMovie(id) {
+            let check = false
+            film.seriesMovie.forEach(f => {
+                if (f.id == id)
+                    return check = true;
+            })
+            return check;
+        }
+    </script>
+</div>

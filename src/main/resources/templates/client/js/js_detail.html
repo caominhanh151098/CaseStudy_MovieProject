@@ -4,29 +4,40 @@
         let showDetail = document.getElementById("movie_detail");
         let url = location.href;
         let id = url.slice(27);
-        let film;
+        let idSeries = id;
+        let movie;
         initData();
+
+        function displayStatus(text) {
+            if (text == "COMPLETE")
+                return  "Hoàn thành";
+            else if (trues == "SHOWING")
+                return  "Đang chiếu";
+            else return  "Sắp khởi chiếu";
+        }
 
         function initData() {
             $.ajax({
-                url: `http://localhost:8080/api/phim/${id}`,
+                url: `http://localhost:8080/api/movie/${id}`,
                 method: "GET"
             }).done(data => {
-                film = data;
-                let imgUrl = "&quot;" + film.img_poster + "&quot;";
+                movie = data;
+                movie.status = displayStatus(data.status);
+                movie.quality = displayQuality(data.quality)
+                let imgUrl = "&quot;" + movie.img_poster + "&quot;";
                 showDetail.innerHTML = `
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="anime__details__pic set-bg" data-setbg="${film.img_poster}"
+                    <div class="anime__details__pic set-bg" data-setbg="${movie.img_poster}"
                          style="background-image: url(${imgUrl});">
-                        <div class="comment"><i class="fa fa-comments"></i> ${film.commentNum}</div>
+                        <div class="comment"><i class="fa fa-comments"></i> ${movie.commentNum}</div>
                         <div class="view"><i class="fa fa-eye"></i> 9141</div>
                     </div>
                 </div>
                 <div class="col-lg-9">
                     <div class="anime__details__text">
                         <div class="anime__details__title">
-                            <h3>${film.name}</h3>
+                            <h3>${movie.name}</h3>
                             <span></span>
                         </div>
                         <div class="anime__details__rating">
@@ -39,22 +50,23 @@
                             </div>
                             <span>1.029 Votes</span>
                         </div>
-                        <p>${film.description}</p>
+                        <p>${movie.description}</p>
                         <div class="anime__details__widget">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                     <ul>
-                                        <li><span>Năm phát hành:</span>${film.airedYear}</li>
-                                        <li><span>Thể loại:</span>${film.movieGenres}</li>
-                                        <li><span>Thời lượng:</span>${film.duration}</li>
-                                        <li><span>Chất lượng:</span>${film.quality}</li>
+                                        <li><span>Năm phát hành:</span>${movie.airedYear}</li>
+                                        <li><span>Thể loại:</span>${movie.movieGenres}</li>
+                                        <li><span>Chất lượng:</span>${movie.quality}</li>
+                                        <li><span>Tình trạng:</span>${movie.status}</li>
                                     </ul>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <ul>
-                                        <li><span>Điểm:</span>${film.scoreIMDb + ' / 10.0 IMDb'}</li>
-                                        <li><span>Đạo diễn:</span>${film.directors}</li>
-                                        <li><span>Diễn viên:</span>${film.actors}</li>
+                                        <li><span>Điểm:</span>${movie.scoreIMDb + ' / 10.0 IMDb'}</li>
+                                        <li><span>Thời lượng:</span>${movie.duration}</li>
+                                        <li><span>Đạo diễn:</span>${movie.directors}</li>
+                                        <li><span>Diễn viên:</span>${movie.actors}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -72,6 +84,12 @@
 
         function watchFilm() {
             location.href = `/xem-phim/${id}`;
+        }
+
+        function displayQuality(text) {
+            if (text == "HD_VIET_SUB")
+                return "HD Vietsub"
+            else return text;
         }
     </script>
 </div>

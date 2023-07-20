@@ -23,7 +23,7 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToMany(mappedBy = "movie")
-    private Set<UrlMovie> seriesMovie;
+    private Set<EpMovie> seriesMovie;
     private int airedYear;
     private int duration;
     @Column(nullable = true)
@@ -65,4 +65,6 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EType type;
+    @Column(nullable = true)
+    private int totalEp;
 }

@@ -11,14 +11,13 @@
 
         function renderComment() {
             $.ajax({
-                url: `http://localhost:8080/api/phim/comment/${id}?sort=${soft.sortField},${soft.sortBy}`,
+                url: `http://localhost:8080/api/comment/${idSeries}?sort=${soft.sortField},${soft.sortBy}`,
                 method: "GET"
             }).done(data => {
                 comments = data.content;
                 commentArea.innerHTML = "";
                 comments.forEach(c => {
                     let time = checkDifferenceTime(c.timeComment);
-                    console.log(checkDifferenceTime(c.timeComment))
                     commentArea.innerHTML += `
                         <div class="anime__review__item">
                             <div class="anime__review__item__pic">

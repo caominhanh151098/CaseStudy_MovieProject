@@ -1,6 +1,5 @@
 package com.example.casestudy_movieproject.repository;
 
-import com.example.casestudy_movieproject.model.Follow;
 import com.example.casestudy_movieproject.model.Movie;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,4 +23,17 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
                     "p.name like :search or " +
                     "g.name like :search")
     Page<Movie> searchAll(String search, Pageable pageable);
+
+    @Query(value = "SELECT m FROM Movie m " +
+            "JOIN MovieGenre mg ON m.id = mg.movie.id " +
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' " +
+            "AND mg.genre.id = :idGenre")
+    Page<Movie> getMovieByGenre(String idGenre, Pageable pageable);
+
+    @Query(value = "SELECT m FROM Movie m " +
+            "JOIN MovieGenre mg ON m.id = mg.movie.id " +
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' " +
+            "AND m.type = 'SERIES'")
+    Page<Movie> getMovieSeries(Pageable pageable);
+    Page<Movie> findAll(Pageable pageable);
 }

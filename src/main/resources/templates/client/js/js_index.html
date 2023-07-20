@@ -1,0 +1,80 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="js">
+    <script th:inline="javascript">
+        const showMovies = document.getElementById("movie");
+        const showCartoons = document.getElementById("cartoon");
+        const showEpMovies = document.getElementById("episode_movie");
+        const showL_AMovie = document.getElementById("live_action_movie");
+        let movies = [];
+        showUpdateMovie();
+        showCartoonMovie();
+        function showUpdateMovie() {
+            $.ajax({
+                url: `http://localhost:8080/api/movie/show/all?sort=id,desc`,
+                method: "GET"
+            }).done(data => {
+                movies = data.content;
+
+                showMovies.innerHTML = "";
+                movies.forEach(m => {
+                    m.quality = displayQuality(m.quality);
+                    showMovies.innerHTML += `
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="${m.img_poster}"
+                                style="background-image: url(${m.img_poster});">
+                                    <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?")  +"/"+ (m.totalEp == 0 ? "?" : m.totalEp)}</div>
+                                    <div class="comment"><i class="fa fa-comments"></i> 11</div>
+                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                </div>
+                                <div class="product__item__text">
+                                    <ul>
+                                        <li>Active</li>
+                                        <li>Movie</li>
+                                    </ul>
+                                    <h5><a href="#">${m.name}</a></h5>
+                                </div>
+                            </div>
+                        </div>`
+                })
+            })
+        }
+
+        function showCartoonMovie() {
+            $.ajax({
+                url: `http://localhost:8080/api/movie/show/4?sort=id,desc`,
+                method: "GET"
+            }).done(data => {
+                movies = data.content;
+                showMovies.innerHTML = "";
+                movies.forEach(m => {
+                    m.quality = displayQuality(m.quality);
+                    showCartoons.innerHTML += `
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="${m.img_poster}"
+                                style="background-image: url(${m.img_poster});">
+                                    <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?")  +"/"+ (m.totalEp == 0 ? "?" : m.totalEp)}</div>
+                                    <div class="comment"><i class="fa fa-comments"></i> 11</div>
+                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                </div>
+                                <div class="product__item__text">
+                                    <ul>
+                                        <li>Active</li>
+                                        <li>Movie</li>
+                                    </ul>
+                                    <h5><a>${m.name}</a></h5>
+                                </div>
+                            </div>
+                        </div>`
+                })
+            })
+        }
+
+        function displayQuality(text) {
+            if (text == "HD_VIET_SUB")
+                return "HD Vietsub"
+            else return text;
+        }
+    </script>
+</div>
