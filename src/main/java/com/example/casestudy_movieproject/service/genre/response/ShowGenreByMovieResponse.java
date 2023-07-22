@@ -1,4 +1,4 @@
-package com.example.casestudy_movieproject.service.movie.response;
+package com.example.casestudy_movieproject.service.genre.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class WatchMovieResponse {
+public class ShowGenreByMovieResponse {
+    private String id;
     private String name;
-    private String url;
-    private String movie;
 }

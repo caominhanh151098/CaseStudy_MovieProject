@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class ShowUrlMovieResponse {
+    private String id;
     private String name;
     private String genre;
     private List<ShowListEpisodeResponse> seriesMovie;

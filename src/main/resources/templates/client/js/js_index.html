@@ -4,33 +4,35 @@
         const showMovies = document.getElementById("movie");
         const showCartoons = document.getElementById("cartoon");
         const showEpMovies = document.getElementById("episode_movie");
-        const showL_AMovie = document.getElementById("live_action_movie");
+        const showLAMovies = document.getElementById("live_action_movie");
         let movies = [];
-        showUpdateMovie();
-        showCartoonMovie();
-        function showUpdateMovie() {
+        renderUpdateMovies();
+        renderCartoonMovies();
+        renderEpMovies();
+        renderLAMovies();
+
+        function renderUpdateMovies() {
             $.ajax({
                 url: `http://localhost:8080/api/movie/show/all?sort=id,desc`,
                 method: "GET"
             }).done(data => {
                 movies = data.content;
-
                 showMovies.innerHTML = "";
                 movies.forEach(m => {
                     m.quality = displayQuality(m.quality);
+                    let genres = displayGenre(m.genres);
                     showMovies.innerHTML += `
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="${m.img_poster}"
-                                style="background-image: url(${m.img_poster});">
-                                    <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?")  +"/"+ (m.totalEp == 0 ? "?" : m.totalEp)}</div>
-                                    <div class="comment"><i class="fa fa-comments"></i> 11</div>
+                                <div class="product__item__pic set-bg" data-setbg="${m.img_movie}"
+                                style="background-image: url(${m.img_movie});">
+                                    <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?") + "/" + (m.totalEp == 0 ? "?" : m.totalEp)}</div>
+                                    <div class="comment"><i class="fa fa-comments"></i> ${m.commentNum}</div>
                                     <div class="view"><i class="fa fa-eye"></i> 9141</div>
                                 </div>
                                 <div class="product__item__text">
                                     <ul>
-                                        <li>Active</li>
-                                        <li>Movie</li>
+                                        ${genres}
                                     </ul>
                                     <h5><a href="#">${m.name}</a></h5>
                                 </div>
@@ -39,23 +41,82 @@
                 })
             })
         }
-
-        function showCartoonMovie() {
+        function renderCartoonMovies() {
             $.ajax({
                 url: `http://localhost:8080/api/movie/show/4?sort=id,desc`,
                 method: "GET"
             }).done(data => {
                 movies = data.content;
-                showMovies.innerHTML = "";
+                showCartoons.innerHTML = "";
                 movies.forEach(m => {
                     m.quality = displayQuality(m.quality);
+                    let genres = displayGenre(m.genres);
                     showCartoons.innerHTML += `
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="${m.img_poster}"
-                                style="background-image: url(${m.img_poster});">
-                                    <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?")  +"/"+ (m.totalEp == 0 ? "?" : m.totalEp)}</div>
-                                    <div class="comment"><i class="fa fa-comments"></i> 11</div>
+                                <div class="product__item__pic set-bg" data-setbg="${m.img_movie}"
+                                style="background-image: url(${m.img_movie});">
+                                    <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?") + "/" + (m.totalEp == 0 ? "?" : m.totalEp)}</div>
+                                    <div class="comment"><i class="fa fa-comments"></i> ${m.commentNum}</div>
+                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                </div>
+                                <div class="product__item__text">
+                                    <ul>
+                                        ${genres}
+                                    </ul>
+                                    <h5><a>${m.name}</a></h5>
+                                </div>
+                            </div>
+                        </div>`
+                })
+            })
+        }
+        function renderEpMovies() {
+            $.ajax({
+                url: `http://localhost:8080/api/movie/show/seriesM?sort=id,desc`,
+                method: "GET"
+            }).done(data => {
+                movies = data.content;
+                showEpMovies.innerHTML = "";
+                movies.forEach(m => {
+                    m.quality = displayQuality(m.quality);
+                    let genres = displayGenre(m.genres);
+                    showEpMovies.innerHTML += `
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="${m.img_movie}"
+                                style="background-image: url(${m.img_movie});">
+                                    <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?") + "/" + (m.totalEp == 0 ? "?" : m.totalEp)}</div>
+                                    <div class="comment"><i class="fa fa-comments"></i> ${m.commentNum}</div>
+                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                                </div>
+                                <div class="product__item__text">
+                                    <ul>
+                                        ${genres}
+                                    </ul>
+                                    <h5><a href="#">${m.name}</a></h5>
+                                </div>
+                            </div>
+                        </div>`
+                })
+            })
+        }
+        function renderLAMovies() {
+            $.ajax({
+                url: `http://localhost:8080/api/movie/show/14?sort=id,desc`,
+                method: "GET"
+            }).done(data => {
+                movies = data.content;
+                showLAMovies.innerHTML = "";
+                movies.forEach(m => {
+                    m.quality = displayQuality(m.quality);
+                    showLAMovies.innerHTML += `
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="${m.img_movie}"
+                                style="background-image: url(${m.img_movie});">
+                                    <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?") + "/" + (m.totalEp == 0 ? "?" : m.totalEp)}</div>
+                                    <div class="comment"><i class="fa fa-comments"></i> ${m.commentNum}</div>
                                     <div class="view"><i class="fa fa-eye"></i> 9141</div>
                                 </div>
                                 <div class="product__item__text">
@@ -69,6 +130,16 @@
                         </div>`
                 })
             })
+        }
+        function displayGenre(arr){
+            let genres = "";
+            for (let i = 0; i< arr.length; i++) {
+                let g = arr[i];
+                genres += `<a href="#"><li id="genre${g.id}">${g.name}</li></a>`
+                if (i>1)
+                    break;
+            }
+            return genres;
         }
 
         function displayQuality(text) {

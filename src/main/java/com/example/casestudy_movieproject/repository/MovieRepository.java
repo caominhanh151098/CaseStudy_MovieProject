@@ -35,5 +35,6 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
             "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' " +
             "AND m.type = 'SERIES'")
     Page<Movie> getMovieSeries(Pageable pageable);
-    Page<Movie> findAll(Pageable pageable);
+
+
 }

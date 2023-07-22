@@ -2,6 +2,8 @@ package com.example.casestudy_movieproject.service.ep_movie;
 
 import com.example.casestudy_movieproject.model.EpMovie;
 import com.example.casestudy_movieproject.repository.EpMovieRepository;
+import com.example.casestudy_movieproject.service.movie.response.WatchMovieResponse;
+import com.example.casestudy_movieproject.util.AppUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class EpMovieService {
     private final EpMovieRepository epMovieRepository;
 
-    public EpMovie getMovie(int id){
-        return epMovieRepository.findById(id);
+    public WatchMovieResponse getMovie(int id){
+        return AppUtils.mapper.map(epMovieRepository.findById(id), WatchMovieResponse.class) ;
     }
 }

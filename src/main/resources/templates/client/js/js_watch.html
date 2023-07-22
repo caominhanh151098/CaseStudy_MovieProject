@@ -6,43 +6,54 @@
         let episode = document.getElementById("episode");
         let url = location.href;
         let id = url.slice(31);
-        idSeries = id.split('-')[0];
-        let idMovie = id.split('-')[1];
-        let film = undefined;
+        idMovie = id.split('-')[0];
+        let idEp = id.split('-')[1];
+        let film;
+        let videoPlayer = document.querySelector("video");
         initData();
+        if (idMovie == "")
+            location.href = "/";
 
         function initData() {
             $.ajax({
-                url: `http://localhost:8080/api/movie/watch/${idSeries}`,
+                url: `http://localhost:8080/api/movie/watch/${idMovie}`,
                 method: "GET"
             }).done(data => {
                 film = data;
                 genreMovie.innerHTML = `
                  <div class="breadcrumb__links">
-                    <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                    <a href="/"><i class="fa fa-home"></i> Home</a>
                     <a href="./categories.html">Thể loại</a>
-                    <a href="#">${film.genre}</a>
-                    <span>${film.name}</span>
+                    <a href="#">${film.genre || ""}</a>
+                    <a href="/phim/${film.id}">${film.name}</a>
+                    <span id="nameEp"></span>
                 </div>`
                 let episodeMovie = "";
                 film.seriesMovie.forEach(f => {
-                    episodeMovie += `<a href="${f.id}">${f.name}</a>`;
+                    episodeMovie += `<a href="${idMovie + "-" + f.id}">${f.name}</a>`;
                 })
                 episode.innerHTML = episodeMovie;
-                if (!checkIdMovie(idMovie))
+                if (!checkIdMovie(idEp))
                     location.href = "/";
-            })
 
-            $.ajax({
-                url: `http://localhost:8080/api/movie/watch_url/${idMovie}`,
-                method: "GET"
-            }).done(data => {
-                let url = data.url;
-                playVideo.innerHTML = `
-                <iframe src="${url}"
-                                width="847" height="476.4375" frameborder="0" allowfullscreen=""></iframe>`
-
+                $.ajax({
+                    url: `http://localhost:8080/api/movie/watch_url/${idEp}`,
+                    method: "GET"
+                }).done(data => {
+                    let film = data;
+                    // videoPlayer.innerHTML = `<source src="../assets/client/videos/Transformers7.mp4">`
+                    playVideo.innerHTML = `
+                    <iframe id="iframePlayer" src="${film.url}" id="videoPlayer" width="847" height="476.4375" frameborder="0" allowfullscreen="">
+                    </iframe>`
+                    document.getElementById("nameEp").innerHTML = `${film.name}`
+                })
             })
+            setTimeout(() => {
+                addEvent()
+            }, 1000)
+        }
+
+        function addEvent() {
         }
 
         function checkIdMovie(id) {
@@ -52,6 +63,12 @@
                     return check = true;
             })
             return check;
+        }
+        function startPlaying() {
+            console.log("play");
+        }
+        function pausePlaying() {
+            console.log("stop");
         }
     </script>
 </div>

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,12 +19,13 @@ import java.util.Set;
 @Data
 @Where(clause = "status != '1'")
 @SQLDelete(sql = "UPDATE movie  SET status = '1' WHERE (`id` = ?);")
+@Table(name = "movies")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToMany(mappedBy = "movie")
-    private Set<EpMovie> seriesMovie;
+    private Set<EpMovie> epMovies;
     private int airedYear;
     private int duration;
     @Column(nullable = true)
@@ -37,7 +39,6 @@ public class Movie {
     private String description;
     @Column(columnDefinition = "LONGTEXT")
     private String urlTrailer;
-    @Column(name = "poster",nullable = false)
     private String img_poster;
     private String img_movie;
 

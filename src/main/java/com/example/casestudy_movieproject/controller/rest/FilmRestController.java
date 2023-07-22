@@ -10,6 +10,7 @@ import com.example.casestudy_movieproject.service.movie.response.ShowListMovieRe
 import com.example.casestudy_movieproject.service.movie.response.ShowMovieDetailResponse;
 import com.example.casestudy_movieproject.service.movie.response.ShowUrlMovieResponse;
 import com.example.casestudy_movieproject.service.ep_movie.EpMovieService;
+import com.example.casestudy_movieproject.service.movie.response.WatchMovieResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +40,7 @@ public class FilmRestController {
     }
 
     @GetMapping("/watch_url/{id}")
-    public EpMovie urlMovie(@PathVariable int id) {
+    public WatchMovieResponse urlMovie(@PathVariable int id) {
         return epMovieService.getMovie(id);
     }
 
@@ -51,6 +52,11 @@ public class FilmRestController {
     @GetMapping("/show/{idGenre}")
     public Page<ShowListMovieResponse> showMoviesByGenre(@PathVariable String idGenre, @PageableDefault(size = 6) Pageable pageable) {
         return movieService.showListMovieByGenre(idGenre, pageable);
+    }
+
+    @GetMapping("/show/seriesM")
+    public Page<ShowListMovieResponse> showListEPMovie(@PageableDefault(size = 6) Pageable pageable) {
+        return movieService.showListEpMovie(pageable);
     }
 
 }

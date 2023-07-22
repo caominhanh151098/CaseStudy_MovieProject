@@ -24,12 +24,14 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="anime__video__player">
-                    <div id="player"
-                         class="jwplayer jw-reset jw-state-paused jw-stretch-uniform jw-breakpoint-5 jw-floating-dismissible jw-flag-user-inactive"
-                         tabindex="0" aria-label="Trình phát video" role="application"
-                         style="width: 847px; height: 477px;">
-                    </div>
+                <div id="player_test" class="anime__video__player"  onclick="startPlaying()">
+                        <div id="player" class="test_click jwplayer jw-reset jw-state-paused jw-stretch-uniform jw-breakpoint-5 jw-floating-dismissible jw-flag-user-inactive"
+                             tabindex="0" aria-label="Trình phát video" role="application"
+                             style="width: 847px; height: 477px">
+                            <video id="videoPlayer" width="847" height="476.4375" frameborder="0" allowfullscreen=""
+                                   controls>
+                            </video>
+                        </div>
                 </div>
                 <div class="anime__details__episodes">
                     <div class="section-title">
@@ -52,9 +54,9 @@
                     <div class="section-title">
                         <h5>Your Comment</h5>
                     </div>
-                    <form action="#">
-                        <textarea placeholder="Your Comment"></textarea>
-                        <button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
+                    <form id="formComment">
+                        <textarea placeholder="Your Comment" id="comment" name="content"></textarea>
+                        <button onclick="submitComment(event)"><i class="fa fa-location-arrow"></i> Review</button>
                     </form>
                 </div>
             </div>
@@ -63,11 +65,10 @@
 </section>
 <!-- Anime Section End -->
 
-<!-- Footer Section Begin -->
+<!-- Footer Section Begin --><script src="https://player.vimeo.com/api/player.js"></script>
 <th:block th:replace="client/layout.html :: footer_layout"></th:block>
 <th:block th:replace="client/js/js_watch.html :: js"></th:block>
 <th:block th:replace="client/js/js_comment.html :: js"></th:block>
-
 </body>
 
 </html>
