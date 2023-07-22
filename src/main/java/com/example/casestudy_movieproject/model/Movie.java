@@ -42,7 +42,7 @@ public class Movie {
     private String img_poster;
     private String img_movie;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "movie")
     private Set<MovieGenre> movieGenres;
 
     @OneToMany(mappedBy = "movie")

@@ -11,8 +11,13 @@ import java.util.List;
 @Repository
 public interface GenreRepository extends JpaRepository<Genre, Integer> {
 
+<<<<<<< Updated upstream
     @Query(value = "SELECT g FROM Genre g " +
             "JOIN MovieGenre mg ON g.id = mg.genre.id " +
             "WHERE mg.movie.id = :movie_id")
     List<Genre> getGenreByMovie(int movie_id);
+=======
+
+    Genre findById(int id);
+>>>>>>> Stashed changes
 }

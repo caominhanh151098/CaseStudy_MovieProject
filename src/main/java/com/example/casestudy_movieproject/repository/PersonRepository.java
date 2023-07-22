@@ -7,4 +7,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersonRepository extends JpaRepository<Person,Integer> {
 
+
+    boolean existsByNameIgnoreCase(String name);
+
+    Person findPersonByNameContaining(String name);
+
+
 }

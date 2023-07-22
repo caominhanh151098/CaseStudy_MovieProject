@@ -274,7 +274,7 @@
                 >
                     Create Movie
                 </h4>
-                <form th:object="${movie}" method="post" th:action="@{/admin/create}">
+                <form th:object="${movie}" method="post" th:action="@{/admin/create}" enctype="multipart/form-data">
                     <div
                             class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
                     >
@@ -285,8 +285,8 @@
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     th:field="*{name}"
                             />
-                            <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"
-                                  th:errors="*{name}"></span>
+                            <!--                            <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"-->
+                            <!--                                  th:errors="*{name}"></span>-->
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Aired Year</span>
@@ -294,9 +294,9 @@
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{airedYear}"
                             />
-                            <span class="text-xs text-red-600 dark:text-red-400"
-                                  th:if="${#fields.hasErrors('airedYear')}"
-                                  th:errors="*{airedYear}"></span>
+                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
+                            <!--                                  th:if="${#fields.hasErrors('airedYear')}"-->
+                            <!--                                  th:errors="*{airedYear}"></span>-->
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Duration</span>
@@ -304,9 +304,9 @@
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{duration}"
                             />
-                            <span class="text-xs text-red-600 dark:text-red-400"
-                                  th:if="${#fields.hasErrors('duration')}"
-                                  th:errors="*{duration}"></span>
+                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
+                            <!--                                  th:if="${#fields.hasErrors('duration')}"-->
+                            <!--                                  th:errors="*{duration}"></span>-->
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Total Eption</span>
@@ -314,9 +314,9 @@
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{totalEp}"
                             />
-                            <span class="text-xs text-red-600 dark:text-red-400"
-                                  th:if="${#fields.hasErrors('totalEp')}"
-                                  th:errors="*{totalEp}"></span>
+                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
+                            <!--                                  th:if="${#fields.hasErrors('totalEp')}"-->
+                            <!--                                  th:errors="*{totalEp}"></span>-->
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">IMDB Score</span>
@@ -324,13 +324,14 @@
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{scoreIMDb}"
                             />
-                            <span class="text-xs text-red-600 dark:text-red-400"
-                                  th:if="${#fields.hasErrors('scoreIMDb')}"
-                                  th:errors="*{scoreIMDb}"></span>
+                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
+                            <!--                                  th:if="${#fields.hasErrors('scoreIMDb')}"-->
+                            <!--                                  th:errors="*{scoreIMDb}"></span>-->
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">IMG Movie</span>
-                            <input type="file"
+                            <input type="file" name="imgMovie"
+                                   id="imgMovie"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{img_movie}"
                             />
@@ -339,22 +340,24 @@
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">IMG Poster</span>
-                            <input type="file"
+                            <input type="file" name="imgPoster"
+                                   id="imgPoster"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{img_poster}"
                             />
                             <!--              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"-->
                             <!--                    th:errors="*{duration}"></span>-->
                         </label>
-<!--                        <label class="block text-sm">-->
-<!--                            <span class="text-gray-700 dark:text-gray-400">Movie Trailer</span>-->
-<!--                            <input type="file"-->
-<!--                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"-->
-<!--                                   th:field="*{urlTrailer}"-->
-<!--                            />-->
-<!--                            &lt;!&ndash;              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"&ndash;&gt;-->
-<!--                            &lt;!&ndash;                    th:errors="*{duration}"></span>&ndash;&gt;-->
-<!--                        </label>-->
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Trailer</span>
+                                <input type="file" name="urlTrailer"
+                                       id="urlTrailer"
+                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   th:field="*{urlTrailer}"
+                            />
+                            <!--              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"-->
+                            <!--                    th:errors="*{duration}"></span>-->
+                        </label>
 
 
                         <label class="block mt-4 text-sm">
@@ -364,7 +367,8 @@
                             <select th:field="*{quality}"
                                     class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             >
-                                <option th:each="quality : ${qualities}" th:value="${quality}" th:text="${quality}"></option>
+                                <option th:each="quality : ${qualities}" th:value="${quality}"
+                                        th:text="${quality}"></option>
 
                             </select>
                         </label>
@@ -375,7 +379,8 @@
                             <select th:field="*{status}"
                                     class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             >
-                                <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+                                <option th:each="status : ${statuses}" th:value="${status}"
+                                        th:text="${status}"></option>
 
                             </select>
                         </label>
@@ -395,9 +400,9 @@
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Genre</span>
                             <th:block th:each="genre : ${genres}">
-                                <input  th:value="${genre.id}" th:name="${genre.name}"
-                                        type="checkbox"
-                                        class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                <input th:value="${genre.id}" name="genre" id="genre" th:field="*{movieGenres}"
+                                       type="checkbox"
+                                       class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                 />
                                 <span class="ml-2" th:text="${genre.name}">
 
@@ -427,32 +432,33 @@
 
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Name Person</span>
-                                        <input  list="personList"
-                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                                th:id="${'person'+iter.index}"
-                                                th:value="${ekip.person}"
-                                                th:name="${'eKips['+ iter.index + '].person'}"
+                                        <input list="personList"
+                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                               th:id="${'person'+iter.index}"
+                                               th:value="${ekip.name}"
+                                               th:name="${'eKips['+ iter.index + '].person'}"
                                         />
-<!--                                        th:field="*{eKips.person}"-->
+                                        <!--                                        th:field="*{eKips.person}"-->
 
                                         <datalist id="personList">
                                             <option th:each="person : ${persons}"
-                                                    th:value="${person.id}" th:text="${person.name}">
-
+                                                    th:name="${person.name}">
                                             </option>
                                         </datalist>
-<!--                                        <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('eKips.person')}"-->
-<!--                                              th:errors="*{eKips.person}"></span>-->
+                                        <!--                                        <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('eKips.person')}"-->
+                                        <!--                                              th:errors="*{eKips.person}"></span>-->
                                     </label>
                                     <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
                   Role
                 </span>
-<!--                                        th:field="*{eKips.role}"-->
-                                        <select th:id="${iter.index}" th:value="${ekip.role}" th:name="${'eKips[' + iter.index + '].role'}"
+                                        <!--                                        th:field="*{eKips.role}"-->
+                                        <select th:id="${iter.index}" th:value="${ekip.role}"
+                                                th:name="${'eKips[' + iter.index + '].role'}"
                                                 class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                         >
-                                            <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+                                            <option th:each="role : ${roles}" th:value="${role}"
+                                                    th:text="${role}"></option>
 
                                         </select>
                                     </label>
@@ -488,12 +494,20 @@
                                     </label>
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">URL</span>
+<!--                                        <input type="file"-->
+<!--                                               class="hiddenInput"-->
+<!--                                               th:id="${'urlFile'+iter.index}"-->
+
+<!--                                               th:name="${'seriesMovie['+ iter.index + '].urlFile'}"-->
+<!--                                        />-->
                                         <input type="file"
                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                th:id="${'url'+iter.index}"
                                                th:value="${chap.url}"
                                                th:name="${'seriesMovie['+ iter.index + '].url'}"
+
                                         />
+<!--                                        onclick="document.getElementById('urlFile'+ '${iter.index}').click()"-->
                                         <!--                                    <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"-->
                                         <!--                                          th:errors="*{name}"></span>-->
                                     </label>
@@ -543,7 +557,7 @@
     let ekips = [[${movie.eKips}]] || [];
     let currentSizeEkip = ekips.length;
 
-    function addMorePerson(){
+    function addMorePerson() {
         const data = {
             person: '',
             role: ''
@@ -553,7 +567,7 @@
         currentSizeEkip++;
     }
 
-    function addMoreMovie(){
+    function addMoreMovie() {
         const data = {
             name: '',
             url: ''
@@ -564,26 +578,34 @@
         currentSizeSerie++;
     }
 
-    function renderPerson(){
+    function renderPerson() {
         let str = "";
 
         ekips.forEach((ekip, index) => {
             let strOption = "";
             let strRole = "";
             roles.forEach(role => {
-                strRole += `<option value="${role}">${role}</option>`
+                if (role.index === ekip.role.index) {
+                    strRole += `<option value="${role}" selected>${role}</option>`
+                } else {
+                    strRole += `<option value="${role}">${role}</option>`
+                }
             })
             persons.forEach(person => {
-                strOption += `<option value="${person.id}">${person.name}</option>`
+                if (person.id === +ekip.person.id) {
+                    strOption += `<option value="${person.name}" selected></option>`
+                } else {
+                    strOption += `<option value="${person.name}"></option>`
+                }
             })
             str += `
-            <label class="block text-sm">
+                                    <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Name Person</span>
                                         <input  list="personList"
                                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                                id="${'person'+ index}"
-                                                value="${ekip.person}"
-                                                name="${'eKips['+ index + '].person'}"
+                                                id="${'name' + index}"
+                                                value="${ekip.name || ''}"
+                                                name="${'eKips[' + index + '].name'}"
                                         />
 <!--                                        th:field="*{eKips.person}"-->
 
@@ -593,9 +615,9 @@
 
                                     </label>
                                     <label class="block mt-4 text-sm">
-                <span class="text-gray-700 dark:text-gray-400">
-                  Role
-                </span>
+                                        <span class="text-gray-700 dark:text-gray-400">
+                                          Role
+                                        </span>
 <!--                                        th:field="*{eKips.role}"-->
                                         <select id="${index}" value="${ekip.role}" name="${'eKips[' + index + '].role'}"
                                                 class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
@@ -604,47 +626,74 @@
 
                                         </select>
                                     </label>
+                                    <button type="button" onclick="removePerson(${index})"
+                            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                    >
+                        Delete
+                    </button> `
 
-            `
         })
         ekip.innerHTML = str;
     }
 
-    function renderChapter(){
+        function renderChapter() {
 
-        let str = "";
+            let str = "";
 
-        seriesMovie.forEach((chap, index) => {
-            str += `
-                <label class="block text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
-                                        <input
-                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                                id="chap${index}"
-                                                value="${chap.name}"
-                                                name="${'seriesMovie['+ index + '].name'}"
-                                        />
+            seriesMovie.forEach((chap, index) => {
+                str +=
+            `<label class="block text-sm">
+            <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
+            <input
+            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+            id="chap${index}"
+            value="${chap.name}"
+            name="${'seriesMovie[' + index + '].name'}"
+            />
 
-                                    </label>
-                                    <label class="block text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">URL</span>
-                                        <input type="file"
+            </label>
+            <label class="block text-sm">
+            <span class="text-gray-700 dark:text-gray-400">URL</span>
+            <input type="file"
                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                               id="url${index}"
-                                               value="${chap.url}"
+                                               id="${'url'+ index}"
+                                                value="${chap.url}"
                                                name="${'seriesMovie['+ index + '].url'}"
                                         />
 
-                                    </label>
-            `
-        })
-        chapter.innerHTML = str;
-    }
+
+            </label>
+            <button type="button" onclick="removeMovie(${index})"
+            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+            >
+            Delete
+            </button>`
+
+            })
+            chapter.innerHTML = str;
+        }
+
+        function removeMovie(index) {
+            seriesMovie.splice(index, 1);
+            renderChapter();
+        }
+
+        function removePerson(index) {
+            ekips.splice(index, 1);
+            renderPerson();
+        }
 
 
-    renderPerson();
-    renderChapter();
+        renderPerson();
+        renderChapter();
 </script>
+<!--<input type="text" readonly-->
+<!--       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"-->
+<!--       id="url${index}"-->
+<!--       value="${chap.url}"-->
+<!--       name="${'seriesMovie[' + index + '].url'}"-->
+<!--       onclick="document.getElementById('urlFile'+ '${index}').click()"-->
+<!--/>-->
 
 </body>
 </html>

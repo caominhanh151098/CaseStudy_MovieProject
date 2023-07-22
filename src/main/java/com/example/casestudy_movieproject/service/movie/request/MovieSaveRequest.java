@@ -4,6 +4,7 @@ import com.example.casestudy_movieproject.service.SelectOptionRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,17 +16,17 @@ public class MovieSaveRequest {
     private String description;
     private String airedYear;
     private String duration;
-    private String img_movie;
-    private String img_poster;
+    private MultipartFile img_movie;
+    private MultipartFile img_poster;
     private String scoreIMDb;
     private String totalEp;
-    private String urlTrailer;
-    private SelectOptionRequest type;
-    private SelectOptionRequest status;
-    private SelectOptionRequest quality;
+    private MultipartFile urlTrailer;
+    private String type;
+    private String status;
+    private String quality;
     private List<EkipSaveRequest> eKips;
     private List<UrlMovieSaveRequest> seriesMovie;
-    private List<MovieGenreSaveRequest> movieGenres;
+    private List<String> movieGenres;
 
     public List<EkipSaveRequest> geteKips() {
         return eKips;
@@ -35,20 +36,29 @@ public class MovieSaveRequest {
         this.eKips = eKips;
     }
 
+    public List<UrlMovieSaveRequest> getSeriesMovie() {
+        return seriesMovie;
+    }
+
+    public void setSeriesMovie(List<UrlMovieSaveRequest> seriesMovie) {
+        this.seriesMovie = seriesMovie;
+    }
+
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     public static class UrlMovieSaveRequest {
         private String name;
-        private String url;
+        private MultipartFile url;
     }
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     public static class MovieGenreSaveRequest {
-        private SelectOptionRequest genre;
+        private String genre;
+
     }
 
     @Data
@@ -56,24 +66,8 @@ public class MovieSaveRequest {
     @NoArgsConstructor
     public static class EkipSaveRequest {
 
-        private List<PersonSaveRequest> person;
-        private SelectOptionRequest role;
-
-        public List<PersonSaveRequest> getPerson() {
-            return person;
-        }
-
-        public void setPerson(List<PersonSaveRequest> person) {
-            this.person = person;
-        }
-
-
-        @Data
-        @AllArgsConstructor
-        @NoArgsConstructor
-        public static class PersonSaveRequest {
-            private String id;
-            private String name;
-        }
+        private String id;
+        private String name;
+        private String role;
     }
 }

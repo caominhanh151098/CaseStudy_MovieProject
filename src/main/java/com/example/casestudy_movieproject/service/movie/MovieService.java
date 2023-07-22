@@ -1,24 +1,36 @@
 package com.example.casestudy_movieproject.service.movie;
 
-import com.example.casestudy_movieproject.model.EKip;
-import com.example.casestudy_movieproject.model.Movie;
+import com.example.casestudy_movieproject.config.AppConfig;
+import com.example.casestudy_movieproject.model.*;
 
-import com.example.casestudy_movieproject.model.MovieGenre;
 import com.example.casestudy_movieproject.model.enums.ERoleEKip;
 import com.example.casestudy_movieproject.repository.*;
+
 import com.example.casestudy_movieproject.service.genre.response.ShowGenreByMovieResponse;
+
+import com.example.casestudy_movieproject.service.movie.request.MovieSaveRequest;
+
 import com.example.casestudy_movieproject.service.movie.response.MovieListResponse;
 import com.example.casestudy_movieproject.service.movie.response.ShowListMovieResponse;
 import com.example.casestudy_movieproject.service.movie.response.ShowMovieDetailResponse;
 import com.example.casestudy_movieproject.service.movie.response.ShowUrlMovieResponse;
 import com.example.casestudy_movieproject.service.ep_movie.reponse.ShowListEpisodeResponse;
 import com.example.casestudy_movieproject.util.AppUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +43,10 @@ public class MovieService {
     private final EKipRepository eKipRepository;
     private final CommentRepository commentRepository;
     private final EpMovieRepository epMovieRepository;
+    private final PersonRepository personRepository;
+    private final AppConfig appConfig;
+
+
 
     public ShowMovieDetailResponse showDetail(int id) {
         ShowMovieDetailResponse showMovieDetail = AppUtils.mapper.map(movieRepository.findById(id), ShowMovieDetailResponse.class);
@@ -146,5 +162,72 @@ public class MovieService {
                     .collect(Collectors.toList()));
         });
         return movies;
+    }
+
+    public void create(MovieSaveRequest movieSave) {
+
+        saveFile(movieSave.getImg_movie(), appConfig.getImgStoragePathMovie());
+        saveFile(movieSave.getImg_poster(), appConfig.getImgStoragePoster());
+        saveFile(movieSave.getUrlTrailer(), appConfig.getUrlStorageTrailer());
+        for (var chapter : movieSave.getSeriesMovie()) {
+            saveFile(chapter.getUrl(), appConfig.getUrlStorageChapter());
+        }
+
+
+        for (var person : movieSave.geteKips()) {
+            if (!personRepository.existsByNameIgnoreCase(person.getName())) {
+                Person newPerson = new Person();
+                newPerson.setName(person.getName());
+                personRepository.save(newPerson);
+
+                person.setId(String.valueOf(newPerson.getId()));
+            } else {
+                Person person1 = personRepository.findPersonByNameContaining(person.getName());
+                person.setId(String.valueOf(person1.getId()));
+            }
+
+
+        }
+        Movie movie = AppUtils.mapper.map(movieSave, Movie.class);
+        System.out.println(movie);
+        String setLink = "../assets/client";
+
+        movie.setImg_movie(setLink + "/img/movie/" + movieSave.getImg_movie().getOriginalFilename());
+        movie.setImg_poster(setLink + "/img/poster/" + movieSave.getImg_poster().getOriginalFilename());
+        movie.setUrlTrailer(setLink + "/videos/trailer/" + movieSave.getUrlTrailer().getOriginalFilename());
+
+        movieRepository.save(movie);
+
+
+        for (String genre : movieSave.getMovieGenres()) {
+            Genre genre1 = genreRepository.findById(Integer.parseInt(genre));
+            MovieGenre newMovieGenre = new MovieGenre(movie, genre1);
+            movieGenreRepository.save(newMovieGenre);
+        }
+
+//        for (var ekip:movieSave.geteKips()) {
+//            Person person = movie.getEKips()
+//        }
+
+
+
+    }
+
+    private static String saveFile(MultipartFile file, String storagePath) {
+        if (file == null || file.isEmpty()) {
+            return null;
+        }
+
+        try {
+            String originFileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+            String filePath = storagePath + originFileName;
+
+            FileCopyUtils.copy(file.getBytes(), new File(filePath));
+
+            return filePath;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
