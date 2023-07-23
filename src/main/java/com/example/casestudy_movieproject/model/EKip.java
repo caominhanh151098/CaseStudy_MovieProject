@@ -15,14 +15,19 @@ public class EKip {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    @MapsId("movieId")
     @JoinColumn(name = "movie_id")
     private Movie movie;
     @ManyToOne
-    @MapsId("personId")
     @JoinColumn(name = "person_id")
     private Person person;
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private ERoleEKip role;
+
+
+    public EKip(Person person, Movie movie, ERoleEKip eRoleEKip) {
+        this.person = person;
+        this.movie = movie;
+        this.role = eRoleEKip;
+    }
 }

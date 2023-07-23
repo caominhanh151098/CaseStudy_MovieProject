@@ -83,20 +83,16 @@ public class MovieService {
     }
 
     public Page<MovieListResponse> findAllWithSearchAndPaging(String search, Pageable pageable) {
-        List<Movie> movieList = movieRepository.findAll();
-//        List<String> genres
-
         search = "%" + search + "%";
+        Page<Movie> movies = movieRepository.searchAll(search,pageable);
 
-        return movieRepository.searchAll(search, pageable).map(movie -> {
-            var response = AppUtils.mapper.map(movie, MovieListResponse.class);
-            List<String> listGenre = new ArrayList<>();
-//            for (var genre: ) {
-//
-//            }
-//            response.setMovieGenres();
-            return response;
+        Page<MovieListResponse> responses = movieRepository.searchAll(search,pageable)
+                .map(e -> AppUtils.mapper.map(e , MovieListResponse.class));
+        responses.forEach(m -> {
+            m.setMovieGenres(String.join(",", movieGenreRepository.findAllByMovie_Id(m.getId())
+                    .stream().map(e -> e.getGenre().getName()).collect(Collectors.toList())));
         });
+        return responses;
     }
 
     public List<MovieListResponse> findAll() {
@@ -171,7 +167,7 @@ public class MovieService {
         saveFile(movieSave.getImg_movie(), appConfig.getImgStoragePathMovie());
         saveFile(movieSave.getImg_poster(), appConfig.getImgStoragePoster());
         saveFile(movieSave.getUrlTrailer(), appConfig.getUrlStorageTrailer());
-        for (var chapter : movieSave.getSeriesMovie()) {
+        for (var chapter : movieSave.getEpMovies()) {
             saveFile(chapter.getUrl(), appConfig.getUrlStorageChapter());
         }
 
@@ -182,10 +178,8 @@ public class MovieService {
                 newPerson.setName(person.getName());
                 personRepository.save(newPerson);
 
-                person.setId(String.valueOf(newPerson.getId()));
             } else {
                 Person person1 = personRepository.findPersonByNameContaining(person.getName());
-                person.setId(String.valueOf(person1.getId()));
             }
 
 
@@ -200,6 +194,15 @@ public class MovieService {
 
         movieRepository.save(movie);
 
+        for (var chapter:movie.getEpMovies()) {
+            for (var chapterSave:movieSave.getEpMovies()) {
+                chapter.setUrl(setLink + "/videos/" + chapterSave.getUrl().getOriginalFilename());
+                Movie movie1 = movieRepository.findById(movie.getId());
+                EpMovie epMovie = new EpMovie(chapterSave.getName(),chapter.getUrl(),movie1);
+                epMovieRepository.save(epMovie);
+            }
+        }
+
 
         for (String genre : movieSave.getMovieGenres()) {
             Genre genre1 = genreRepository.findById(Integer.parseInt(genre));
@@ -207,9 +210,12 @@ public class MovieService {
             movieGenreRepository.save(newMovieGenre);
         }
 
-//        for (var ekip:movieSave.geteKips()) {
-//            Person person = movie.getEKips()
-//        }
+        for (var ekip:movieSave.geteKips()) {
+            Person person = personRepository.findPersonByNameContaining(ekip.getName());
+
+            EKip eKip = new EKip(person,movie,ERoleEKip.valueOf(ekip.getRole()));
+            eKipRepository.save(eKip);
+        }
 
 
     }

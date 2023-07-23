@@ -480,14 +480,14 @@
                             <span class="text-gray-700 dark:text-gray-400">Chapter</span>
                             <div id="chapter">
 
-                                <th:block th:each="chap, iter : *{seriesMovie}">
+                                <th:block th:each="chap, iter : *{epMovies}">
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
                                         <input
                                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                 th:id="${'chap'+iter.index}"
                                                 th:value="${chap.name}"
-                                                th:name="${'seriesMovie['+ iter.index + '].name'}"
+                                                th:name="${'epMovies['+ iter.index + '].name'}"
                                         />
                                         <!--                                    <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"-->
                                         <!--                                          th:errors="*{name}"></span>-->
@@ -504,7 +504,7 @@
                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                th:id="${'url'+iter.index}"
                                                th:value="${chap.url}"
-                                               th:name="${'seriesMovie['+ iter.index + '].url'}"
+                                               th:name="${'epMovies['+ iter.index + '].url'}"
 
                                         />
 <!--                                        onclick="document.getElementById('urlFile'+ '${iter.index}').click()"-->
@@ -550,7 +550,7 @@
     const roles = [[${roles}]];
 
     let chapter = document.getElementById('chapter');
-    let seriesMovie = [[${movie.seriesMovie}]] || [];
+    let seriesMovie = [[${movie.epMovies}]] || [];
     let currentSizeSerie = seriesMovie.length;
 
     let ekip = document.getElementById("ekip");
@@ -648,7 +648,7 @@
             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             id="chap${index}"
             value="${chap.name}"
-            name="${'seriesMovie[' + index + '].name'}"
+            name="${'epMovies[' + index + '].name'}"
             />
 
             </label>
@@ -658,7 +658,7 @@
                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                id="${'url'+ index}"
                                                 value="${chap.url}"
-                                               name="${'seriesMovie['+ index + '].url'}"
+                                               name="${'epMovies['+ index + '].url'}"
                                         />
 
 

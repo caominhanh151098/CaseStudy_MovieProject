@@ -26,4 +26,8 @@ public class MovieListResponse {
     private String status;
     private String eKips;
     private String type;
+    public MovieListResponse(String name,String movieGenres){
+        this.name = name;
+        this.movieGenres = movieGenres;
+    }
 }

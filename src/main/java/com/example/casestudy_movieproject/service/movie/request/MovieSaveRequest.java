@@ -25,7 +25,7 @@ public class MovieSaveRequest {
     private String status;
     private String quality;
     private List<EkipSaveRequest> eKips;
-    private List<UrlMovieSaveRequest> seriesMovie;
+    private List<UrlMovieSaveRequest> epMovies;
     private List<String> movieGenres;
 
     public List<EkipSaveRequest> geteKips() {
@@ -36,12 +36,12 @@ public class MovieSaveRequest {
         this.eKips = eKips;
     }
 
-    public List<UrlMovieSaveRequest> getSeriesMovie() {
-        return seriesMovie;
+    public List<UrlMovieSaveRequest> getEpMovies() {
+        return epMovies;
     }
 
-    public void setSeriesMovie(List<UrlMovieSaveRequest> seriesMovie) {
-        this.seriesMovie = seriesMovie;
+    public void setEpMovies(List<UrlMovieSaveRequest> epMovies) {
+        this.epMovies = epMovies;
     }
 
 

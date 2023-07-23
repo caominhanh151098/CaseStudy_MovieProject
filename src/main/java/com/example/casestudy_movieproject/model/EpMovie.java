@@ -21,4 +21,10 @@ public class EpMovie {
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movie;
+
+    public EpMovie(String name, String url, Movie movie) {
+        this.name = name;
+        this.url = url;
+        this.movie = movie;
+    }
 }
