@@ -10,8 +10,9 @@
         renderComment();
 
         function renderComment() {
+            let count = 0;
             $.ajax({
-                url: `http://localhost:8080/api/comment/${idMovie}?sort=${soft.sortField},${soft.sortBy}`,
+                url: `http://localhost:8080/api/comment/${movieId}?sort=${soft.sortField},${soft.sortBy}`,
                 method: "GET"
             }).done(data => {
                 comments = data.content;
@@ -28,7 +29,32 @@
                                 <p>${c.content}</p>
                             </div>
                         </div>`;
+                    if (++count == 7)
+                        return;
                 })
+            })
+        }
+        function submitComment(e) {
+            e.preventDefault();
+            let inputComment = document.getElementById("comment");
+            const form = document.getElementById("formComment");
+            const formInput = new FormData(form);
+            const data = Object.fromEntries(formInput.entries());
+            data.movieId = movieId;
+            data.userId = userId;
+            data.content = inputComment.value;
+            console.log(data)
+            $.ajax({
+                url: 'http://localhost:8080/api/comment',
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(data),
+            }).done(e => {
+                renderComment();
+                initData();
             })
         }
 
@@ -55,29 +81,6 @@
             let now = new Date();
             let diff = (timeComment.getTime() - now.getTime()) / 1000;
             return countDownTime(Math.floor(diff));
-        }
-
-        function submitComment(e) {
-            e.preventDefault();
-            let inputComment = document.getElementById("comment");
-            const form = document.getElementById("formComment");
-            const formInput = new FormData(form);
-            const data = Object.fromEntries(formInput.entries());
-            data.movieId = idMovie;
-            data.userId = "4";
-            data.content = inputComment.value;
-            console.log(data)
-            $.ajax({
-                url: 'http://localhost:8080/api/comment',
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                data: JSON.stringify(data),
-            }).done(e => {
-                renderComment();
-            })
         }
     </script>
 </div>

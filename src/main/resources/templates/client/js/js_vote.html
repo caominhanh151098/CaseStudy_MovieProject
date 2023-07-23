@@ -1,0 +1,74 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="js">
+    <script th:inline="javascript">
+        let score = 0;
+
+
+        function getVote() {
+            $.ajax({
+                url: `http://localhost:8080/api/vote?userId=${userId}&movieId=${movieId}`,
+                method: 'GET',
+            }).done(data => {
+                if (data != 0)
+                    score = data;
+                else return getAvgVote();
+                // else score = getAvgVote();
+                renderVote();
+                getNumVote();
+            })
+        }
+
+        function getAvgVote() {
+            $.ajax({
+                url: `http://localhost:8080/api/vote/avg/${movieId}`,
+                method: 'GET',
+            }).done(data => {
+                score = data;
+                renderVote();
+                getNumVote();
+            })
+
+
+
+        }
+
+        function renderVote() {
+            let voteForm = document.getElementById("voteRate");
+            voteForm.innerHTML = ""
+            for (let i = 10; i > 0; i--) {
+                if (i % 2 == 1)
+                    voteForm.innerHTML += `<input type="radio" onclick="submitVote(${i})" id="rating${i}" name="rating" ${i == score ? "checked" : ""}/><label class="half" for="rating${i}" title="${i / 2} 1/2 star"></label>`
+                else
+                    voteForm.innerHTML += `<input type="radio" onclick="submitVote(${i})" id="rating${i}" name="rating" ${i == score ? "checked" : ""}/><label for="rating${i}" title="${i / 2} star"></label>`
+            }
+        }
+
+        function getNumVote() {
+            $.ajax({
+                url: `http://localhost:8080/api/vote/numVote?movieId=${movieId}`,
+                method: 'GET',
+            }).done(data => {
+                document.getElementById("numVote").innerHTML = `${data} Votes`;
+            })
+        }
+
+        function submitVote(e) {
+            score = e;
+            const data = {};
+            data.movieId = movieId;
+            data.userId = userId;
+            data.score = score;
+            $.ajax({
+                url: 'http://localhost:8080/api/vote',
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(data),
+            }).done(e => {
+                getVote();
+            })
+        }
+    </script>
+</div>

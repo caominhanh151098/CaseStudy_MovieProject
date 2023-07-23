@@ -13,24 +13,20 @@ import com.example.casestudy_movieproject.service.movie.request.MovieSaveRequest
 import com.example.casestudy_movieproject.service.movie.response.MovieListResponse;
 import com.example.casestudy_movieproject.service.movie.response.ShowListMovieResponse;
 import com.example.casestudy_movieproject.service.movie.response.ShowMovieDetailResponse;
-import com.example.casestudy_movieproject.service.movie.response.ShowUrlMovieResponse;
+import com.example.casestudy_movieproject.service.movie.response.ShowMovieResponse;
 import com.example.casestudy_movieproject.service.ep_movie.reponse.ShowListEpisodeResponse;
 import com.example.casestudy_movieproject.util.AppUtils;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,13 +43,17 @@ public class MovieService {
     private final AppConfig appConfig;
 
 
-
     public ShowMovieDetailResponse showDetail(int id) {
         ShowMovieDetailResponse showMovieDetail = AppUtils.mapper.map(movieRepository.findById(id), ShowMovieDetailResponse.class);
         List<MovieGenre> movieGenres = movieGenreRepository.findAllByMovie_Id(id);
         List<String> ListGenre = movieGenres.stream().map(e -> e.getGenre().getName()).collect(Collectors.toList());
         List<EKip> eKips = eKipRepository.findAllByMovie_Id(id);
+        List<ShowListEpisodeResponse> Eplist = epMovieRepository.findAllByMovie_Id(id).stream()
+                .map(e -> AppUtils.mapper.map(e, ShowListEpisodeResponse.class))
+                .collect(Collectors.toList());
 
+        showMovieDetail.setSeriesMovie(Eplist);
+        showMovieDetail.setTopGenre(AppUtils.mapper.map(movieGenres.get(0).getGenre(), ShowGenreByMovieResponse.class));
         showMovieDetail.setMovieGenres(String.join(", ", ListGenre));
         showMovieDetail.setDirectors(convertToString(eKips, ERoleEKip.DIRECTOR));
         showMovieDetail.setActors(convertToString(eKips, ERoleEKip.ACTOR));
@@ -70,13 +70,15 @@ public class MovieService {
         return String.join(", ", listActor);
     }
 
-    public ShowUrlMovieResponse showMovie(int id) {
-        ShowUrlMovieResponse movie = AppUtils.mapper.map(movieRepository.findById(id), ShowUrlMovieResponse.class);
-        movie.setGenre(movieGenreRepository.findTopByMovie_Id(id).getGenre().getName());
-        List<ShowListEpisodeResponse> list = epMovieRepository.findAllByMovie_Id(id).stream()
+    public ShowMovieResponse showMovie(int id) {
+        ShowMovieResponse movie = AppUtils.mapper.map(movieRepository.findById(id), ShowMovieResponse.class);
+        movie.setGenre(AppUtils
+                .mapper
+                .map(movieGenreRepository.findTopByMovie_Id(id).getGenre(), ShowGenreByMovieResponse.class));
+        List<ShowListEpisodeResponse> Eplist = epMovieRepository.findAllByMovie_Id(id).stream()
                 .map(e -> AppUtils.mapper.map(e, ShowListEpisodeResponse.class))
                 .collect(Collectors.toList());
-        movie.setSeriesMovie(list);
+        movie.setSeriesMovie(Eplist);
         return movie;
     }
 
@@ -208,7 +210,6 @@ public class MovieService {
 //        for (var ekip:movieSave.geteKips()) {
 //            Person person = movie.getEKips()
 //        }
-
 
 
     }

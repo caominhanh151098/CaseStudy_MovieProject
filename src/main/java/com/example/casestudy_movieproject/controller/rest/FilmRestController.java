@@ -1,14 +1,10 @@
 package com.example.casestudy_movieproject.controller.rest;
 
 
-import com.example.casestudy_movieproject.model.EpMovie;
-
 import com.example.casestudy_movieproject.service.movie.MovieService;
-import com.example.casestudy_movieproject.service.comment.CommentService;
-import com.example.casestudy_movieproject.service.comment.response.ShowCommentResponse;
 import com.example.casestudy_movieproject.service.movie.response.ShowListMovieResponse;
 import com.example.casestudy_movieproject.service.movie.response.ShowMovieDetailResponse;
-import com.example.casestudy_movieproject.service.movie.response.ShowUrlMovieResponse;
+import com.example.casestudy_movieproject.service.movie.response.ShowMovieResponse;
 import com.example.casestudy_movieproject.service.ep_movie.EpMovieService;
 import com.example.casestudy_movieproject.service.movie.response.WatchMovieResponse;
 import lombok.AllArgsConstructor;
@@ -35,7 +31,7 @@ public class FilmRestController {
     }
 
     @GetMapping("/watch/{id}")
-    public ShowUrlMovieResponse watchMovie(@PathVariable int id) {
+    public ShowMovieResponse watchMovie(@PathVariable int id) {
         return movieService.showMovie(id);
     }
 
@@ -47,6 +43,7 @@ public class FilmRestController {
     @GetMapping("/show/all")
     public Page<ShowListMovieResponse> showListMovie(@PageableDefault(size = 12) Pageable pageable) {
         return movieService.showListMovie(pageable);
+//        return epMovieService.showListMovieUpdate(pageable);
     }
 
     @GetMapping("/show/{idGenre}")

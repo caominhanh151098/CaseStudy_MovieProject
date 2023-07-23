@@ -1,8 +1,13 @@
 package com.example.casestudy_movieproject.service.movie.response;
 
+import com.example.casestudy_movieproject.service.ep_movie.reponse.ShowListEpisodeResponse;
+import com.example.casestudy_movieproject.service.genre.response.ShowGenreByMovieResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +21,7 @@ public class ShowMovieDetailResponse {
     private String quality;
     private String description;
     private String img_movie;
+    private ShowGenreByMovieResponse topGenre;
     private String movieGenres;
     private String directors;
     private String actors;
@@ -23,4 +29,5 @@ public class ShowMovieDetailResponse {
     private String status;
     private String type;
     private String totalEp;
+    private List<ShowListEpisodeResponse> seriesMovie;
 }

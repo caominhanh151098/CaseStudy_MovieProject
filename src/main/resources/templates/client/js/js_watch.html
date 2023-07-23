@@ -6,31 +6,31 @@
         let episode = document.getElementById("episode");
         let url = location.href;
         let id = url.slice(31);
-        idMovie = id.split('-')[0];
+        let movieId = id.split('-')[0];
         let idEp = id.split('-')[1];
-        let film;
+        let movie;
         let videoPlayer = document.querySelector("video");
         initData();
-        if (idMovie == "")
+        if (movieId == "")
             location.href = "/";
 
         function initData() {
             $.ajax({
-                url: `http://localhost:8080/api/movie/watch/${idMovie}`,
+                url: `http://localhost:8080/api/movie/watch/${movieId}`,
                 method: "GET"
             }).done(data => {
-                film = data;
+                movie = data;
                 genreMovie.innerHTML = `
                  <div class="breadcrumb__links">
                     <a href="/"><i class="fa fa-home"></i> Home</a>
                     <a href="./categories.html">Thể loại</a>
-                    <a href="#">${film.genre || ""}</a>
-                    <a href="/phim/${film.id}">${film.name}</a>
+                    <a href="#${movie.genre.id}">${movie.genre.name || ""}</a>
+                    <a href="/phim/${movie.id}">${movie.name}</a>
                     <span id="nameEp"></span>
                 </div>`
                 let episodeMovie = "";
-                film.seriesMovie.forEach(f => {
-                    episodeMovie += `<a href="${idMovie + "-" + f.id}">${f.name}</a>`;
+                movie.seriesMovie.forEach(f => {
+                    episodeMovie += `<a href="${movieId + "-" + f.id}">${f.name}</a>`;
                 })
                 episode.innerHTML = episodeMovie;
                 if (!checkIdMovie(idEp))
@@ -58,7 +58,7 @@
 
         function checkIdMovie(id) {
             let check = false
-            film.seriesMovie.forEach(f => {
+            movie.seriesMovie.forEach(f => {
                 if (f.id == id)
                     return check = true;
             })

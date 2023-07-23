@@ -34,16 +34,17 @@
                                     <ul>
                                         ${genres}
                                     </ul>
-                                    <h5><a href="#">${m.name}</a></h5>
+                                    <h5><a href="/phim/${m.id}">${m.name}</a></h5>
                                 </div>
                             </div>
                         </div>`
                 })
             })
         }
+
         function renderCartoonMovies() {
             $.ajax({
-                url: `http://localhost:8080/api/movie/show/4?sort=id,desc`,
+                url: `http://localhost:8080/api/movie/show/4?sort=,desc`,
                 method: "GET"
             }).done(data => {
                 movies = data.content;
@@ -64,13 +65,14 @@
                                     <ul>
                                         ${genres}
                                     </ul>
-                                    <h5><a>${m.name}</a></h5>
+                                    <h5><a href="/phim/${m.id}">${m.name}</a></h5>
                                 </div>
                             </div>
                         </div>`
                 })
             })
         }
+
         function renderEpMovies() {
             $.ajax({
                 url: `http://localhost:8080/api/movie/show/seriesM?sort=id,desc`,
@@ -94,13 +96,14 @@
                                     <ul>
                                         ${genres}
                                     </ul>
-                                    <h5><a href="#">${m.name}</a></h5>
+                                    <h5><a href="/phim/${m.id}">${m.name}</a></h5>
                                 </div>
                             </div>
                         </div>`
                 })
             })
         }
+
         function renderLAMovies() {
             $.ajax({
                 url: `http://localhost:8080/api/movie/show/14?sort=id,desc`,
@@ -110,6 +113,7 @@
                 showLAMovies.innerHTML = "";
                 movies.forEach(m => {
                     m.quality = displayQuality(m.quality);
+                    let genres = displayGenre(m.genres);
                     showLAMovies.innerHTML += `
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
@@ -121,22 +125,22 @@
                                 </div>
                                 <div class="product__item__text">
                                     <ul>
-                                        <li>Active</li>
-                                        <li>Movie</li>
+                                        ${genres}
                                     </ul>
-                                    <h5><a>${m.name}</a></h5>
+                                    <h5><a href="/phim/${m.id}">${m.name}</a></h5>
                                 </div>
                             </div>
                         </div>`
                 })
             })
         }
-        function displayGenre(arr){
+
+        function displayGenre(arr) {
             let genres = "";
-            for (let i = 0; i< arr.length; i++) {
+            for (let i = 0; i < arr.length; i++) {
                 let g = arr[i];
                 genres += `<a href="#"><li id="genre${g.id}">${g.name}</li></a>`
-                if (i>1)
+                if (i >= 1)
                     break;
             }
             return genres;
