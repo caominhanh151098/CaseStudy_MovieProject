@@ -19,10 +19,6 @@ public class FilmRestController {
     private final MovieService movieService;
     private final EpMovieService epMovieService;
 
-//    @GetMapping
-//    public List<Movie> getAll() {
-//        return movieRepository.findAll();
-//    }
 
     @GetMapping("/{id}")
     public ShowMovieDetailResponse getDetail(@PathVariable int id) {
