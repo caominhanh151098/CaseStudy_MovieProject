@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="admin/layout.html :: header_layout">
+</head>
+<body>
+
+<div
+        class="flex h-screen bg-gray-50 dark:bg-gray-900"
+        :class="{ 'overflow-hidden': isSideMenuOpen }"
+>
+    <!-- Desktop sidebar -->
+    <th:block th:replace="admin/layout.html :: head_bar"></th:block>
+    <div class="flex flex-col flex-1 w-full">
+        <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
+            <div
+                    class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
+            >
+                <!-- Mobile hamburger -->
+                <button
+                        class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
+                        @click="toggleSideMenu"
+                        aria-label="Menu"
+                >
+                    <svg
+                            class="w-6 h-6"
+                            aria-hidden="true"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                    >
+                        <path
+                                fill-rule="evenodd"
+                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clip-rule="evenodd"
+                        ></path>
+                    </svg>
+                </button>
+                <!-- Search input -->
+                <div class="flex justify-center flex-1 lg:mr-32">
+                    <div
+                            class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
+                    >
+                        <div class="absolute inset-y-0 flex items-center pl-2">
+                            <svg
+                                    class="w-4 h-4"
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                            >
+                                <path
+                                        fill-rule="evenodd"
+                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                        clip-rule="evenodd"
+                                ></path>
+                            </svg>
+                        </div>
+                        <input
+                                class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                                type="text"
+                                placeholder="Search for projects"
+                                aria-label="Search"
+                        />
+                    </div>
+                </div>
+                <ul class="flex items-center flex-shrink-0 space-x-6">
+                    <!-- Theme toggler -->
+                    <li class="flex">
+                        <button
+                                class="rounded-md focus:outline-none focus:shadow-outline-purple"
+                                @click="toggleTheme"
+                                aria-label="Toggle color mode"
+                        >
+                            <template x-if="!dark">
+                                <svg
+                                        class="w-5 h-5"
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                >
+                                    <path
+                                            d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                    ></path>
+                                </svg>
+                            </template>
+                            <template x-if="dark">
+                                <svg
+                                        class="w-5 h-5"
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                >
+                                    <path
+                                            fill-rule="evenodd"
+                                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                            clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                            </template>
+                        </button>
+                    </li>
+                    <!-- Notifications menu -->
+                    <li class="relative">
+                        <button
+                                class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
+                                @click="toggleNotificationsMenu"
+                                @keydown.escape="closeNotificationsMenu"
+                                aria-label="Notifications"
+                                aria-haspopup="true"
+                        >
+                            <svg
+                                    class="w-5 h-5"
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                            >
+                                <path
+                                        d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
+                                ></path>
+                            </svg>
+                            <!-- Notification badge -->
+                            <span
+                                    aria-hidden="true"
+                                    class="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"
+                            ></span>
+                        </button>
+                        <template x-if="isNotificationsMenuOpen">
+                            <ul
+                                    x-transition:leave="transition ease-in duration-150"
+                                    x-transition:leave-start="opacity-100"
+                                    x-transition:leave-end="opacity-0"
+                                    @click.away="closeNotificationsMenu"
+                                    @keydown.escape="closeNotificationsMenu"
+                                    class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700"
+                            >
+                                <li class="flex">
+                                    <a
+                                            class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                            href="#"
+                                    >
+                                        <span>Messages</span>
+                                        <span
+                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600"
+                                        >
+                          13
+                        </span>
+                                    </a>
+                                </li>
+                                <li class="flex">
+                                    <a
+                                            class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                            href="#"
+                                    >
+                                        <span>Sales</span>
+                                        <span
+                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600"
+                                        >
+                          2
+                        </span>
+                                    </a>
+                                </li>
+                                <li class="flex">
+                                    <a
+                                            class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                            href="#"
+                                    >
+                                        <span>Alerts</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </template>
+                    </li>
+                    <!-- Profile menu -->
+                    <li class="relative">
+                        <button
+                                class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
+                                @click="toggleProfileMenu"
+                                @keydown.escape="closeProfileMenu"
+                                aria-label="Account"
+                                aria-haspopup="true"
+                        >
+                            <img
+                                    class="object-cover w-8 h-8 rounded-full"
+                                    src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+                                    alt=""
+                                    aria-hidden="true"
+                            />
+                        </button>
+                        <template x-if="isProfileMenuOpen">
+                            <ul
+                                    x-transition:leave="transition ease-in duration-150"
+                                    x-transition:leave-start="opacity-100"
+                                    x-transition:leave-end="opacity-0"
+                                    @click.away="closeProfileMenu"
+                                    @keydown.escape="closeProfileMenu"
+                                    class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
+                                    aria-label="submenu"
+                            >
+                                <li class="flex">
+                                    <a
+                                            class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                            href="#"
+                                    >
+                                        <svg
+                                                class="w-4 h-4 mr-3"
+                                                aria-hidden="true"
+                                                fill="none"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                        >
+                                            <path
+                                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                            ></path>
+                                        </svg>
+                                        <span>Profile</span>
+                                    </a>
+                                </li>
+                                <li class="flex">
+                                    <a
+                                            class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                            href="#"
+                                    >
+                                        <svg
+                                                class="w-4 h-4 mr-3"
+                                                aria-hidden="true"
+                                                fill="none"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                        >
+                                            <path
+                                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                                            ></path>
+                                            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                        <span>Settings</span>
+                                    </a>
+                                </li>
+                                <li class="flex">
+                                    <a
+                                            class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                            href="#"
+                                    >
+                                        <svg
+                                                class="w-4 h-4 mr-3"
+                                                aria-hidden="true"
+                                                fill="none"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                        >
+                                            <path
+                                                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                                            ></path>
+                                        </svg>
+                                        <span>Log out</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </template>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <main class="h-full overflow-y-auto">
+            <div class="container px-6 mx-auto grid">
+                <h4
+                        class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"
+                >
+                    Edit Movie
+                </h4>
+                <form th:object="${movie}" method="post" th:action="@{/admin/edit}" enctype="multipart/form-data">
+                    <div
+                            class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
+                    >
+                        <input type="hidden" th:field="*{id}">
+
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Name Movie</span>
+                            <input
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                    th:field="*{name}"
+                            />
+                            <!--                            <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"-->
+                            <!--                                  th:errors="*{name}"></span>-->
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Aired Year</span>
+                            <input type="number"
+                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   th:field="*{airedYear}"
+                            />
+                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
+                            <!--                                  th:if="${#fields.hasErrors('airedYear')}"-->
+                            <!--                                  th:errors="*{airedYear}"></span>-->
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Duration</span>
+                            <input type="number"
+                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   th:field="*{duration}"
+                            />
+                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
+                            <!--                                  th:if="${#fields.hasErrors('duration')}"-->
+                            <!--                                  th:errors="*{duration}"></span>-->
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Total Eption</span>
+                            <input type="number"
+                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   th:field="*{totalEp}"
+                            />
+                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
+                            <!--                                  th:if="${#fields.hasErrors('totalEp')}"-->
+                            <!--                                  th:errors="*{totalEp}"></span>-->
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">IMDB Score</span>
+                            <input type="number"
+                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   th:field="*{scoreIMDb}"
+                            />
+                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
+                            <!--                                  th:if="${#fields.hasErrors('scoreIMDb')}"-->
+                            <!--                                  th:errors="*{scoreIMDb}"></span>-->
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">IMG Movie</span>
+                            <input type="file" name="imgMovie"
+                                   id="imgMovie"
+                                   class="hiddenInput"
+                                   th:field="*{img_movie}"
+                            />
+                            <div class="relative">
+                                <input type="text" readonly id="movie"
+                                       class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                       th:field="*{imgMovie}"
+                                />
+                                <button type="button"
+                                        onclick="chooseFileMovie()"
+                                        class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                >
+                                    Click
+                                </button>
+                            </div>
+                            <!--              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"-->
+                            <!--                    th:errors="*{duration}"></span>-->
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">IMG Poster</span>
+                            <input type="file" name="imgPoster"
+                                   id="imgPoster"
+                                   class="hiddenInput"
+                                   th:field="*{img_poster}"
+                            />
+                            <div class="relative">
+                                <input type="text" readonly id="poster"
+                                       class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                       th:field="*{imgPoster}"
+                                />
+                                <button type="button"
+                                        onclick="chooseFilePoster()"
+                                        class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                >
+                                    Click
+                                </button>
+                            </div>
+                            <!--              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"-->
+                            <!--                    th:errors="*{duration}"></span>-->
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Trailer</span>
+                            <input type="file" name="urlTrailer"
+                                   id="urlTrailer"
+                                   class="hiddenInput"
+                                   th:field="*{urlTrailer}"
+                            />
+                            <div class="relative">
+                                <input type="text" readonly id="trailer"
+                                       class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                       th:field="*{url_trailer}"
+                                />
+                                <button type="button"
+                                        onclick="chooseFileTrailer()"
+                                        class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                >
+                                    Click
+                                </button>
+                            </div>
+                            <!--              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"-->
+                            <!--                    th:errors="*{duration}"></span>-->
+                        </label>
+
+
+                        <label class="block mt-4 text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">
+                              Quality
+                            </span>
+                            <select th:field="*{quality}"
+                                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            >
+
+                                <option th:each="quality : ${qualities}" th:value="${quality}"
+                                        th:text="${quality}"></option>
+
+                            </select>
+                        </label>
+                        <label class="block mt-4 text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">
+                              Status
+                            </span>
+                            <select th:field="*{status}"
+                                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            >
+                                <option th:each="status : ${statuses}" th:value="${status}"
+                                        th:text="${status}"></option>
+
+                            </select>
+                        </label>
+                        <label class="block mt-4 text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">
+                              Type
+                            </span>
+                            <select th:field="*{type}"
+                                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            >
+                                <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
+
+
+                            </select>
+                        </label>
+
+                        <label class="block text-sm">
+
+                            <th:block th:each="genre : ${genres}">
+                                <input th:value="${genre.id}" name="genre" id="genre" th:field="*{movieGenres}"
+                                       type="checkbox"
+                                       class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                />
+                                <span class="ml-2" th:text="${genre.name}">
+
+                                </span>
+                            </th:block>
+
+                        </label>
+
+                        <label class="block mt-4 text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Description</span>
+                            <textarea th:field="*{description}"
+                                      class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                      rows="3"
+                                      placeholder="Enter description."
+                            ></textarea>
+                        </label>
+                        <hr>
+                        <hr>
+                        <hr>
+
+                        <div
+                                class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
+                        >
+                            <span class="text-gray-700 dark:text-gray-400">EKip Movie</span>
+                            <div id="ekip">
+                                <th:block th:each="ekip, iter : *{eKips}">
+                                    <input type="hidden" th:id="${'id' + iter.index}" th:value="${ekip.id}" th:name="${'eKips['+ iter.index + '].id'}">
+                                    <label class="block text-sm">
+                                        <span class="text-gray-700 dark:text-gray-400">Name Person</span>
+                                        <input list="personList"
+                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                               th:id="${'person'+iter.index}"
+                                               th:value="${ekip.name}"
+                                               th:name="${'eKips['+ iter.index + '].person'}"
+                                        />
+                                        <!--                                        th:field="*{eKips.person}"-->
+
+                                        <datalist id="personList">
+                                            <option th:each="person : ${persons}"
+                                                    th:name="${person.name}">
+                                            </option>
+                                        </datalist>
+                                        <!--                                        <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('eKips.person')}"-->
+                                        <!--                                              th:errors="*{eKips.person}"></span>-->
+                                    </label>
+                                    <label class="block mt-4 text-sm">
+                <span class="text-gray-700 dark:text-gray-400">
+                  Role
+                </span>
+                                        <!--                                        th:field="*{eKips.role}"-->
+                                        <select th:id="${iter.index}" th:value="${ekip.role}"
+                                                th:name="${'eKips[' + iter.index + '].role'}"
+                                                class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                        >
+                                            <option th:each="role : ${roles}" th:value="${role}"
+                                                    th:text="${role}"></option>
+
+                                        </select>
+                                    </label>
+
+
+                                </th:block>
+                            </div>
+                            <button type="button" onclick="addMorePerson()"
+                                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                            >
+                                Add More
+                            </button>
+
+                        </div>
+
+                        <div
+                                class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
+                        >
+                            <span class="text-gray-700 dark:text-gray-400">Chapter</span>
+                            <div id="chapter">
+
+                                <th:block th:each="chap, iter : *{epMovies}">
+                                    <label class="block text-sm">
+                                        <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
+                                        <input type="hidden" th:id="${'person' + iter.index}" th:value="${chap.id}" th:name="${'epMovies['+ iter.index + '].id'}">
+                                        <input
+                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                th:id="${'chap'+iter.index}"
+                                                th:value="${chap.name}"
+                                                th:name="${'epMovies['+ iter.index + '].name'}"
+                                        />
+                                        <!--                                    <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"-->
+                                        <!--                                          th:errors="*{name}"></span>-->
+                                    </label>
+                                    <label class="block text-sm">
+                                        <span class="text-gray-700 dark:text-gray-400">URL</span>
+                                        <!--                                        <input type="file"-->
+                                        <!--                                               class="hiddenInput"-->
+                                        <!--                                               th:id="${'urlFile'+iter.index}"-->
+
+                                        <!--                                               th:name="${'seriesMovie['+ iter.index + '].urlFile'}"-->
+                                        <!--                                        />-->
+                                        <input type="file"
+                                               class="hiddenInput"
+                                               th:id="${'url'+iter.index}"
+                                               th:value="${chap.url}"
+                                               th:name="${'epMovies['+ iter.index + '].url'}"
+
+                                        />
+                                        <div class="relative">
+                                            <input type="text" readonly
+                                                   class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                                   th:id="${'urlChapter' + iter.index}"
+                                                   th:value="${chap.urlChapter}"
+                                                   th:name="${'epMovies['+ iter.index + '].urlChapter'}"
+                                            />
+                                            <button type="button"
+                                                    onclick="chooseFileChapter()"
+                                                    class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                            >
+                                                Click
+                                            </button>
+                                        </div>
+                                        <!--                                        onclick="document.getElementById('urlFile'+ '${iter.index}').click()"-->
+                                        <!--                                    <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"-->
+                                        <!--                                          th:errors="*{name}"></span>-->
+                                    </label>
+                                </th:block>
+                            </div>
+                            <button type="button" onclick="addMoreMovie()"
+                                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                            >
+                                Add More
+                            </button>
+
+                        </div>
+
+
+                    </div>
+                    <button type="submit"
+                            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                    >
+                        Edit
+                    </button>
+
+                    <a th:href="@{/admin/showMovie}">
+                        <button type="button"
+                                class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                        >
+                            Back
+                        </button>
+                    </a>
+                </form>
+
+
+            </div>
+        </main>
+    </div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script th:inline="javascript">
+
+    const persons = [[${persons}]];
+    const roles = [[${roles}]];
+
+    let chapter = document.getElementById('chapter');
+    let seriesMovie = [[${movie.epMovies}]] || [];
+    let currentSizeSerie = seriesMovie.length;
+
+    let ekip = document.getElementById("ekip");
+    let ekips = [[${movie.eKips}]] || [];
+    let currentSizeEkip = ekips.length;
+
+    function addMorePerson() {
+        const data = {
+            person: '',
+            role: ''
+        }
+        ekips.push(data);
+        renderPerson();
+        currentSizeEkip++;
+    }
+
+    function addMoreMovie() {
+        const data = {
+            name: '',
+            url: ''
+
+        };
+        seriesMovie.push(data);
+        renderChapter();
+        currentSizeSerie++;
+    }
+
+    function renderPerson() {
+        let str = "";
+
+        ekips.forEach((ekip, index) => {
+            let strOption = "";
+            let strRole = "";
+            roles.forEach(role => {
+                if (role === ekip.role) {
+                    strRole += `<option value="${role}" selected>${ekip.role}</option>`
+
+                } else {
+                    strRole += `<option value="${role}">${role}</option>`
+                }
+            })
+            persons.forEach(person => {
+                if (person.id === +ekip.id) {
+                    strOption += `<option value="${person.name}" selected></option>`
+                } else {
+                    strOption += `<option value="${person.name}"></option>`
+                }
+            })
+            str += `
+                                    <label class="block text-sm">
+                                        <span class="text-gray-700 dark:text-gray-400">Name Person</span>
+                                        <input type="hidden" id="${'id' + index || ''}" value="${ekip.id || ''}" name="${'eKips[' + index + '].id' || ''}">
+                                        <input  list="personList"
+                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                id="${'name' + index}"
+                                                value="${ekip.name || ''}"
+                                                name="${'eKips[' + index + '].name'}"
+                                        />
+
+                                        <datalist id="personList">
+                                            ${strOption}
+                                        </datalist>
+
+                                    </label>
+                                    <label class="block mt-4 text-sm">
+                                        <span class="text-gray-700 dark:text-gray-400">
+                                          Role
+                                        </span>
+
+            <select id="${index}" value="${ekip.role}" name="${'eKips[' + index + '].role'}"
+            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+            >
+            ${strRole}
+
+            </select>
+            </label>
+            <button type="button" onclick="removePerson(${index})"
+            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+            >
+            Delete
+            </button>`
+
+        })
+        ekip.innerHTML = str;
+    }
+
+        function renderChapter() {
+
+            let str = "";
+
+            seriesMovie.forEach((chap, index) => {
+                str +=
+            `<label class="block text-sm">
+            <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
+            <input type="hidden" id="id${index || ''}" value="${chap.id || ''}" name="${'epMovies[' + index + '].id' || ''}">
+            <input
+            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+            id="chap${index}"
+            value="${chap.name}"
+            name="${'epMovies[' + index + '].name'}"
+            />
+
+            </label>
+            <label class="block text-sm">
+            <span class="text-gray-700 dark:text-gray-400">URL</span>
+            <input type="file"
+            class="hiddenInput"
+            id="${'url'+ index}"
+            value="${chap.url}"
+            name="${'epMovies['+ index + '].url'}"
+            />
+            <div class="relative">
+            <input type="text" readonly
+            class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+            id="${'urlChapter' + index}"
+            value="${chap.urlChapter || ''}"
+            name="${'epMovies['+ index + '].urlChapter'}"
+            />
+            <button type="button"
+            onclick="chooseFileChapter(${index})"
+            class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+            >
+            Click
+            </button>
+            </div>
+
+
+            </label>
+            <button type="button" onclick="removeMovie(${index})"
+            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+            >
+            Delete
+            </button>`
+
+            })
+            chapter.innerHTML = str;
+        }
+
+        function removeMovie(index) {
+            seriesMovie.splice(index, 1);
+            renderChapter();
+        }
+
+        function chooseFileChapter(index){
+            document.getElementById("url" + index).click();
+            document.getElementById("url" + index).addEventListener("change", function (){
+                let path = this.value.split("\\");
+                let fileName = path[path.length - 1];
+
+                document.getElementById("urlChapter" + index).value = fileName;
+            })
+        }
+
+        function removePerson(index) {
+            ekips.splice(index, 1);
+            renderPerson();
+        }
+
+        function chooseFileTrailer(){
+            document.getElementById("urlTrailer").click();
+            document.getElementById("urlTrailer").addEventListener("change" , function (){
+                // console.log(this.value)
+                let path = this.value.split("\\");
+                let fileName = path[path.length - 1];
+                // console.log(fileName);
+
+                document.getElementById("trailer").value = fileName;
+            })
+        }
+        function chooseFilePoster(){
+            document.getElementById("imgPoster").click();
+            document.getElementById("imgPoster").addEventListener("change",function (){
+                let path = this.value.split("\\");
+                let fileName = path[path.length - 1];
+
+                document.getElementById("poster").value = fileName;
+            })
+        }
+        function chooseFileMovie(){
+            document.getElementById("imgMovie").click();
+            document.getElementById("imgMovie").addEventListener("change",function (){
+                let path = this.value.split("\\");
+                let fileName = path[path.length - 1];
+
+                document.getElementById("movie").value = fileName;
+            })
+        }
+
+
+        renderPerson();
+        renderChapter();
+</script>
+
+</body>
+</html>

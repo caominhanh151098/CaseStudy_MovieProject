@@ -12,15 +12,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MovieSaveRequest {
+    private String id;
     private String name;
     private String description;
     private String airedYear;
     private String duration;
     private MultipartFile img_movie;
+    private String imgMovie;
     private MultipartFile img_poster;
+    private String imgPoster;
     private String scoreIMDb;
     private String totalEp;
     private MultipartFile urlTrailer;
+    private String url_trailer;
     private String type;
     private String status;
     private String quality;
@@ -49,8 +53,10 @@ public class MovieSaveRequest {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class UrlMovieSaveRequest {
+        private String id;
         private String name;
         private MultipartFile url;
+        private String urlChapter;
     }
 
     @Data

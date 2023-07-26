@@ -15,15 +15,12 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     Movie findById(int id);
 
 
-    @Query(value = "SELECT m FROM Movie m left join EKip e on m.id = e.movie.id " +
-            " join Person p on e.person.id = p.id " +
-            "   join MovieGenre mg on m.id = mg.movie.id " +
-            " join Genre g on mg.genre.id = g.id where " +
-            " m.name like :search or " +
-            " lower(m.type) like :search or " +
-            " p.name like :search or " +
-            " g.name like :search")
+
     Page<Movie> searchAll(String search, Pageable pageable);
+
+    @Query(value = "select m from Movie  m where lower(m.name) like lower(:search) or " +
+                                                "lower(m.type) like lower(:search) ")
+    Page<Movie> searchAllWithPage(String search , Pageable pageable);
 
 //    @Query(value = "SELECT new MovieListResponse(m.name,m.movieGenres) FROM Movie m left join EKip e on m.id = e.movie.id " +
 //            " join Person p on e.person.id = p.id " +

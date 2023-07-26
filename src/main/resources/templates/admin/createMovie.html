@@ -332,9 +332,21 @@
                             <span class="text-gray-700 dark:text-gray-400">IMG Movie</span>
                             <input type="file" name="imgMovie"
                                    id="imgMovie"
-                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   class="hiddenInput"
                                    th:field="*{img_movie}"
                             />
+                            <div class="relative">
+                                <input type="text" readonly id="movie"
+                                       class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                       th:field="*{imgMovie}"
+                                />
+                                <button type="button"
+                                        onclick="chooseFileMovie()"
+                                        class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                >
+                                    Click
+                                </button>
+                            </div>
                             <!--              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"-->
                             <!--                    th:errors="*{duration}"></span>-->
                         </label>
@@ -342,9 +354,21 @@
                             <span class="text-gray-700 dark:text-gray-400">IMG Poster</span>
                             <input type="file" name="imgPoster"
                                    id="imgPoster"
-                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   class="hiddenInput"
                                    th:field="*{img_poster}"
                             />
+                            <div class="relative">
+                                <input type="text" readonly id="poster"
+                                       class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                       th:field="*{imgPoster}"
+                                />
+                                <button type="button"
+                                        onclick="chooseFilePoster()"
+                                        class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                >
+                                    Click
+                                </button>
+                            </div>
                             <!--              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"-->
                             <!--                    th:errors="*{duration}"></span>-->
                         </label>
@@ -352,18 +376,30 @@
                             <span class="text-gray-700 dark:text-gray-400">Trailer</span>
                                 <input type="file" name="urlTrailer"
                                        id="urlTrailer"
-                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   class="hiddenInput"
                                    th:field="*{urlTrailer}"
                             />
+                            <div class="relative">
+                                <input type="text" readonly id="trailer"
+                                        class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                        th:field="*{url_trailer}"
+                                />
+                                <button type="button"
+                                        onclick="chooseFileTrailer()"
+                                        class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                >
+                                    Click
+                                </button>
+                            </div>
                             <!--              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"-->
                             <!--                    th:errors="*{duration}"></span>-->
                         </label>
 
 
                         <label class="block mt-4 text-sm">
-                <span class="text-gray-700 dark:text-gray-400">
-                  Quality
-                </span>
+                            <span class="text-gray-700 dark:text-gray-400">
+                              Quality
+                            </span>
                             <select th:field="*{quality}"
                                     class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             >
@@ -373,9 +409,9 @@
                             </select>
                         </label>
                         <label class="block mt-4 text-sm">
-                <span class="text-gray-700 dark:text-gray-400">
-                  Status
-                </span>
+                            <span class="text-gray-700 dark:text-gray-400">
+                              Status
+                            </span>
                             <select th:field="*{status}"
                                     class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             >
@@ -385,9 +421,9 @@
                             </select>
                         </label>
                         <label class="block mt-4 text-sm">
-                <span class="text-gray-700 dark:text-gray-400">
-                  Type
-                </span>
+                            <span class="text-gray-700 dark:text-gray-400">
+                              Type
+                            </span>
                             <select th:field="*{type}"
                                     class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             >
@@ -501,12 +537,26 @@
 <!--                                               th:name="${'seriesMovie['+ iter.index + '].urlFile'}"-->
 <!--                                        />-->
                                         <input type="file"
-                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                               class="hiddenInput"
                                                th:id="${'url'+iter.index}"
                                                th:value="${chap.url}"
                                                th:name="${'epMovies['+ iter.index + '].url'}"
 
                                         />
+                                        <div class="relative">
+                                            <input type="text" readonly
+                                                   class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                                   th:id="${'urlChapter' + iter.index}"
+                                                   th:value="${chap.urlChapter}"
+                                                   th:name="${'epMovies['+ iter.index + '].urlChapter'}"
+                                            />
+                                            <button type="button"
+                                                    onclick="chooseFileChapter()"
+                                                    class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                            >
+                                                Click
+                                            </button>
+                                        </div>
 <!--                                        onclick="document.getElementById('urlFile'+ '${iter.index}').click()"-->
                                         <!--                                    <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"-->
                                         <!--                                          th:errors="*{name}"></span>-->
@@ -543,6 +593,7 @@
         </main>
     </div>
 </div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <script th:inline="javascript">
 
@@ -585,14 +636,14 @@
             let strOption = "";
             let strRole = "";
             roles.forEach(role => {
-                if (role.index === ekip.role.index) {
-                    strRole += `<option value="${role}" selected>${role}</option>`
+                if (role === ekip.role) {
+                    strRole += `<option value="${role}" selected>${ekip.role}</option>`
                 } else {
                     strRole += `<option value="${role}">${role}</option>`
                 }
             })
             persons.forEach(person => {
-                if (person.id === +ekip.person.id) {
+                if (person.id === +ekip.id) {
                     strOption += `<option value="${person.name}" selected></option>`
                 } else {
                     strOption += `<option value="${person.name}"></option>`
@@ -607,7 +658,6 @@
                                                 value="${ekip.name || ''}"
                                                 name="${'eKips[' + index + '].name'}"
                                         />
-<!--                                        th:field="*{eKips.person}"-->
 
                                         <datalist id="personList">
                                             ${strOption}
@@ -617,8 +667,7 @@
                                     <label class="block mt-4 text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">
                                           Role
-                                        </span>
-<!--                                        th:field="*{eKips.role}"-->
+
                                         <select id="${index}" value="${ekip.role}" name="${'eKips[' + index + '].role'}"
                                                 class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                         >
@@ -630,7 +679,7 @@
                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                     >
                         Delete
-                    </button> `
+                    </button>`
 
         })
         ekip.innerHTML = str;
@@ -655,11 +704,25 @@
             <label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">URL</span>
             <input type="file"
-                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                               id="${'url'+ index}"
-                                                value="${chap.url}"
-                                               name="${'epMovies['+ index + '].url'}"
-                                        />
+                  class="hiddenInput"
+                  id="${'url'+ index}"
+                  value="${chap.url}"
+                  name="${'epMovies['+ index + '].url'}"
+                      />
+                      <div class="relative">
+                          <input type="text" readonly
+                                                   class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                                   id="${'urlChapter' + index}"
+                                                   value="${chap.urlChapter || ''}"
+                                                   name="${'epMovies['+ index + '].urlChapter'}"
+                                            />
+                          <button type="button"
+                                                    onclick="chooseFileChapter(${index})"
+                                                    class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                            >
+                                                Click
+                          </button>
+                      </div>
 
 
             </label>
@@ -678,22 +741,55 @@
             renderChapter();
         }
 
+        function chooseFileChapter(index){
+            document.getElementById("url" + index).click();
+            document.getElementById("url" + index).addEventListener("change", function (){
+                let path = this.value.split("\\");
+                let fileName = path[path.length - 1];
+
+                document.getElementById("urlChapter" + index).value = fileName;
+            })
+        }
+
         function removePerson(index) {
             ekips.splice(index, 1);
             renderPerson();
+        }
+
+        function chooseFileTrailer(){
+            document.getElementById("urlTrailer").click();
+            document.getElementById("urlTrailer").addEventListener("change" , function (){
+                // console.log(this.value)
+                let path = this.value.split("\\");
+                let fileName = path[path.length - 1];
+                // console.log(fileName);
+
+                document.getElementById("trailer").value = fileName;
+            })
+        }
+        function chooseFilePoster(){
+            document.getElementById("imgPoster").click();
+            document.getElementById("imgPoster").addEventListener("change",function (){
+                let path = this.value.split("\\");
+                let fileName = path[path.length - 1];
+
+                document.getElementById("poster").value = fileName;
+            })
+        }
+        function chooseFileMovie(){
+            document.getElementById("imgMovie").click();
+            document.getElementById("imgMovie").addEventListener("change",function (){
+                let path = this.value.split("\\");
+                let fileName = path[path.length - 1];
+
+                document.getElementById("movie").value = fileName;
+            })
         }
 
 
         renderPerson();
         renderChapter();
 </script>
-<!--<input type="text" readonly-->
-<!--       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"-->
-<!--       id="url${index}"-->
-<!--       value="${chap.url}"-->
-<!--       name="${'seriesMovie[' + index + '].url'}"-->
-<!--       onclick="document.getElementById('urlFile'+ '${index}').click()"-->
-<!--/>-->
 
 </body>
 </html>
