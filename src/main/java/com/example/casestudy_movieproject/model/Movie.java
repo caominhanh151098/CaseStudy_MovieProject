@@ -18,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 @Where(clause = "status != '1'")
-@SQLDelete(sql = "UPDATE movie  SET status = '1' WHERE (`id` = ?);")
+@SQLDelete(sql = "UPDATE movies  SET status = '1' WHERE (`id` = ?);")
 @Table(name = "movies")
 public class Movie {
     @Id

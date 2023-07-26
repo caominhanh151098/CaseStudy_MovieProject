@@ -26,6 +26,7 @@ public class ShowMovieDetailResponse {
     private String directors;
     private String actors;
     private String commentNum;
+    private String viewNum;
     private String status;
     private String type;
     private String totalEp;

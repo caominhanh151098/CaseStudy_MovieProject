@@ -13,4 +13,6 @@ public interface EpMovieRepository extends JpaRepository<EpMovie, Integer> {
 
     EpMovie findById(int id);
 
+    int countAllByMovie_Id(int id);
+
 }

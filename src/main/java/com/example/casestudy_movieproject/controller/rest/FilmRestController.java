@@ -2,16 +2,15 @@ package com.example.casestudy_movieproject.controller.rest;
 
 
 import com.example.casestudy_movieproject.service.movie.MovieService;
-import com.example.casestudy_movieproject.service.movie.response.ShowListMovieResponse;
-import com.example.casestudy_movieproject.service.movie.response.ShowMovieDetailResponse;
-import com.example.casestudy_movieproject.service.movie.response.ShowMovieResponse;
+import com.example.casestudy_movieproject.service.movie.response.*;
 import com.example.casestudy_movieproject.service.ep_movie.EpMovieService;
-import com.example.casestudy_movieproject.service.movie.response.WatchMovieResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -54,6 +53,15 @@ public class FilmRestController {
     @GetMapping("/show/seriesM")
     public Page<ShowListMovieResponse> showListEPMovie(@PageableDefault(size = 6) Pageable pageable) {
         return movieService.showListEpMovie(pageable);
+    }
+    @GetMapping("/show/upComingM")
+    public Page<ShowUpComingMovieResponse> showUpComingMovie(@PageableDefault(size = 4) Pageable pageable) {
+        return movieService.showUpComingMovie(pageable);
+    }
+
+    @GetMapping("/show/randomM/{id}")
+    public List<ShowListRandomMovieResponse> showRandomMovie(@PathVariable int id) {
+        return movieService.showRandomWithoutMovie(id);
     }
 
 }

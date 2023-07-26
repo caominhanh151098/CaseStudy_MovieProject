@@ -1,0 +1,112 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="js">
+    <script th:inline="javascript">
+        let showList = [[${showList}]];
+        let showMovies = document.getElementById("movies");
+        let pagination = document.getElementById("pagination");
+        let movies = [];
+        let url = location.href;
+        genreId = url.slice(31);
+        let totalPages = 0;
+        let page = 0;
+        renderHeaderBar(1);
+        switch (showList) {
+            case 1:
+                renderTag(1);
+                break;
+            case 2:
+                renderTag(2);
+                renderGenreMovie();
+                break;
+            case 3:
+                renderTag(3);
+                break;
+        }
+
+
+
+        function renderGenreMovie() {
+            $.ajax({
+                url: `http://localhost:8080/api/movie/show/${genreId}?page=${page}&size=12&sort=id,desc`,
+                method: "GET"
+            }).done(data => {
+                movies = data.content;
+                totalPages = data.totalPages;
+                showMovies.innerHTML = "";
+                movies.forEach(m => showMovies.innerHTML += renderMovie(m));
+                renderPagination();
+            })
+        }
+
+        function sortBy(sort) {
+
+        }
+
+        function renderPagination() {
+            let buttonPages = "";
+            if (page < 2) {
+                let pageStart = totalPages >= 3 ? 3 : totalPages < 1 ? 1 : totalPages;
+                for (let index = 0; index + 1 <= pageStart; index++) {
+                    buttonPages += `<a href="#" onclick="changePage(${index})" ${index == page ? "class='current-page'" : ""}>${index + 1}</a>`
+                }
+            } else if (page >= 2 && page < totalPages - 1) {
+                for (let index = page - 1; index <= page + 1; index++) {
+                    buttonPages += `<a href="#" onclick="changePage(${index})" ${index == page ? "class='current-page'" : ""}>${index + 1}</a>`
+                }
+            } else {
+                for (let index = totalPages - 3; index < totalPages; index++) {
+                    buttonPages += `<a href="#" onclick="changePage(${index})" ${index == page ? "class='current-page'" : ""}>${index + 1}</a>`
+                }
+            }
+            pagination.innerHTML = `
+                    <a href="#" onclick="changePage(0)"><i class="fa fa-angle-double-left"></i></a>
+                    ${buttonPages}
+                    <a href="#" onclick="changePage(totalPages + 1)"><i class="fa fa-angle-double-right"></i></a>`
+        }
+
+        function changePage(pageChange) {
+            if (pageChange < 0)
+                page = 0;
+            else if (pageChange > totalPages)
+                page = totalPages - 1;
+            else page = pageChange;
+            renderGenreMovie();
+        }
+
+
+        function renderTag(index) {
+            switch (index) {
+                case 1:
+                    document.getElementById("category").innerHTML = "Tất cả";
+                    document.getElementById("genreTag").innerHTML = "Tất cả";
+                    break;
+                case 2:
+                    if (checkIdGenre() == undefined)
+                        location.href = "/";
+                    document.getElementById("category").innerHTML = "Thể loại";
+                    document.getElementById("genreTag").innerHTML = checkIdGenre();
+                    break;
+                case 3:
+                    document.getElementById("category").innerHTML = "Phim bộ";
+                    document.getElementById("genreTag").innerHTML = "Phim bộ"
+                    break;
+            }
+
+
+        }
+
+        function checkIdGenre() {
+            let check = undefined;
+            for (var i = 0; i < genreList.length; i++) {
+                let g = genreList[i];
+                if (+genreId == genreId && g.id == genreId) {
+                    check = g.name;
+                    break;
+                }
+            }
+            return check;
+        }
+
+
+    </script>
+</div>

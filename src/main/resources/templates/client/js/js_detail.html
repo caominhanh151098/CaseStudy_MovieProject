@@ -11,6 +11,7 @@
         let movie;
         let firstEp;
         initData();
+        renderHeaderBar(0);
 
         function displayStatus(text) {
             if (text == "COMPLETE")
@@ -23,9 +24,9 @@
         function renderGenre() {
             genreMovie.innerHTML = `
                  <div class="breadcrumb__links">
-                    <a href="/"><i class="fa fa-home"></i> Home</a>
-                    <a href="./categories.html">Thể loại</a>
-                    <a href="#${movie.topGenre.id}">${movie.topGenre.name || ""}</a>
+                    <a href="/"><i class="fa fa-home"></i> Trang chủ</a>
+                    <a href="#">Thể loại</a>
+                    <a href="/the-loai/${movie.topGenre.id}">${movie.topGenre.name || ""}</a>
                     <span>${movie.name}</span>
                 </div>`
         }
@@ -50,7 +51,7 @@
                     <div class="anime__details__pic set-bg" data-setbg="${movie.img_movie}"
                          style="background-image: url(${movie.img_movie});">
                         <div class="comment"><i class="fa fa-comments"></i> ${movie.commentNum}</div>
-                        <div class="view"><i class="fa fa-eye"></i> 9141</div>
+                        <div class="view"><i class="fa fa-eye"></i> ${movie.viewNum}</div>
                     </div>
                 </div>
                 <div class="col-lg-9">
@@ -88,9 +89,10 @@
                             </div>
                         </div>
                         <div class="anime__details__btn">
-                            <a href="#" class="follow-btn"><i class="fa fa-heart-o"></i> Follow</a>
-                            <a class="watch-btn" onclick="watchFilm()"><span>Watch Now</span> <i
-                                    class="fa fa-angle-right"></i></a>
+                            <a href="#" class="follow-btn"><i class="fa fa-heart-o"></i>Thích</a>
+                            <a class="watch-btn"><span onclick="watchFilm()" style="cursor: pointer">Xem Ngay</span>
+                                <i class="fa fa-angle-right" ></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -102,12 +104,6 @@
 
         function watchFilm() {
             location.href = `/xem-phim/${movieId}-${firstEp}`;
-        }
-
-        function displayQuality(text) {
-            if (text == "HD_VIET_SUB")
-                return "HD Vietsub"
-            else return text;
         }
     </script>
 </div>

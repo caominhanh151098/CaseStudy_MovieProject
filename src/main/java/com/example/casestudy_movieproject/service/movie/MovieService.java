@@ -10,10 +10,7 @@ import com.example.casestudy_movieproject.service.genre.response.ShowGenreByMovi
 
 import com.example.casestudy_movieproject.service.movie.request.MovieSaveRequest;
 
-import com.example.casestudy_movieproject.service.movie.response.MovieListResponse;
-import com.example.casestudy_movieproject.service.movie.response.ShowListMovieResponse;
-import com.example.casestudy_movieproject.service.movie.response.ShowMovieDetailResponse;
-import com.example.casestudy_movieproject.service.movie.response.ShowMovieResponse;
+import com.example.casestudy_movieproject.service.movie.response.*;
 import com.example.casestudy_movieproject.service.ep_movie.reponse.ShowListEpisodeResponse;
 import com.example.casestudy_movieproject.util.AppUtils;
 import lombok.AllArgsConstructor;
@@ -40,6 +37,7 @@ public class MovieService {
     private final CommentRepository commentRepository;
     private final EpMovieRepository epMovieRepository;
     private final PersonRepository personRepository;
+    private final ViewRepository viewRepository;
     private final AppConfig appConfig;
 
 
@@ -57,6 +55,7 @@ public class MovieService {
         showMovieDetail.setMovieGenres(String.join(", ", ListGenre));
         showMovieDetail.setDirectors(convertToString(eKips, ERoleEKip.DIRECTOR));
         showMovieDetail.setActors(convertToString(eKips, ERoleEKip.ACTOR));
+        showMovieDetail.setViewNum(String.valueOf(viewRepository.countAllByMovie_Id(id)));
         showMovieDetail.setCommentNum(String.valueOf(commentRepository.countAllByMovie_Id(id)));
         return showMovieDetail;
     }
@@ -84,10 +83,10 @@ public class MovieService {
 
     public Page<MovieListResponse> findAllWithSearchAndPaging(String search, Pageable pageable) {
         search = "%" + search + "%";
-        Page<Movie> movies = movieRepository.searchAll(search,pageable);
+        Page<Movie> movies = movieRepository.searchAll(search, pageable);
 
-        Page<MovieListResponse> responses = movieRepository.searchAll(search,pageable)
-                .map(e -> AppUtils.mapper.map(e , MovieListResponse.class));
+        Page<MovieListResponse> responses = movieRepository.searchAll(search, pageable)
+                .map(e -> AppUtils.mapper.map(e, MovieListResponse.class));
         responses.forEach(m -> {
             m.setMovieGenres(String.join(",", movieGenreRepository.findAllByMovie_Id(m.getId())
                     .stream().map(e -> e.getGenre().getName()).collect(Collectors.toList())));
@@ -110,7 +109,6 @@ public class MovieService {
 
             movieListResponse.setDirectors(convertToString(ekips, ERoleEKip.DIRECTOR));
             movieListResponse.setActors(convertToString(ekips, ERoleEKip.ACTOR));
-
             movieListResponse.setMovieGenres(String.join(", ", ListGenre));
             movieListResponse.setEKips(String.join(", ", listEkip));
 
@@ -121,12 +119,13 @@ public class MovieService {
     }
 
     public Page<ShowListMovieResponse> showListMovie(Pageable pageable) {
-        Page<Movie> movieessadas = movieRepository.findAll(pageable);
-        Page<ShowListMovieResponse> movies = movieRepository.findAll(pageable)
+        Page<ShowListMovieResponse> movies = movieRepository.getMovieUpdate(pageable)
                 .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
         movies.forEach(m -> {
             int id = Integer.parseInt(m.getId());
+            m.setEpPresent(String.valueOf(epMovieRepository.countAllByMovie_Id(id)));
             m.setCommentNum(String.valueOf(commentRepository.countAllByMovie_Id(id)));
+            m.setViewNum(String.valueOf(viewRepository.countAllByMovie_Id(id)));
             m.setGenres(genreRepository.getGenreByMovie(id)
                     .stream()
                     .map(g -> AppUtils.mapper.map(g, ShowGenreByMovieResponse.class))
@@ -139,7 +138,9 @@ public class MovieService {
         Page<ShowListMovieResponse> movies = movieRepository.getMovieByGenre(idGenre, pageable).map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
         movies.forEach(m -> {
             int id = Integer.parseInt(m.getId());
+            m.setEpPresent(String.valueOf(epMovieRepository.countAllByMovie_Id(id)));
             m.setCommentNum(String.valueOf(commentRepository.countAllByMovie_Id(id)));
+            m.setViewNum(String.valueOf(viewRepository.countAllByMovie_Id(id)));
             m.setGenres(genreRepository.getGenreByMovie(id)
                     .stream()
                     .map(g -> AppUtils.mapper.map(g, ShowGenreByMovieResponse.class))
@@ -153,11 +154,41 @@ public class MovieService {
                 .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
         movies.forEach(m -> {
             int id = Integer.parseInt(m.getId());
+            m.setEpPresent(String.valueOf(epMovieRepository.countAllByMovie_Id(id)));
+            m.setCommentNum(String.valueOf(commentRepository.countAllByMovie_Id(id)));
+            m.setViewNum(String.valueOf(viewRepository.countAllByMovie_Id(id)));
+            m.setGenres(genreRepository.getGenreByMovie(id)
+                    .stream()
+                    .map(g -> AppUtils.mapper.map(g, ShowGenreByMovieResponse.class))
+                    .collect(Collectors.toList()));
+        });
+        return movies;
+    }
+
+    public Page<ShowUpComingMovieResponse> showUpComingMovie(Pageable pageable) {
+        Page<ShowUpComingMovieResponse> movies = movieRepository.getMovieComingSoon(pageable)
+                .map(e -> AppUtils.mapper.map(e, ShowUpComingMovieResponse.class));
+        movies.forEach(m -> {
+            int id = Integer.parseInt(m.getId());
             m.setCommentNum(String.valueOf(commentRepository.countAllByMovie_Id(id)));
             m.setGenres(genreRepository.getGenreByMovie(id)
                     .stream()
                     .map(g -> AppUtils.mapper.map(g, ShowGenreByMovieResponse.class))
                     .collect(Collectors.toList()));
+        });
+        return movies;
+    }
+
+    public List<ShowListRandomMovieResponse> showRandomWithoutMovie(int idMovie) {
+        List<ShowListRandomMovieResponse> movies = movieRepository.getRandomWithoutMovie_Id(idMovie)
+                .stream()
+                .map(e -> AppUtils.mapper.map(e, ShowListRandomMovieResponse.class))
+                .collect(Collectors.toList());
+        movies.forEach(m -> {
+            int id = Integer.parseInt(m.getId());
+            m.setGender(genreRepository.getGenreByMovie(id).get(0).getName());
+            m.setViewNum(String.valueOf(viewRepository.countAllByMovie_Id(id)));
+            m.setEpPresent(String.valueOf(epMovieRepository.countAllByMovie_Id(id)));
         });
         return movies;
     }
@@ -194,11 +225,11 @@ public class MovieService {
 
         movieRepository.save(movie);
 
-        for (var chapter:movie.getEpMovies()) {
-            for (var chapterSave:movieSave.getEpMovies()) {
+        for (var chapter : movie.getEpMovies()) {
+            for (var chapterSave : movieSave.getEpMovies()) {
                 chapter.setUrl(setLink + "/videos/" + chapterSave.getUrl().getOriginalFilename());
                 Movie movie1 = movieRepository.findById(movie.getId());
-                EpMovie epMovie = new EpMovie(chapterSave.getName(),chapter.getUrl(),movie1);
+                EpMovie epMovie = new EpMovie(chapterSave.getName(), chapter.getUrl(), movie1);
                 epMovieRepository.save(epMovie);
             }
         }
@@ -210,13 +241,12 @@ public class MovieService {
             movieGenreRepository.save(newMovieGenre);
         }
 
-        for (var ekip:movieSave.geteKips()) {
+        for (var ekip : movieSave.geteKips()) {
             Person person = personRepository.findPersonByNameContaining(ekip.getName());
 
-            EKip eKip = new EKip(person,movie,ERoleEKip.valueOf(ekip.getRole()));
+            EKip eKip = new EKip(person, movie, ERoleEKip.valueOf(ekip.getRole()));
             eKipRepository.save(eKip);
         }
-
 
     }
 

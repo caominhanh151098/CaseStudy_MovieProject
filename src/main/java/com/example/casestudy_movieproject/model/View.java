@@ -18,6 +18,12 @@ public class View {
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movie;
-    private String id_session;
-    private LocalDateTime time = LocalDateTime.now();
+    private String sessionId;
+    private LocalDateTime time;
+
+    public View(Movie movie, String sessionId, LocalDateTime time) {
+        this.movie = movie;
+        this.sessionId = sessionId;
+        this.time = time;
+    }
 }

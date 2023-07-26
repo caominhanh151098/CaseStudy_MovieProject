@@ -1,11 +1,11 @@
 package com.example.casestudy_movieproject.repository;
 
 import com.example.casestudy_movieproject.model.Movie;
-import com.example.casestudy_movieproject.service.movie.response.MovieListResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,10 +19,10 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
             " join Person p on e.person.id = p.id " +
             "   join MovieGenre mg on m.id = mg.movie.id " +
             " join Genre g on mg.genre.id = g.id where " +
-                    " m.name like :search or " +
-                    " lower(m.type) like :search or " +
-                    " p.name like :search or " +
-                    " g.name like :search")
+            " m.name like :search or " +
+            " lower(m.type) like :search or " +
+            " p.name like :search or " +
+            " g.name like :search")
     Page<Movie> searchAll(String search, Pageable pageable);
 
 //    @Query(value = "SELECT new MovieListResponse(m.name,m.movieGenres) FROM Movie m left join EKip e on m.id = e.movie.id " +
@@ -36,6 +36,10 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 //    Page<MovieListResponse> searchAll1(String search, Pageable pageable);
 
     @Query(value = "SELECT m FROM Movie m " +
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL'")
+    Page<Movie> getMovieUpdate(Pageable pageable);
+
+    @Query(value = "SELECT m FROM Movie m " +
             "JOIN MovieGenre mg ON m.id = mg.movie.id " +
             "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' " +
             "AND mg.genre.id = :idGenre")
@@ -47,5 +51,14 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
             "AND m.type = 'SERIES'")
     Page<Movie> getMovieSeries(Pageable pageable);
 
+    @Query(value = "SELECT m FROM Movie m " +
+            "WHERE m.status = 'COMING_SOON'")
+    Page<Movie> getMovieComingSoon(Pageable pageable);
+
+    @Query(value = "SELECT m FROM Movie m " +
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' " +
+            "AND m.id != :idMovie " +
+            "ORDER BY RAND() limit 4")
+    List<Movie> getRandomWithoutMovie_Id(int idMovie);
 
 }

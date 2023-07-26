@@ -1,11 +1,14 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <div th:fragment="js">
     <script th:inline="javascript">
+        const showRandomPoster = document.getElementById("randomPoster");
         const showMovies = document.getElementById("movie");
         const showCartoons = document.getElementById("cartoon");
         const showEpMovies = document.getElementById("episode_movie");
         const showLAMovies = document.getElementById("live_action_movie");
         let movies = [];
+        renderHeaderBar(0);
+        // renderRandomMovie()
         renderUpdateMovies();
         renderCartoonMovies();
         renderEpMovies();
@@ -18,27 +21,7 @@
             }).done(data => {
                 movies = data.content;
                 showMovies.innerHTML = "";
-                movies.forEach(m => {
-                    m.quality = displayQuality(m.quality);
-                    let genres = displayGenre(m.genres);
-                    showMovies.innerHTML += `
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="${m.img_movie}"
-                                style="background-image: url(${m.img_movie});">
-                                    <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?") + "/" + (m.totalEp == 0 ? "?" : m.totalEp)}</div>
-                                    <div class="comment"><i class="fa fa-comments"></i> ${m.commentNum}</div>
-                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <ul>
-                                        ${genres}
-                                    </ul>
-                                    <h5><a href="/phim/${m.id}">${m.name}</a></h5>
-                                </div>
-                            </div>
-                        </div>`
-                })
+                movies.forEach(m => showMovies.innerHTML += renderMovie(m));
             })
         }
 
@@ -49,27 +32,7 @@
             }).done(data => {
                 movies = data.content;
                 showCartoons.innerHTML = "";
-                movies.forEach(m => {
-                    m.quality = displayQuality(m.quality);
-                    let genres = displayGenre(m.genres);
-                    showCartoons.innerHTML += `
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="${m.img_movie}"
-                                style="background-image: url(${m.img_movie});">
-                                    <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?") + "/" + (m.totalEp == 0 ? "?" : m.totalEp)}</div>
-                                    <div class="comment"><i class="fa fa-comments"></i> ${m.commentNum}</div>
-                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <ul>
-                                        ${genres}
-                                    </ul>
-                                    <h5><a href="/phim/${m.id}">${m.name}</a></h5>
-                                </div>
-                            </div>
-                        </div>`
-                })
+                movies.forEach(m => showCartoons.innerHTML += renderMovie(m));
             })
         }
 
@@ -80,27 +43,7 @@
             }).done(data => {
                 movies = data.content;
                 showEpMovies.innerHTML = "";
-                movies.forEach(m => {
-                    m.quality = displayQuality(m.quality);
-                    let genres = displayGenre(m.genres);
-                    showEpMovies.innerHTML += `
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="${m.img_movie}"
-                                style="background-image: url(${m.img_movie});">
-                                    <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?") + "/" + (m.totalEp == 0 ? "?" : m.totalEp)}</div>
-                                    <div class="comment"><i class="fa fa-comments"></i> ${m.commentNum}</div>
-                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <ul>
-                                        ${genres}
-                                    </ul>
-                                    <h5><a href="/phim/${m.id}">${m.name}</a></h5>
-                                </div>
-                            </div>
-                        </div>`
-                })
+                movies.forEach(m => showEpMovies.innerHTML += renderMovie(m));
             })
         }
 
@@ -111,45 +54,23 @@
             }).done(data => {
                 movies = data.content;
                 showLAMovies.innerHTML = "";
-                movies.forEach(m => {
-                    m.quality = displayQuality(m.quality);
-                    let genres = displayGenre(m.genres);
-                    showLAMovies.innerHTML += `
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="${m.img_movie}"
-                                style="background-image: url(${m.img_movie});">
-                                    <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?") + "/" + (m.totalEp == 0 ? "?" : m.totalEp)}</div>
-                                    <div class="comment"><i class="fa fa-comments"></i> ${m.commentNum}</div>
-                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <ul>
-                                        ${genres}
-                                    </ul>
-                                    <h5><a href="/phim/${m.id}">${m.name}</a></h5>
-                                </div>
-                            </div>
-                        </div>`
-                })
+                movies.forEach(m => showLAMovies.innerHTML += renderMovie(m));
             })
         }
 
-        function displayGenre(arr) {
-            let genres = "";
-            for (let i = 0; i < arr.length; i++) {
-                let g = arr[i];
-                genres += `<a href="#"><li id="genre${g.id}">${g.name}</li></a>`
-                if (i >= 1)
-                    break;
-            }
-            return genres;
-        }
-
-        function displayQuality(text) {
-            if (text == "HD_VIET_SUB")
-                return "HD Vietsub"
-            else return text;
+        function renderRandomMovie() {
+            $.ajax({
+                url: `http://localhost:8080/api/movie/show/randomM/0`,
+                method: "GET"
+            }).done(data => {
+                movies = data;
+                showRandomPoster.innerHTML = "";
+                console.log(movies)
+                movies.forEach(m => {
+                    showRandomPoster.innerHTML = `
+                            `
+                });
+            })
         }
     </script>
 </div>

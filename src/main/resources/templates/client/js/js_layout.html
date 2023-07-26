@@ -1,0 +1,70 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="js">
+    <script th:inline="javascript">
+        const headerBar = document.getElementById("header_menu");
+        genreId = 0;
+        let genreList = [];
+
+        function renderHeaderBar(typePage) {
+            $.ajax({
+                url: `http://localhost:8080/api/genre`,
+                async: false,
+                method: "GET"
+            }).done(data => {
+                genreList = data;
+                let genreBar = "";
+                genreList.forEach(g => {
+                    genreBar += `<li ${genreId == g.id ? "class='active'" : ""}><a href="/the-loai/${g.id}">${g.name}</a></li>`
+                })
+                headerBar.innerHTML = `<li ${typePage == 0 ? "class='active'" : ""}><a href="/">Trang chủ</a></li>
+                                <li ${typePage == 1 ? "class='active'" : ""}><a href="#">Thể loại<span class="arrow_carrot-down" ></span></a>
+                                    <ul class="dropdown">
+                                        ${genreBar}
+                                    </ul>
+                                </li>
+                                <li ${typePage == 2 ? "class='active'" : ""}><a href="/#">Phim bộ</a></li>
+                                `
+            })
+        }
+
+        function renderMovie(m) {
+            m.quality = displayQuality(m.quality);
+            let genres = displayGenre(m.genres);
+            return `<div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <a href="/phim/${m.id}">
+                                    <div class="product__item__pic set-bg" data-setbg="${m.img_movie}"
+                                    style="background-image: url(${m.img_movie});">
+                                        <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?") + "/" + (m.totalEp == 0 ? "?" : m.totalEp)}</div>
+                                        <div class="comment"><i class="fa fa-comments"></i> ${m.commentNum}</div>
+                                        <div class="view"><i class="fa fa-eye"></i> ${m.viewNum}</div>
+                                    </div>
+                                </a>
+                                <div class="product__item__text">
+                                    <ul>
+                                        ${genres}
+                                    </ul>
+                                    <h5><a href="/phim/${m.id}">${m.name}</a></h5>
+                                </div>
+                            </div>
+                        </div>`
+        }
+
+        function displayQuality(text) {
+            if (text == "HD_VIET_SUB")
+                return "HD Vietsub"
+            else return text;
+        }
+
+        function displayGenre(arr) {
+            let genres = "";
+            for (let i = 0; i < arr.length; i++) {
+                let g = arr[i];
+                genres += `<a href="/the-loai/${g.id}"><li id="genre${g.id}">${g.name}</li></a>`
+                if (i >= 1)
+                    break;
+            }
+            return genres;
+        }
+    </script>
+</div>

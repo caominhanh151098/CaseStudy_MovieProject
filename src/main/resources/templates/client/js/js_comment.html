@@ -42,6 +42,7 @@
             const data = Object.fromEntries(formInput.entries());
             data.movieId = movieId;
             data.userId = userId;
+
             data.content = inputComment.value;
             console.log(data)
             $.ajax({

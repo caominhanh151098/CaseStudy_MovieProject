@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="js">
+    <script th:inline="javascript">
+        let showUpcomingM = document.getElementById("upcomingMovie");
+
+        renderUpcomingM()
+
+        function renderUpcomingM() {
+            $.ajax({
+                url: `http://localhost:8080/api/movie/show/upComingM?sort=id,desc`,
+                method: "GET"
+            }).done(data => {
+                movies = data.content;
+                showUpcomingM.innerHTML = "";
+                movies.forEach(m => {
+                    m.quality = displayQuality(m.quality);
+                    let genres = displayGenre(m.genres);
+                    showUpcomingM.innerHTML += `
+                            <div class="product__sidebar__comment__item">
+                                <div class="product__sidebar__comment__item__pic">
+                                    <img src="${m.img_movie}" alt="" style="width: 120px">
+                                </div>
+                                <div class="product__sidebar__comment__item__text">
+                                    <ul>
+                                        ${genres}
+                                    </ul>
+                                    <h5><a href="#">${m.name}</a></h5>
+                                    <span><i class="fa fa-comment"></i> ${m.commentNum}</span>
+                                </div>
+                            </div>`
+                })
+            })
+        }
+    </script>
+</div>

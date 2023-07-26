@@ -4,12 +4,15 @@
         let playVideo = document.getElementById("player");
         let genreMovie = document.getElementById("genre");
         let episode = document.getElementById("episode");
+        let videoPlayer = document.querySelector('video');
         let url = location.href;
         let id = url.slice(31);
         let movieId = id.split('-')[0];
         let idEp = id.split('-')[1];
         let movie;
-        let videoPlayer = document.querySelector("video");
+        let userId = "6";
+
+        renderHeaderBar(0);
         initData();
         if (movieId == "")
             location.href = "/";
@@ -20,11 +23,13 @@
                 method: "GET"
             }).done(data => {
                 movie = data;
+                if (!checkIdMovie(idEp))
+                    location.href = "/";
                 genreMovie.innerHTML = `
                  <div class="breadcrumb__links">
-                    <a href="/"><i class="fa fa-home"></i> Home</a>
-                    <a href="./categories.html">Thể loại</a>
-                    <a href="#${movie.genre.id}">${movie.genre.name || ""}</a>
+                    <a href="/"><i class="fa fa-home"></i> Trang chủ</a>
+                    <a href="#">Thể loại</a>
+                    <a href="/the-loai/${movie.genre.id}">${movie.genre.name || ""}</a>
                     <a href="/phim/${movie.id}">${movie.name}</a>
                     <span id="nameEp"></span>
                 </div>`
@@ -33,27 +38,27 @@
                     episodeMovie += `<a href="${movieId + "-" + f.id}">${f.name}</a>`;
                 })
                 episode.innerHTML = episodeMovie;
-                if (!checkIdMovie(idEp))
-                    location.href = "/";
+
 
                 $.ajax({
                     url: `http://localhost:8080/api/movie/watch_url/${idEp}`,
                     method: "GET"
                 }).done(data => {
                     let film = data;
-                    // videoPlayer.innerHTML = `<source src="../assets/client/videos/Transformers7.mp4">`
-                    playVideo.innerHTML = `
-                    <iframe id="iframePlayer" src="${film.url}" id="videoPlayer" width="847" height="476.4375" frameborder="0" allowfullscreen="">
-                    </iframe>`
+                    videoPlayer.innerHTML = `<source src="../assets/client/videos/Transformers7.mp4">`
+                    // playVideo.innerHTML = `
+                    // <iframe id="iframePlayer" src="${film.url}" id="videoPlayer" width="847" height="476.4375" frameborder="0" allowfullscreen="">
+                    // </iframe>`
                     document.getElementById("nameEp").innerHTML = `${film.name}`
                 })
             })
-            setTimeout(() => {
-                addEvent()
-            }, 1000)
+            addEvent()
         }
 
         function addEvent() {
+            videoPlayer.addEventListener("play", startPlaying)
+            videoPlayer.addEventListener("pause", pausePlaying)
+            // document.getElementById("player_container").addEventListener("click", upView);
         }
 
         function checkIdMovie(id) {
@@ -64,11 +69,43 @@
             })
             return check;
         }
+
+        let timer = null,
+            totalTime = 0;
+        let increaseViews = false;
+
         function startPlaying() {
-            console.log("play");
+            timer = window.setInterval(function () {
+                totalTime += 5;
+                console.log(totalTime)
+                if (totalTime >= 5 && !increaseViews) {
+                    increaseViews = true;
+                    clearInterval(timer)
+                    return upView();
+                }
+            }, 5000);
+
+
         }
+
         function pausePlaying() {
-            console.log("stop");
+            if (timer)
+                clearInterval(timer);
+        }
+
+        function upView() {
+            data = movieId;
+            $.ajax({
+                url: 'http://localhost:8080/api/views',
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(data),
+            }).done(e => {
+                console.log("OK");
+            })
         }
     </script>
 </div>

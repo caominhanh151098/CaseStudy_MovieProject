@@ -6,6 +6,7 @@ import com.example.casestudy_movieproject.repository.UserRepository;
 import com.example.casestudy_movieproject.repository.VoteRepository;
 import com.example.casestudy_movieproject.service.vote.request.VoteSaveRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
