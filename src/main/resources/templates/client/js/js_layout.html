@@ -14,7 +14,7 @@
                 genreList = data;
                 let genreBar = "";
                 genreList.forEach(g => {
-                    genreBar += `<li ${genreId == g.id ? "class='active'" : ""}><a href="/the-loai/${g.id}">${g.name}</a></li>`
+                    genreBar += `<li ${genreId == g.id ? "class='active'" : ""}><a href="/client/the-loai/${g.id}">${g.name}</a></li>`
                 })
                 headerBar.innerHTML = `<li ${typePage == 0 ? "class='active'" : ""}><a href="/">Trang chủ</a></li>
                                 <li ${typePage == 1 ? "class='active'" : ""}><a href="#">Thể loại<span class="arrow_carrot-down" ></span></a>
@@ -22,7 +22,7 @@
                                         ${genreBar}
                                     </ul>
                                 </li>
-                                <li ${typePage == 2 ? "class='active'" : ""}><a href="/#">Phim bộ</a></li>
+                                <li ${typePage == 2 ? "class='active'" : ""}><a href="/client/phim-bo">Phim bộ</a></li>
                                 `
             })
         }
@@ -32,7 +32,7 @@
             let genres = displayGenre(m.genres);
             return `<div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <a href="/phim/${m.id}">
+                                <a href="/client/phim/${m.id}">
                                     <div class="product__item__pic set-bg" data-setbg="${m.img_movie}"
                                     style="background-image: url(${m.img_movie});">
                                         <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?") + "/" + (m.totalEp == 0 ? "?" : m.totalEp)}</div>
@@ -44,7 +44,7 @@
                                     <ul>
                                         ${genres}
                                     </ul>
-                                    <h5><a href="/phim/${m.id}">${m.name}</a></h5>
+                                    <h5><a href="/client/phim/${m.id}">${m.name}</a></h5>
                                 </div>
                             </div>
                         </div>`
@@ -60,7 +60,7 @@
             let genres = "";
             for (let i = 0; i < arr.length; i++) {
                 let g = arr[i];
-                genres += `<a href="/the-loai/${g.id}"><li id="genre${g.id}">${g.name}</li></a>`
+                genres += `<a href="/client/the-loai/${g.id}"><li id="genre${g.id}">${g.name}</li></a>`
                 if (i >= 1)
                     break;
             }

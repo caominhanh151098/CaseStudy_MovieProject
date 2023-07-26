@@ -6,16 +6,15 @@
         let episode = document.getElementById("episode");
         let videoPlayer = document.querySelector('video');
         let url = location.href;
-        let id = url.slice(31);
+        let id = url.replace("http://localhost:8080/client/xem-phim/","");
         let movieId = id.split('-')[0];
         let idEp = id.split('-')[1];
         let movie;
         let userId = "6";
-
         renderHeaderBar(0);
         initData();
         if (movieId == "")
-            location.href = "/";
+            location.href = "/client";
 
         function initData() {
             $.ajax({
@@ -24,7 +23,7 @@
             }).done(data => {
                 movie = data;
                 if (!checkIdMovie(idEp))
-                    location.href = "/";
+                    location.href = "/client";
                 genreMovie.innerHTML = `
                  <div class="breadcrumb__links">
                     <a href="/"><i class="fa fa-home"></i> Trang chủ</a>

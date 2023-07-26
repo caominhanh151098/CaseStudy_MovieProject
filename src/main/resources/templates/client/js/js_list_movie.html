@@ -6,7 +6,7 @@
         let pagination = document.getElementById("pagination");
         let movies = [];
         let url = location.href;
-        genreId = url.slice(31);
+
         let totalPages = 0;
         let page = 0;
         renderHeaderBar(1);
@@ -15,6 +15,7 @@
                 renderTag(1);
                 break;
             case 2:
+                genreId = url.replace("http://localhost:8080/client/the-loai/", "");
                 renderTag(2);
                 renderGenreMovie();
                 break;

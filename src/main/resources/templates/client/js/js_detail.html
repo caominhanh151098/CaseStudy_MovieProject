@@ -5,7 +5,7 @@
         let genreMovie = document.getElementById("genre");
         let episode = document.getElementById("episode");
         let url = location.href;
-        let id = url.slice(27);
+        let id = url.replace("http://localhost:8080/client/phim/", "");
         let movieId = id;
         let userId = "6";
         let movie;

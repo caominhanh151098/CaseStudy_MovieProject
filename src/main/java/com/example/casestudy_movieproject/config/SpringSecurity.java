@@ -21,7 +21,7 @@ public class SpringSecurity {
     private UserDetailsService userDetailsService;
 
     @Bean
-    public static PasswordEncoder passwordEncoder(){
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -29,9 +29,11 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/client").permitAll()
-                                .requestMatchers("/index").permitAll()
+                        authorize.requestMatchers("/register").permitAll()
+                                .requestMatchers("/").permitAll()
+                                .requestMatchers("/client/**").permitAll()
                                 .requestMatchers("/assets/**").permitAll()
+                                .requestMatchers("/api/**").permitAll()
                                 .requestMatchers("/admin").hasRole("USER")
                 ).formLogin(
                         form -> form
