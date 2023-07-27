@@ -31,16 +31,17 @@ public class AuthService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public boolean checkUsernameOrPhoneNumberOrEmail(RegisterRequest request, BindingResult result){
+    public boolean checkUsernameOrEmail(RegisterRequest request, BindingResult result){
         boolean check = false;
         if(userRepository.existsByUsernameIgnoreCase(request.getUsername())){
             result.reject("username", null,
-                    "There is already an account registered with the same username");
+                    "đã có một tài khoảng đăng ký trùng với tên người dùng .");
             check = true;
         }
+
         if(userRepository.existsByEmailIgnoreCase(request.getEmail())){
             result.reject("email", null,
-                    "There is already an account registered with the same email");
+                    "đã có một tài khoảng đăng ký với cùng một mail ");
             check = true;
         }
         return check;
@@ -48,12 +49,13 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(username,username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not Exist") );
+        User user = userRepository.findByUsernameIgnoreCase(username)
+                .orElseThrow(() -> new UsernameNotFoundException("tài khoảng không tồn tại") );
         var role = new ArrayList<SimpleGrantedAuthority>();
         role.add(new SimpleGrantedAuthority(user.getRole().toString()));
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), role);
     }
+
 }
 

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zxx">
 
-<head th:replace="client/layout.html :: header_layout"></head>
+<th:block th:replace="client/layout :: header_layout"></th:block>
 
 <body>
 <!-- Page Preloder -->
-<th:block th:replace="client/layout.html :: head_bar"></th:block>
+<th:block th:replace="client/layout :: head_bar"></th:block>
 
 <!-- Normal Breadcrumb Begin -->
 <section class="normal-breadcrumb set-bg" data-setbg="/assets/client/img/normal-breadcrumb.jpg">
@@ -29,13 +29,13 @@
       <div class="col-lg-6">
         <div class="login__form">
           <h3>Login</h3>
-          <form action="/login">
+          <form action="login" method="post">
             <div class="input__item">
-              <input type="text" placeholder="UserName">
+              <input type="text" placeholder="UserName" name="username">
               <span class="icon_mail"></span>
             </div>
             <div class="input__item">
-              <input type="text" placeholder="Password">
+              <input type="password" placeholder="Password" name="password">
               <span class="icon_lock"></span>
             </div>
             <button type="submit" class="site-btn">Login Now</button>
@@ -46,7 +46,7 @@
       <div class="col-lg-6">
         <div class="login__register">
           <h3>Dont’t Have An Account?</h3>
-          <a href="/register" class="primary-btn">Register Now</a>
+          <a href="register" class="primary-btn">Register Now</a>
         </div>
       </div>
     </div>
@@ -71,7 +71,7 @@
 <!-- Login Section End -->
 
 <!-- Footer Section Begin -->
-<th:block th:replace="client/layout.html :: footer_layout"></th:block>
+<th:block th:replace="client/layout :: footer_layout"></th:block>
 <script >renderHeaderBar(0)</script>
 </body>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zxx">
 
-<head th:replace="client/layout.html :: header_layout"></head>
+<th:block th:replace="client/layout.html :: header_layout"></th:block>
 
 <body>
 <!-- Page Preloder -->
@@ -31,9 +31,10 @@
         <div class="login__form">
           <h3>Sign Up</h3>
           <form action="/register" method="post" >
+
             <div class="input__item">
-              <input type="email" placeholder="Email" name="email">
-              <span class="icon_mail"></span>
+              <input type="text" placeholder="Name" name="name">
+              <span class="icon_bag"></span>
             </div>
             <div class="input__item">
               <input type="text" placeholder="User Name" name="username">
@@ -43,7 +44,11 @@
               <input type="password" name="password" placeholder="Password" >
               <span class="icon_lock"></span>
             </div>
-            <button type="submit" class="site-btn">Login Now</button>
+            <div class="input__item">
+              <input type="email" placeholder="Email" name="email">
+              <span class="icon_mail"></span>
+            </div>
+            <button type="submit" class="site-btn">Register Now</button>
           </form>
           <h5>Already have an account? <a href="#">Log In!</a></h5>
         </div>

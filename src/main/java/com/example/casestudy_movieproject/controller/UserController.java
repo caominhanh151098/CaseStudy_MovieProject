@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("phim")
+@RequestMapping("")
 public class UserController {
     private UserRepository userRepository;
     private UserService userService;
@@ -21,6 +21,7 @@ public class UserController {
         model.addAttribute("phim",userRepository.findAll());
         return"login";
     }
+
 
 }
 

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="zxx">
 
-<head th:replace="client/layout.html :: header_layout"></head>
+<th:block th:replace="client/layout :: header_layout"></th:block>
 
 <body>
 <!-- Page Preloder -->
-<th:block th:replace="client/layout.html :: head_bar"></th:block>
+<th:block th:replace="client/layout :: head_bar"></th:block>
 
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option">
@@ -164,10 +164,12 @@
 <!-- Product Section End -->
 
 <!-- Footer Section Begin -->
+
 <th:block th:replace="client/layout.html :: footer_layout"></th:block>
 <th:block th:replace="client/js/js_list_movie.html :: js"></th:block>
 <th:block th:replace="client/js/js_upcoming_movie.html :: js"></th:block>
 <th:block th:replace="client/js/js_top_view.html :: js"></th:block>
+
 </body>
 
 </html>

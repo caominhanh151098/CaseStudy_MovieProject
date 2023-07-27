@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zxx">
 
-<head th:replace="client/layout.html :: header_layout"></head>
+<th:block th:replace="client/layout :: header_layout"></th:block>
 
 <body>
 <!-- Page Preloder -->
-<th:block th:replace="client/layout.html :: head_bar"></th:block>
+<th:block th:replace="client/layout :: head_bar"></th:block>
 
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option">
@@ -86,11 +86,11 @@
 <!-- Anime Section End -->
 
 <!-- Footer Section Begin -->
-<th:block th:replace="client/layout.html :: footer_layout"></th:block>
-<th:block th:replace="client/js/js_detail.html :: js"></th:block>
-<th:block th:replace="client/js/js_comment.html :: js"></th:block>
-<th:block th:replace="client/js/js_vote.html :: js"></th:block>
-<th:block th:replace="client/js/js_random_movie.html :: js"></th:block>
+<th:block th:replace="client/layout :: footer_layout"></th:block>
+<th:block th:replace="client/js/js_detail :: js"></th:block>
+<th:block th:replace="client/js/js_comment :: js"></th:block>
+<th:block th:replace="client/js/js_vote :: js"></th:block>
+<th:block th:replace="client/js/js_random_movie :: js"></th:block>
 </body>
 
 </html>

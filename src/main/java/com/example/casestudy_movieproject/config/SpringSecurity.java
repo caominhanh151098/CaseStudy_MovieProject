@@ -34,11 +34,13 @@ public class SpringSecurity {
                                 .requestMatchers("/client/**").permitAll()
                                 .requestMatchers("/assets/**").permitAll()
                                 .requestMatchers("/api/**").permitAll()
-                                .requestMatchers("/admin").hasRole("USER")
+                                .requestMatchers("/demo/**").permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
+                                .defaultSuccessUrl("/demo")
                                 .permitAll()
                 ).logout(
                         logout -> logout
