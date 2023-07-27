@@ -699,7 +699,7 @@
                 str +=
             `<label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
-            <input type="hidden" id="id${index || ''}" value="${chap.id || ''}" name="${'epMovies[' + index + '].id' || ''}">
+            <input type="hidden" id="id${index || '0'}" value="${chap.id || '0'}" name="${'epMovies[' + index + '].id' || '0'}">
             <input
             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             id="chap${index}"

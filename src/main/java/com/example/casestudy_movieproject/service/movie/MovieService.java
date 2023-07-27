@@ -30,6 +30,7 @@ import java.io.*;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -277,29 +278,30 @@ public class MovieService {
             }
         }
         Movie movie = AppUtils.mapper.map(movieSave, Movie.class);
+        for (var person:movie.getEKips()) {
+            person.setId(0);
+        }
+        movie.setMovieGenres(new HashSet<>());
+        movie.setEpMovies(new HashSet<>());
         System.out.println(movie);
         String setLink = "../assets/client";
 
         movie.setImg_movie(setLink + "/img/movie/" + movieSave.getImgMovie());
         movie.setImg_poster(setLink + "/img/poster/" + movieSave.getImgPoster());
         movie.setUrlTrailer(setLink + "/videos/trailer/" + movieSave.getUrl_trailer());
+        movieRepository.save(movie);
 
-        for (var chapter : movie.getEpMovies()) {
-            for (var chapterSave : movieSave.getEpMovies()) {
-                if (epMovieRepository.existsById(Integer.parseInt(chapterSave.getId()))) {
-                    EpMovie epMovie = epMovieRepository.findById(Integer.parseInt(chapterSave.getId()));
-                    epMovie.setUrl(setLink + "/videos/" + chapterSave.getUrlChapter());
-                    chapter.setUrl(setLink + "/videos/" + chapterSave.getUrlChapter());
-                    chapter.setMovie(movie);
-                    epMovieRepository.save(epMovie);
-                } else {
-                    chapter.setUrl(setLink + "/videos/" + chapterSave.getUrlChapter());
-                    Movie movie1 = movieRepository.findById(movie.getId());
-                    EpMovie epMovie = new EpMovie(chapterSave.getName(), chapter.getUrl(), movie1);
-                    epMovieRepository.save(epMovie);
-                }
+        for (var chapter:movieSave.getEpMovies()) {
+            if(Integer.parseInt(chapter.getId()) != 0){
+                EpMovie epMovie = epMovieRepository.findById(Integer.parseInt(chapter.getId()));
+                epMovie.setUrl(setLink + "/videos/" + chapter.getUrlChapter());
+                epMovie.setName(chapter.getName());
+
             }
         }
+
+
+
 
 
         for (String genre : movieSave.getMovieGenres()) {
@@ -308,14 +310,17 @@ public class MovieService {
             movieGenreRepository.save(newMovieGenre);
         }
 
+
         for (var ekip : movieSave.geteKips()) {
+
             Person person = personRepository.findPersonByNameContaining(ekip.getName());
 
             EKip eKip = new EKip(person, movie, ERoleEKip.valueOf(ekip.getRole()));
             eKipRepository.save(eKip);
         }
 
-        movieRepository.save(movie);
+
+
     }
 
     @Transactional
