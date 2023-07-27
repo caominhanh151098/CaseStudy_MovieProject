@@ -44,7 +44,7 @@
                     method: "GET"
                 }).done(data => {
                     let film = data;
-                    videoPlayer.innerHTML = `<source src="../assets/client/videos/Transformers7.mp4">`
+                    videoPlayer.innerHTML = `<source src="/assets/client/videos/Transformers7.mp4">`
                     // playVideo.innerHTML = `
                     // <iframe id="iframePlayer" src="${film.url}" id="videoPlayer" width="847" height="476.4375" frameborder="0" allowfullscreen="">
                     // </iframe>`
@@ -77,7 +77,8 @@
             timer = window.setInterval(function () {
                 totalTime += 5;
                 console.log(totalTime)
-                if (totalTime >= 5 && !increaseViews) {
+                if (totalTime >= 20 && !increaseViews) {
+                    console.log(totalTime)
                     increaseViews = true;
                     clearInterval(timer)
                     return upView();

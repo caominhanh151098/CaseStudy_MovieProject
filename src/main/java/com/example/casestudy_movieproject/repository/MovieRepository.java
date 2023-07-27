@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -52,5 +53,18 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
             "AND m.id != :idMovie " +
             "ORDER BY RAND() limit 4")
     List<Movie> getRandomWithoutMovie_Id(int idMovie);
+
+
+    @Query(value = "Select m From Movie  m  LEFT Join View v on m.id = v.movie.id group by m.id order by count(m.id) desc")
+    Page<Movie> findMovieByViewDESC(Pageable pageable);
+
+    @Query(value = "SELECT m.* FROM movies m JOIN view v ON m.id = v.movie_id WHERE v.time BETWEEN SUBDATE(LOCALTIME(), INTERVAL 1 DAY) AND LOCALTIME() GROUP BY m.id ORDER BY COUNT(v.id) DESC LIMIT 5", nativeQuery = true)
+    List<Movie> getMovieTopViewOfDay();
+    @Query(value = "SELECT m.* FROM movies m JOIN view v ON m.id = v.movie_id WHERE v.time BETWEEN SUBDATE(LOCALTIME(), INTERVAL 1 WEEK) AND LOCALTIME() GROUP BY m.id ORDER BY COUNT(v.id) DESC LIMIT 5", nativeQuery = true)
+    List<Movie> getMovieTopViewOfWeek();
+    @Query(value = "SELECT m.* FROM movies m JOIN view v ON m.id = v.movie_id WHERE v.time BETWEEN SUBDATE(LOCALTIME(), INTERVAL 1 MONTH) AND LOCALTIME() GROUP BY m.id ORDER BY COUNT(v.id) DESC LIMIT 5", nativeQuery = true)
+    List<Movie> getMovieTopViewOfMonth();
+    @Query(value = "SELECT m.* FROM movies m JOIN view v ON m.id = v.movie_id WHERE v.time BETWEEN SUBDATE(LOCALTIME(), INTERVAL 1 YEAR) AND LOCALTIME() GROUP BY m.id ORDER BY COUNT(v.id) DESC LIMIT 5", nativeQuery = true)
+    List<Movie> getMovieTopViewOfYear();
 
 }

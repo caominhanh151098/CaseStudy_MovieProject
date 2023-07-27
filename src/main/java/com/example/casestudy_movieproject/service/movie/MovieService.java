@@ -90,10 +90,10 @@ public class MovieService {
     public Page<MovieListResponse> findAllWithSearchAndPaging(String search, Pageable pageable) {
         search = "%" + search + "%";
 
-        Page<Movie> movies = movieRepository.searchAllWithPage(search,pageable);
+        Page<Movie> movies = movieRepository.searchAllWithPage(search, pageable);
 
-        Page<MovieListResponse> responses = movieRepository.searchAllWithPage(search,pageable)
-                .map(e -> AppUtils.mapper.map(e , MovieListResponse.class));
+        Page<MovieListResponse> responses = movieRepository.searchAllWithPage(search, pageable)
+                .map(e -> AppUtils.mapper.map(e, MovieListResponse.class));
 
         responses.forEach(m -> {
             m.setMovieGenres(String.join(",", movieGenreRepository.findAllByMovie_Id(m.getId())
@@ -259,7 +259,7 @@ public class MovieService {
     }
 
     @Transactional
-    public void edit(MovieSaveRequest movieSave){
+    public void edit(MovieSaveRequest movieSave) {
         saveFile(movieSave.getImg_movie(), appConfig.getImgStoragePathMovie());
         saveFile(movieSave.getImg_poster(), appConfig.getImgStoragePoster());
         saveFile(movieSave.getUrlTrailer(), appConfig.getUrlStorageTrailer());
@@ -284,19 +284,18 @@ public class MovieService {
         movie.setImg_poster(setLink + "/img/poster/" + movieSave.getImgPoster());
         movie.setUrlTrailer(setLink + "/videos/trailer/" + movieSave.getUrl_trailer());
 
-        for (var chapter:movie.getEpMovies()) {
-            for (var chapterSave:movieSave.getEpMovies()) {
-                if (epMovieRepository.existsById(Integer.parseInt(chapterSave.getId()))){
+        for (var chapter : movie.getEpMovies()) {
+            for (var chapterSave : movieSave.getEpMovies()) {
+                if (epMovieRepository.existsById(Integer.parseInt(chapterSave.getId()))) {
                     EpMovie epMovie = epMovieRepository.findById(Integer.parseInt(chapterSave.getId()));
                     epMovie.setUrl(setLink + "/videos/" + chapterSave.getUrlChapter());
                     chapter.setUrl(setLink + "/videos/" + chapterSave.getUrlChapter());
                     chapter.setMovie(movie);
                     epMovieRepository.save(epMovie);
-                }
-                else {
+                } else {
                     chapter.setUrl(setLink + "/videos/" + chapterSave.getUrlChapter());
                     Movie movie1 = movieRepository.findById(movie.getId());
-                    EpMovie epMovie = new EpMovie(chapterSave.getName(),chapter.getUrl(),movie1);
+                    EpMovie epMovie = new EpMovie(chapterSave.getName(), chapter.getUrl(), movie1);
                     epMovieRepository.save(epMovie);
                 }
             }
@@ -309,24 +308,25 @@ public class MovieService {
             movieGenreRepository.save(newMovieGenre);
         }
 
-        for (var ekip:movieSave.geteKips()) {
+        for (var ekip : movieSave.geteKips()) {
             Person person = personRepository.findPersonByNameContaining(ekip.getName());
 
-            EKip eKip = new EKip(person,movie,ERoleEKip.valueOf(ekip.getRole()));
+            EKip eKip = new EKip(person, movie, ERoleEKip.valueOf(ekip.getRole()));
             eKipRepository.save(eKip);
         }
 
         movieRepository.save(movie);
     }
+
     @Transactional
-    public void delete(int id){
+    public void delete(int id) {
         List<EpMovie> epMovies = epMovieRepository.findAllByMovie_Id(id);
         Movie movie = movieRepository.findById(id);
 
         File fileImg = new File(appConfig.getImgStoragePathMovie(), Paths.get(movie.getImg_movie()).getFileName().toString());
-        File filePoster = new File(appConfig.getImgStoragePoster(),Paths.get(movie.getImg_poster()).getFileName().toString());
-        File urlTrailer = new File(appConfig.getUrlStorageTrailer(),Paths.get(movie.getUrlTrailer()).getFileName().toString());
-        if (fileImg.exists() || filePoster.exists() || urlTrailer.exists()){
+        File filePoster = new File(appConfig.getImgStoragePoster(), Paths.get(movie.getImg_poster()).getFileName().toString());
+        File urlTrailer = new File(appConfig.getUrlStorageTrailer(), Paths.get(movie.getUrlTrailer()).getFileName().toString());
+        if (fileImg.exists() || filePoster.exists() || urlTrailer.exists()) {
             try {
                 fileImg.delete();
                 filePoster.delete();
@@ -336,20 +336,19 @@ public class MovieService {
             }
         }
 
-        for (var chapter:epMovies) {
+        for (var chapter : epMovies) {
 
             File file = new File(appConfig.getUrlStorageChapter(), Paths.get(chapter.getUrl()).getFileName().toString());
 
             File absolutePath = new File(file.getAbsolutePath());
 
-            if (absolutePath.exists()){
+            if (absolutePath.exists()) {
                 try {
                     absolutePath.delete();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-            }
-            else {
+            } else {
                 break;
             }
 
@@ -381,46 +380,78 @@ public class MovieService {
     }
 
 
-    public MovieSaveRequest showEdit(int id){
+    public MovieSaveRequest showEdit(int id) {
         Movie movie1 = movieRepository.findById(id);
 
 
-
-        MovieSaveRequest movie = AppUtils.mapper.map(movie1,MovieSaveRequest.class);
-        movie.setImgMovie(movie1.getImg_movie().replace("../assets/client/img/movie/",""));
-        movie.setImgPoster(movie1.getImg_poster().replace("../assets/client/img/poster/",""));
-        movie.setUrl_trailer(movie1.getUrlTrailer().replace("../assets/client/videos/trailer/",""));
+        MovieSaveRequest movie = AppUtils.mapper.map(movie1, MovieSaveRequest.class);
+        movie.setImgMovie(movie1.getImg_movie().replace("../assets/client/img/movie/", ""));
+        movie.setImgPoster(movie1.getImg_poster().replace("../assets/client/img/poster/", ""));
+        movie.setUrl_trailer(movie1.getUrlTrailer().replace("../assets/client/videos/trailer/", ""));
         List<MovieSaveRequest.UrlMovieSaveRequest> epMovies = epMovieRepository.findAllByMovie_Id(movie1.getId())
-                .stream().map(e -> AppUtils.mapper.map(e , MovieSaveRequest.UrlMovieSaveRequest.class)).collect(Collectors.toList());
+                .stream().map(e -> AppUtils.mapper.map(e, MovieSaveRequest.UrlMovieSaveRequest.class)).collect(Collectors.toList());
         epMovies.forEach(e -> {
-                    EpMovie epMovie = epMovieRepository.findById(Integer.parseInt(e.getId()));
-                    e.setUrlChapter(epMovie.getUrl().replace("../assets/client/videos/",""));
-                });
+            EpMovie epMovie = epMovieRepository.findById(Integer.parseInt(e.getId()));
+            e.setUrlChapter(epMovie.getUrl().replace("../assets/client/videos/", ""));
+        });
 
-        for (var genre:movieGenreRepository.findAllByMovie_Id(movie1.getId())) {
+        for (var genre : movieGenreRepository.findAllByMovie_Id(movie1.getId())) {
             movie.getMovieGenres().add(String.valueOf(genre.getGenre().getId()));
         }
 
         List<EKip> eKips = eKipRepository.findAllByMovie_Id(movie1.getId());
 
         List<MovieSaveRequest.EkipSaveRequest> eKipList = eKipRepository.findAllByMovie_Id(movie1.getId())
-                        .stream().map(e -> AppUtils.mapper.map(e , MovieSaveRequest.EkipSaveRequest.class)).collect(Collectors.toList());
+                .stream().map(e -> AppUtils.mapper.map(e, MovieSaveRequest.EkipSaveRequest.class)).collect(Collectors.toList());
         eKipList.forEach(e -> {
-            for (var person:eKips) {
+            for (var person : eKips) {
                 Person person1 = personRepository.findById(person.getPerson().getId());
                 e.setId(String.valueOf(person.getPerson().getId()));
                 e.setName(person1.getName());
             }
 
         });
-        movie.setScoreIMDb(movie.getScoreIMDb().replace(".0",""));
+        movie.setScoreIMDb(movie.getScoreIMDb().replace(".0", ""));
         movie.seteKips(eKipList);
         movie.setEpMovies(epMovies);
-
-
-
-
         return movie;
 
+    }
+
+    List<Movie> listMovie;
+    List<ShowMovieTopViewResponse> listMovieTopView;
+
+    public List<ShowMovieTopViewResponse> getListMovieTopView() {
+        listMovie = new ArrayList<>();
+        listMovieTopView = new ArrayList<>();
+        List<Movie> moviesOfDay = movieRepository.getMovieTopViewOfDay();
+        List<Movie> moviesOfWeek = movieRepository.getMovieTopViewOfWeek();
+        List<Movie> moviesOfMonth = movieRepository.getMovieTopViewOfMonth();
+        List<Movie> moviesOfYear = movieRepository.getMovieTopViewOfYear();
+
+        checkTimeTopView(moviesOfYear, "years");
+        checkTimeTopView(moviesOfMonth, "month");
+        checkTimeTopView(moviesOfWeek, "week");
+        checkTimeTopView(moviesOfDay, "day");
+
+        return listMovieTopView;
+    }
+
+    private void checkTimeTopView(List<Movie> list, String time) {
+        for (Movie m : list) {
+            if (listMovie.indexOf(m) < 0) {
+                listMovie.add(m);
+                ShowMovieTopViewResponse movie = AppUtils.mapper.map(m, ShowMovieTopViewResponse.class);
+                movie.getOfTime().add(time);
+                int id = Integer.parseInt(movie.getId());
+                movie.setViewNum(String.valueOf(viewRepository.countAllByMovie_Id(id)));
+                movie.setEpPresent(String.valueOf(epMovieRepository.countAllByMovie_Id(id)));
+                listMovieTopView.add(movie);
+            } else {
+                ShowMovieTopViewResponse movie = listMovieTopView.get(listMovie.indexOf(m));
+                if (movie.getOfTime().indexOf(time) < 0)
+                    movie.getOfTime().add(time);
+            }
+        }
     }
 }

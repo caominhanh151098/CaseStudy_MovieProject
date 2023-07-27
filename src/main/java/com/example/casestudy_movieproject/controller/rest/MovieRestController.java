@@ -1,6 +1,8 @@
 package com.example.casestudy_movieproject.controller.rest;
 
 
+import com.example.casestudy_movieproject.model.Movie;
+import com.example.casestudy_movieproject.repository.MovieRepository;
 import com.example.casestudy_movieproject.service.movie.MovieService;
 import com.example.casestudy_movieproject.service.movie.response.MovieListResponse;
 import lombok.AllArgsConstructor;
@@ -17,7 +19,6 @@ import java.util.List;
 public class MovieRestController {
 
     private final MovieService movieService;
-
 
     @GetMapping
     public Page<MovieListResponse> findAll(@RequestParam(defaultValue = "") String search, Pageable pageable){

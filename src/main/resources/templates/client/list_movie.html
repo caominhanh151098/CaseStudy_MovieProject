@@ -59,12 +59,12 @@
                             <h5>Top Views</h5>
                         </div>
                         <ul class="filter__controls">
-                            <li class="active" data-filter="*">Day</li>
+                            <li data-filter=".day" class="active mixitup-control-active">Day</li>
                             <li data-filter=".week">Week</li>
                             <li data-filter=".month">Month</li>
                             <li data-filter=".years">Years</li>
                         </ul>
-                        <div class="filter__gallery">
+                        <div class="filter__gallery" id="topView">
                             <div class="product__sidebar__view__item set-bg mix day years"
                                  data-setbg="img/sidebar/tv-1.jpg">
                                 <div class="ep">18 / ?</div>
@@ -167,6 +167,7 @@
 <th:block th:replace="client/layout.html :: footer_layout"></th:block>
 <th:block th:replace="client/js/js_list_movie.html :: js"></th:block>
 <th:block th:replace="client/js/js_upcoming_movie.html :: js"></th:block>
+<th:block th:replace="client/js/js_top_view.html :: js"></th:block>
 </body>
 
 </html>

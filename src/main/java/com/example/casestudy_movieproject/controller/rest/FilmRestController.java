@@ -60,4 +60,9 @@ public class FilmRestController {
         return movieService.showRandomWithoutMovie(id);
     }
 
+    @GetMapping("/show/topView")
+    public List<ShowMovieTopViewResponse> getListMovieTopView() {
+        return movieService.getListMovieTopView();
+    }
+
 }

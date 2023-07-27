@@ -1,5 +1,5 @@
 
-package com.example.casestudy_movieproject.controller.rest;
+package com.example.casestudy_movieproject.controller;
 import com.example.casestudy_movieproject.service.request.AuthService;
 import com.example.casestudy_movieproject.service.request.RegisterRequest;
 import jakarta.validation.Valid;

@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="js">
+    <script th:inline="javascript">
+        let showTopView = document.getElementById("topView")
+
+        renderTopView();
+
+        function renderTopView() {
+            $.ajax({
+                url: `http://localhost:8080/api/movie/show/topView`,
+                method: "GET"
+            }).done(data => {
+                let topView = data;
+                showTopView.innerHTML = ""
+
+                topView.forEach(m => {
+                    let tagTime = getTag(m.ofTime);
+                    m.quality = displayQuality(m.quality);
+                    showTopView.innerHTML += `
+                            <div class="product__sidebar__view__item set-bg mix ${tagTime}"
+                                 data-setbg="${m.img_movie}"
+                                 style="background-image: url(${m.img_movie});">
+                                <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?") + "/" + (m.totalEp == 0 ? "?" : m.totalEp)}</div>
+                                <div class="view"><i class="fa fa-eye"></i> ${m.viewNum}</div>
+                                <h5><a href="#">${m.name}</a></h5>
+                            </div>`
+                })
+            })
+        }
+
+        function getTag(list) {
+            let tagTime = ""
+            list.forEach(t => tagTime += `${t} `)
+            return tagTime;
+        }
+    </script>
+</div>

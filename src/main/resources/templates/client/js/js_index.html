@@ -1,14 +1,14 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <div th:fragment="js">
     <script th:inline="javascript">
-        const showRandomPoster = document.getElementById("randomPoster");
         const showMovies = document.getElementById("movie");
         const showCartoons = document.getElementById("cartoon");
         const showEpMovies = document.getElementById("episode_movie");
         const showLAMovies = document.getElementById("live_action_movie");
+        let random = [[${randomMovie}]]
+        console.log(random);
         let movies = [];
         renderHeaderBar(0);
-        // renderRandomMovie()
         renderUpdateMovies();
         renderCartoonMovies();
         renderEpMovies();
@@ -55,21 +55,6 @@
                 movies = data.content;
                 showLAMovies.innerHTML = "";
                 movies.forEach(m => showLAMovies.innerHTML += renderMovie(m));
-            })
-        }
-
-        function renderRandomMovie() {
-            $.ajax({
-                url: `http://localhost:8080/api/movie/show/randomM/0`,
-                method: "GET"
-            }).done(data => {
-                movies = data;
-                showRandomPoster.innerHTML = "";
-                console.log(movies)
-                movies.forEach(m => {
-                    showRandomPoster.innerHTML = `
-                            `
-                });
             })
         }
     </script>

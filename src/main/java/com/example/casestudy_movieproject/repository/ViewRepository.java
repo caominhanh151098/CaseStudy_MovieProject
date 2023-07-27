@@ -9,4 +9,6 @@ public interface ViewRepository extends JpaRepository<View, Integer> {
     View findViewByMovie_IdAndSessionId(int idMovie, String sessionId);
 
     int countAllByMovie_Id(int movie_id);
+
+
 }
