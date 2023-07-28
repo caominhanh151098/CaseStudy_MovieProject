@@ -41,22 +41,29 @@
             const formInput = new FormData(form);
             const data = Object.fromEntries(formInput.entries());
             data.movieId = movieId;
-            data.userId = userId;
-
             data.content = inputComment.value;
-            console.log(data)
             $.ajax({
                 url: 'http://localhost:8080/api/comment',
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                data: JSON.stringify(data),
-            }).done(e => {
-                renderComment();
-                initData();
+                method: 'GET',
+            }).done(boolean => {
+                if (!boolean)
+                    myModal.show();
+                else {
+                    $.ajax({
+                        url: 'http://localhost:8080/api/comment',
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        data: JSON.stringify(data),
+                    }).done(e => {
+                        renderComment();
+                        initData();
+                    })
+                }
             })
+
         }
 
         function countDownTime(sec) {

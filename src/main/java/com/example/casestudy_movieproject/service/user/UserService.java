@@ -4,7 +4,8 @@ import com.example.casestudy_movieproject.model.User;
 import com.example.casestudy_movieproject.repository.UserRepository;
 import com.example.casestudy_movieproject.service.request.UserSaveRequest;
 import com.example.casestudy_movieproject.util.AppUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,9 +27,16 @@ public class UserService {
     public Optional<User> findByUsernameIgnoreCase(String username) {
         return userRepository.findByUsernameIgnoreCase(username);
     }
-    public List<User> findAll(){
-      return   userRepository.findAll();
 
+    public List<User> findAll() {
+        return userRepository.findAll();
+
+    }
+
+    public User getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return userRepository.findByUsername(username);
     }
 
 

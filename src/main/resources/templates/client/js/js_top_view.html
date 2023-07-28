@@ -4,7 +4,6 @@
         let showTopView = document.getElementById("topView")
 
         renderTopView();
-
         function renderTopView() {
             $.ajax({
                 url: `http://localhost:8080/api/movie/show/topView`,
@@ -22,10 +21,13 @@
                                  style="background-image: url(${m.img_movie});">
                                 <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?") + "/" + (m.totalEp == 0 ? "?" : m.totalEp)}</div>
                                 <div class="view"><i class="fa fa-eye"></i> ${m.viewNum}</div>
-                                <h5><a href="#">${m.name}</a></h5>
+                                <h5><a href="/client/phim/${m.id}">${m.name}</a></h5>
                             </div>`
                 })
             })
+            window.onload = ()=> {
+                document.getElementById("viewOfDay").click();
+            }
         }
 
         function getTag(list) {

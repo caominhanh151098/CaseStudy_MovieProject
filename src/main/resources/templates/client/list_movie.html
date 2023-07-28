@@ -39,9 +39,10 @@
                                 <div class="product__page__filter">
                                     <p>Sắp xếp theo:</p>
                                     <select onchange="sortBy(this.value)">
-                                        <option value="">Phim mới nhất</option>
-                                        <option value="">Lượt comment</option>
-                                        <option value="">Lượt xem</option>
+                                        <option value="0">Phim mới nhất</option>
+                                        <option value="1">Lượt xem</option>
+                                        <option value="2">Lượt vote</option>
+                                        <option value="3">Lượt comment</option>
                                     </select>
                                 </div>
                             </div>
@@ -59,7 +60,7 @@
                             <h5>Top Views</h5>
                         </div>
                         <ul class="filter__controls">
-                            <li data-filter=".day" class="active mixitup-control-active">Day</li>
+                            <li data-filter=".day" class="active" id="viewOfDay">Day</li>
                             <li data-filter=".week">Week</li>
                             <li data-filter=".month">Month</li>
                             <li data-filter=".years">Years</li>

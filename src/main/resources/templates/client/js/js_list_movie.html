@@ -6,29 +6,39 @@
         let pagination = document.getElementById("pagination");
         let movies = [];
         let url = location.href;
+        let urlListMovie = ""
+        let sortType = 0;
 
         let totalPages = 0;
         let page = 0;
-        renderHeaderBar(1);
-        switch (showList) {
-            case 1:
-                renderTag(1);
-                break;
-            case 2:
-                genreId = url.replace("http://localhost:8080/client/the-loai/", "");
-                renderTag(2);
-                renderGenreMovie();
-                break;
-            case 3:
-                renderTag(3);
-                break;
+        renderWeb();
+        function renderWeb() {
+            switch (showList) {
+                case 1:
+                    renderHeaderBar(0);
+                    urlListMovie = `http://localhost:8080/api/movie/show/all/${sortType}?page=${page}&size=12&sort=id,desc`;
+                    renderTag(1)
+                    break;
+                case 2:
+                    renderHeaderBar(1);
+                    genreId = url.replace("http://localhost:8080/client/the-loai/", "");
+                    urlListMovie = `http://localhost:8080/api/movie/show/${genreId}/${sortType}?page=${page}&size=12&sort=id,desc`
+                    console.log(urlListMovie)
+                    renderTag(2);
+                    break;
+                case 3:
+                    renderHeaderBar(2);
+                    urlListMovie = `http://localhost:8080/api/movie/show/seriesM/${sortType}?page=${page}&size=12&sort=id,desc`;
+                    renderTag(3);
+                    break;
+            }
+            renderListMovie();
         }
 
 
-
-        function renderGenreMovie() {
+        function renderListMovie() {
             $.ajax({
-                url: `http://localhost:8080/api/movie/show/${genreId}?page=${page}&size=12&sort=id,desc`,
+                url: urlListMovie,
                 method: "GET"
             }).done(data => {
                 movies = data.content;
@@ -40,7 +50,9 @@
         }
 
         function sortBy(sort) {
-
+            sortType = sort;
+            renderWeb()
+            document.getElementById("scrollToTopButton").click();
         }
 
         function renderPagination() {
@@ -48,21 +60,21 @@
             if (page < 2) {
                 let pageStart = totalPages >= 3 ? 3 : totalPages < 1 ? 1 : totalPages;
                 for (let index = 0; index + 1 <= pageStart; index++) {
-                    buttonPages += `<a href="#" onclick="changePage(${index})" ${index == page ? "class='current-page'" : ""}>${index + 1}</a>`
+                    buttonPages += `<a onclick="changePage(${index})" ${index == page ? "class='current-page'" : ""} style="cursor: pointer">${index + 1}</a>`
                 }
             } else if (page >= 2 && page < totalPages - 1) {
                 for (let index = page - 1; index <= page + 1; index++) {
-                    buttonPages += `<a href="#" onclick="changePage(${index})" ${index == page ? "class='current-page'" : ""}>${index + 1}</a>`
+                    buttonPages += `<a onclick="changePage(${index})" ${index == page ? "class='current-page'" : ""} style="cursor: pointer">${index + 1}</a>`
                 }
             } else {
                 for (let index = totalPages - 3; index < totalPages; index++) {
-                    buttonPages += `<a href="#" onclick="changePage(${index})" ${index == page ? "class='current-page'" : ""}>${index + 1}</a>`
+                    buttonPages += `<a onclick="changePage(${index})" ${index == page ? "class='current-page'" : ""} style="cursor: pointer">${index + 1}</a>`
                 }
             }
             pagination.innerHTML = `
-                    <a href="#" onclick="changePage(0)"><i class="fa fa-angle-double-left"></i></a>
+                    <a onclick="changePage(0)" style="cursor: pointer"><i class="fa fa-angle-double-left"></i></a>
                     ${buttonPages}
-                    <a href="#" onclick="changePage(totalPages + 1)"><i class="fa fa-angle-double-right"></i></a>`
+                    <a onclick="changePage(totalPages + 1)" style="cursor: pointer"><i class="fa fa-angle-double-right"></i></a>`
         }
 
         function changePage(pageChange) {
@@ -71,7 +83,8 @@
             else if (pageChange > totalPages)
                 page = totalPages - 1;
             else page = pageChange;
-            renderGenreMovie();
+            renderWeb();
+            document.getElementById("scrollToTopButton").click();
         }
 
 

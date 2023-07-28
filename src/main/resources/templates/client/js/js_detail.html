@@ -4,10 +4,10 @@
         let showDetail = document.getElementById("movie_detail");
         let genreMovie = document.getElementById("genre");
         let episode = document.getElementById("episode");
+        const myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
         let url = location.href;
         let id = url.replace("http://localhost:8080/client/phim/", "");
         let movieId = id;
-        let userId = "6";
         let movie;
         let firstEp;
         initData();
@@ -26,7 +26,7 @@
                  <div class="breadcrumb__links">
                     <a href="/"><i class="fa fa-home"></i> Trang chủ</a>
                     <a href="#">Thể loại</a>
-                    <a href="/the-loai/${movie.topGenre.id}">${movie.topGenre.name || ""}</a>
+                    <a href="/client/the-loai/${movie.topGenre.id}">${movie.topGenre.name || ""}</a>
                     <span>${movie.name}</span>
                 </div>`
         }
@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="anime__details__btn">
-                            <a href="#" class="follow-btn"><i class="fa fa-heart-o"></i>Thích</a>
+                            <a id="likeButton" class="follow-btn btn btn-outline-success" onclick="likeMovie()"><i class="fa fa-heart-o"></i>Theo dõi</a>
                             <a class="watch-btn"><span onclick="watchFilm()" style="cursor: pointer">Xem Ngay</span>
                                 <i class="fa fa-angle-right" ></i>
                             </a>
@@ -99,6 +99,36 @@
             </div>`
                 getVote();
                 renderGenre();
+                renderLikeButton()
+            })
+        }
+
+        function renderLikeButton() {
+            let likeButton = document.getElementById("likeButton");
+            $.ajax({
+                url: `http://localhost:8080/api/follow/${movieId}`,
+                method: "GET"
+            }).done(boolean => {
+                if (boolean) {
+                    likeButton.classList.add("active");
+                    likeButton.innerHTML = `<i class="fa fa-heartbeat"></i>Theo dõi`;
+                } else {
+                    likeButton.classList.remove("active");
+                    likeButton.innerHTML = `<i class="fa fa-heart-o"></i>Theo dõi`;
+                }
+            })
+
+
+        }
+
+        function likeMovie() {
+            $.ajax({
+                url: `http://localhost:8080/api/follow/like/${movieId}`,
+                method: "GET"
+            }).done(boolean => {
+                if (!boolean) {
+                    myModal.show();
+                } else renderLikeButton();
             })
         }
 

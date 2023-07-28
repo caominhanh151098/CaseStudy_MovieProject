@@ -1,9 +1,11 @@
 package com.example.casestudy_movieproject.service.vote;
 
+import com.example.casestudy_movieproject.model.User;
 import com.example.casestudy_movieproject.model.Vote;
 import com.example.casestudy_movieproject.repository.MovieRepository;
 import com.example.casestudy_movieproject.repository.UserRepository;
 import com.example.casestudy_movieproject.repository.VoteRepository;
+import com.example.casestudy_movieproject.service.user.UserService;
 import com.example.casestudy_movieproject.service.vote.request.VoteSaveRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.cglib.core.Local;
@@ -16,27 +18,23 @@ import java.util.List;
 public class VoteService {
     private final VoteRepository voteRepository;
     private final MovieRepository movieRepository;
-    private final UserRepository userRepository;
 
-    public void saveVote(VoteSaveRequest voteRequest) {
-        int userId = Integer.parseInt(voteRequest.getUserId());
+    public void saveVote(User user, VoteSaveRequest voteRequest) {
         int movieId = Integer.parseInt(voteRequest.getMovieId());
-        Vote vote = voteRepository.findByUser_IdAndMovie_Id(userId, movieId);
+        Vote vote = voteRepository.findByUserAndMovie_id(user, movieId);
         if (vote == null) {
             vote = new Vote();
-            vote.setUser(userRepository.findById(userId));
+            vote.setUser(user);
             vote.setMovie(movieRepository.findById(movieId));
         }
         vote.setScore(Integer.parseInt(voteRequest.getScore()));
         voteRepository.save(vote);
     }
 
-    public int getScoreByUserAndMovie(String userId, String movieId) {
-        int user = Integer.parseInt(userId);
-        int movie = Integer.parseInt(movieId);
-        Vote vote = voteRepository.findByUser_IdAndMovie_Id(user, movie);
+    public int getScoreByUserAndMovie(User user, int movieId) {
+        Vote vote = voteRepository.findByUserAndMovie_id(user, movieId);
         if (vote == null)
-            return 0;
+            return getAvgScore(movieId);
         else return vote.getScore();
     }
 

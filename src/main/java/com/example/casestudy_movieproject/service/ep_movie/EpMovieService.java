@@ -28,20 +28,4 @@ public class EpMovieService {
     public WatchMovieResponse getMovie(int id){
         return AppUtils.mapper.map(epMovieRepository.findById(id), WatchMovieResponse.class) ;
     }
-
-    public Page<ShowUpdateMovieResponse> showListMovieUpdate (Pageable pageable) {
-        List<EpMovie> epMovies = epMovieRepository.findAll();
-        List<Movie> movies = epMovies.stream().map(e -> e.getMovie()).collect(Collectors.toList());
-        movies = movies.stream().distinct().collect(Collectors.toList());
-//        epMoviess.forEach(m -> {
-//            ShowListMovieResponse movie = m.getMovie();
-//            int id = Integer.parseInt(movie.getId());
-//            movie.setCommentNum(String.valueOf(commentRepository.countAllByMovie_Id(id)));
-//            movie.setGenres(genreRepository.getGenreByMovie(id)
-//                    .stream()
-//                    .map(g -> AppUtils.mapper.map(g, ShowGenreByMovieResponse.class))
-//                    .collect(Collectors.toList()));
-//        });
-        return null;
-    }
 }

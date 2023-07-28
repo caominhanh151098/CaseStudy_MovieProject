@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class VoteSaveRequest {
     private String score;
-    private String userId;
     private String movieId;
 }

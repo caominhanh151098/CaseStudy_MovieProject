@@ -18,31 +18,75 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
                                                 "lower(m.type) like lower(:search) ")
     Page<Movie> searchAllWithPage(String search , Pageable pageable);
 
-//    @Query(value = "SELECT new MovieListResponse(m.name,m.movieGenres) FROM Movie m left join EKip e on m.id = e.movie.id " +
-//            " join Person p on e.person.id = p.id " +
-//            "   join MovieGenre mg on m.id = mg.movie.id " +
-//            " join Genre g on mg.genre.id = g.id where " +
-//            " m.name like :search or " +
-//            " lower(m.type) like :search or " +
-//            " p.name like :search or " +
-//            " g.name like :search")
-//    Page<MovieListResponse> searchAll1(String search, Pageable pageable);
-
     @Query(value = "SELECT m FROM Movie m " +
             "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL'")
     Page<Movie> getMovieUpdate(Pageable pageable);
+    @Query(value = "SELECT m FROM Movie  m  LEFT JOIN View v ON m.id = v.movie.id " +
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' " +
+            "GROUP BY m.id ORDER BY count(m.id) DESC")
+    Page<Movie> getMovieByViewsDESC(Pageable pageable);
+
+    @Query(value = "SELECT m FROM Movie  m  LEFT JOIN Comment c ON m.id = c.movie.id " +
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' " +
+            "GROUP BY m.id ORDER BY count(m.id) DESC")
+    Page<Movie> getMovieByCommentsDESC(Pageable pageable);
+
+    @Query(value = "SELECT m FROM Movie  m  LEFT JOIN Vote v ON m.id = v.movie.id " +
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' " +
+            "GROUP BY m.id ORDER BY count(m.id) DESC")
+    Page<Movie> getMovieByVotesDESC(Pageable pageable);
 
     @Query(value = "SELECT m FROM Movie m " +
             "JOIN MovieGenre mg ON m.id = mg.movie.id " +
-            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' " +
-            "AND mg.genre.id = :idGenre")
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' AND mg.genre.id = :idGenre")
     Page<Movie> getMovieByGenre(String idGenre, Pageable pageable);
 
+    @Query(value = "SELECT m FROM Movie  m " +
+            "JOIN MovieGenre mg ON m.id = mg.movie.id " +
+            "LEFT JOIN View v ON m.id = v.movie.id " +
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' AND mg.genre.id = :idGenre " +
+            "GROUP BY m.id ORDER BY count(m.id) DESC")
+    Page<Movie> getMovieGenreByViewsDESC(String idGenre, Pageable pageable);
+
+    @Query(value = "SELECT m FROM Movie  m " +
+            "JOIN MovieGenre mg ON m.id = mg.movie.id " +
+            "LEFT JOIN Comment c ON m.id = c.movie.id " +
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' AND mg.genre.id = :idGenre " +
+            "GROUP BY m.id ORDER BY count(m.id) DESC")
+    Page<Movie> getMovieGenreByCommentsDESC(String idGenre, Pageable pageable);
+
+    @Query(value = "SELECT m FROM Movie  m " +
+            "JOIN MovieGenre mg ON m.id = mg.movie.id " +
+            "LEFT JOIN Vote v ON m.id = v.movie.id " +
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' AND mg.genre.id = :idGenre " +
+            "GROUP BY m.id ORDER BY count(m.id) DESC")
+    Page<Movie> getMovieGenreByVotesDESC(String idGenre, Pageable pageable);
+
     @Query(value = "SELECT m FROM Movie m " +
             "JOIN MovieGenre mg ON m.id = mg.movie.id " +
-            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' " +
-            "AND m.type = 'SERIES'")
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' AND m.type = 'SERIES'")
     Page<Movie> getMovieSeries(Pageable pageable);
+
+    @Query(value = "SELECT m FROM Movie m " +
+            "JOIN MovieGenre mg ON m.id = mg.movie.id " +
+            "LEFT JOIN View v ON m.id = v.movie.id " +
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' AND m.type = 'SERIES'" +
+            "GROUP BY m.id ORDER BY count(m.id) DESC")
+    Page<Movie> getMovieSeriesByViewsDESC(Pageable pageable);
+
+    @Query(value = "SELECT m FROM Movie m " +
+            "JOIN MovieGenre mg ON m.id = mg.movie.id " +
+            "LEFT JOIN Vote v ON m.id = v.movie.id " +
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' AND m.type = 'SERIES'" +
+            "GROUP BY m.id ORDER BY count(m.id) DESC")
+    Page<Movie> getMovieSeriesByVotesDESC(Pageable pageable);
+
+    @Query(value = "SELECT m FROM Movie m " +
+            "JOIN MovieGenre mg ON m.id = mg.movie.id " +
+            "LEFT JOIN Comment c ON m.id = c.movie.id " +
+            "WHERE m.status != 'COMING_SOON' AND m.status != 'CANCEL' AND m.type = 'SERIES'" +
+            "GROUP BY m.id ORDER BY count(m.id) DESC")
+    Page<Movie> getMovieSeriesByCommentsDESC(Pageable pageable);
 
     @Query(value = "SELECT m FROM Movie m " +
             "WHERE m.status = 'COMING_SOON'")
@@ -53,10 +97,6 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
             "AND m.id != :idMovie " +
             "ORDER BY RAND() limit 4")
     List<Movie> getRandomWithoutMovie_Id(int idMovie);
-
-
-    @Query(value = "Select m From Movie  m  LEFT Join View v on m.id = v.movie.id group by m.id order by count(m.id) desc")
-    Page<Movie> findMovieByViewDESC(Pageable pageable);
 
     @Query(value = "SELECT m.* FROM movies m JOIN view v ON m.id = v.movie_id WHERE v.time BETWEEN SUBDATE(LOCALTIME(), INTERVAL 1 DAY) AND LOCALTIME() GROUP BY m.id ORDER BY COUNT(v.id) DESC LIMIT 5", nativeQuery = true)
     List<Movie> getMovieTopViewOfDay();

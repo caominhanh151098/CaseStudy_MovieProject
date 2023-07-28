@@ -5,6 +5,7 @@
         let genreMovie = document.getElementById("genre");
         let episode = document.getElementById("episode");
         let videoPlayer = document.querySelector('video');
+        const myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
         let url = location.href;
         let id = url.replace("http://localhost:8080/client/xem-phim/","");
         let movieId = id.split('-')[0];
@@ -44,10 +45,10 @@
                     method: "GET"
                 }).done(data => {
                     let film = data;
-                    videoPlayer.innerHTML = `<source src="/assets/client/videos/Transformers7.mp4">`
-                    // playVideo.innerHTML = `
-                    // <iframe id="iframePlayer" src="${film.url}" id="videoPlayer" width="847" height="476.4375" frameborder="0" allowfullscreen="">
-                    // </iframe>`
+                    // videoPlayer.innerHTML = `<source src="/assets/client/videos/Transformers7.mp4">`
+                    playVideo.innerHTML = `
+                    <iframe id="iframePlayer" src="${film.url}" id="videoPlayer" width="847" height="476.4375" frameborder="0" allowfullscreen="">
+                    </iframe>`
                     document.getElementById("nameEp").innerHTML = `${film.name}`
                 })
             })

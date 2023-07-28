@@ -5,8 +5,6 @@
         const showCartoons = document.getElementById("cartoon");
         const showEpMovies = document.getElementById("episode_movie");
         const showLAMovies = document.getElementById("live_action_movie");
-        let random = [[${randomMovie}]]
-        console.log(random);
         let movies = [];
         renderHeaderBar(0);
         renderUpdateMovies();
@@ -16,7 +14,7 @@
 
         function renderUpdateMovies() {
             $.ajax({
-                url: `http://localhost:8080/api/movie/show/all?sort=id,desc`,
+                url: `http://localhost:8080/api/movie/show/all/0?sort=id,desc`,
                 method: "GET"
             }).done(data => {
                 movies = data.content;
@@ -27,7 +25,7 @@
 
         function renderCartoonMovies() {
             $.ajax({
-                url: `http://localhost:8080/api/movie/show/4?sort=,desc`,
+                url: `http://localhost:8080/api/movie/show/4/0?sort=id,desc`,
                 method: "GET"
             }).done(data => {
                 movies = data.content;
@@ -38,7 +36,7 @@
 
         function renderEpMovies() {
             $.ajax({
-                url: `http://localhost:8080/api/movie/show/seriesM?sort=id,desc`,
+                url: `http://localhost:8080/api/movie/show/seriesM/0?sort=id,desc`,
                 method: "GET"
             }).done(data => {
                 movies = data.content;
@@ -49,7 +47,7 @@
 
         function renderLAMovies() {
             $.ajax({
-                url: `http://localhost:8080/api/movie/show/14?sort=id,desc`,
+                url: `http://localhost:8080/api/movie/show/14/0?sort=id,desc`,
                 method: "GET"
             }).done(data => {
                 movies = data.content;

@@ -1,6 +1,7 @@
 package com.example.casestudy_movieproject.service.comment;
 
 import com.example.casestudy_movieproject.model.Comment;
+import com.example.casestudy_movieproject.model.User;
 import com.example.casestudy_movieproject.repository.CommentRepository;
 import com.example.casestudy_movieproject.repository.MovieRepository;
 import com.example.casestudy_movieproject.repository.UserRepository;
@@ -35,9 +36,9 @@ public class CommentService {
         return commentResponses;
     }
 
-    public void saveComment(CommentSaveRequest commentRequest) {
+    public void saveComment(User user, CommentSaveRequest commentRequest) {
         Comment comment = AppUtils.mapper.map(commentRequest, Comment.class);
-        comment.setUser(userRepository.findById(Integer.parseInt(commentRequest.getUserId())));
+        comment.setUser(user);
         comment.setMovie(movieRepository.findById(Integer.parseInt(commentRequest.getMovieId())));
         comment.setTimeComment(LocalDateTime.now().plusHours(7));
         commentRepository.save(comment);

@@ -35,20 +35,19 @@ public class FilmRestController {
         return epMovieService.getMovie(id);
     }
 
-    @GetMapping("/show/all")
-    public Page<ShowListMovieResponse> showListMovie(@PageableDefault(size = 12) Pageable pageable) {
-        return movieService.showListMovie(pageable);
-//        return epMovieService.showListMovieUpdate(pageable);
+    @GetMapping("/show/all/{type}")
+    public Page<ShowListMovieResponse> showListMovie(@PageableDefault(size = 12) Pageable pageable, @PathVariable int type) {
+                return movieService.showListMovie(pageable, type);
     }
 
-    @GetMapping("/show/{idGenre}")
-    public Page<ShowListMovieResponse> showMoviesByGenre(@PathVariable String idGenre, @PageableDefault(size = 6) Pageable pageable) {
-        return movieService.showListMovieByGenre(idGenre, pageable);
+    @GetMapping("/show/{idGenre}/{type}")
+    public Page<ShowListMovieResponse> showMoviesByGenre(@PathVariable String idGenre, @PageableDefault(size = 6) Pageable pageable, @PathVariable int type) {
+        return movieService.showListMovieByGenre(idGenre, pageable, type);
     }
 
-    @GetMapping("/show/seriesM")
-    public Page<ShowListMovieResponse> showListEPMovie(@PageableDefault(size = 6) Pageable pageable) {
-        return movieService.showListEpMovie(pageable);
+    @GetMapping("/show/seriesM/{type}")
+    public Page<ShowListMovieResponse> showListEPMovie(@PageableDefault(size = 6) Pageable pageable, @PathVariable int type) {
+        return movieService.showListEpMovie(pageable, type);
     }
     @GetMapping("/show/upComingM")
     public Page<ShowUpComingMovieResponse> showUpComingMovie(@PageableDefault(size = 4) Pageable pageable) {

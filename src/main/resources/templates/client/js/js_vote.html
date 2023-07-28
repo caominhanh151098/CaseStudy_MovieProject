@@ -6,30 +6,15 @@
 
         function getVote() {
             $.ajax({
-                url: `http://localhost:8080/api/vote?userId=${userId}&movieId=${movieId}`,
-                method: 'GET',
-            }).done(data => {
-                if (data != 0)
-                    score = data;
-                else return getAvgVote();
-                renderVote();
-                getNumVote();
-            })
-        }
-
-        function getAvgVote() {
-            $.ajax({
-                url: `http://localhost:8080/api/vote/avg/${movieId}`,
+                url: `http://localhost:8080/api/vote?movieId=${movieId}`,
                 method: 'GET',
             }).done(data => {
                 score = data;
                 renderVote();
                 getNumVote();
             })
-
-
-
         }
+
 
         function renderVote() {
             let voteForm = document.getElementById("voteRate");
@@ -55,19 +40,28 @@
             score = e;
             const data = {};
             data.movieId = movieId;
-            data.userId = userId;
             data.score = score;
             $.ajax({
-                url: 'http://localhost:8080/api/vote',
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                data: JSON.stringify(data),
-            }).done(e => {
-                getVote();
+                url: `http://localhost:8080/api/vote/check`,
+                method: "GET"
+            }).done(boolean => {
+                if (!boolean) {
+                    myModal.show();
+                } else {
+                    $.ajax({
+                        url: 'http://localhost:8080/api/vote',
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        data: JSON.stringify(data),
+                    }).done(e => {
+                        getVote();
+                    })
+                }
             })
+
         }
     </script>
 </div>

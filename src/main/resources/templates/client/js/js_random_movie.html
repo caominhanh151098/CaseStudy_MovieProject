@@ -19,7 +19,7 @@
                                     style="background-image: url(${m.img_movie});">
                                 <div class="ep">${m.type == 'MOVIE' ? m.quality : (m.epPresent || "?") + "/" + (m.totalEp == 0 ? "?" : m.totalEp)}</div>
                                 <div class="view"><i class="fa fa-eye"></i> ${m.viewNum}</div>
-                            <h5><a href="/phim/${m.id}">${m.name}</a></h5>
+                            <h5><a href="/client/phim/${m.id}">${m.name}</a></h5>
                             </div>`
                 });
             })

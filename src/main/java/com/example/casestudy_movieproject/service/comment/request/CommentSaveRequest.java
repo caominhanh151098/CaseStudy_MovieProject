@@ -1,5 +1,6 @@
 package com.example.casestudy_movieproject.service.comment.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class CommentSaveRequest {
     private String movieId;
-    private String userId;
+    @NotBlank
     private String content;
 }

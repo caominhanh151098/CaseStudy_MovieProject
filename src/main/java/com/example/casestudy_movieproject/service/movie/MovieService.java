@@ -127,49 +127,77 @@ public class MovieService {
         return responses;
     }
 
-    public Page<ShowListMovieResponse> showListMovie(Pageable pageable) {
+    public Page<ShowListMovieResponse> showListMovie(Pageable pageable, int type) {
         Page<ShowListMovieResponse> movies = movieRepository.getMovieUpdate(pageable)
                 .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+        switch (type){
+            case 1:
+                movies = movieRepository.getMovieByViewsDESC(pageable)
+                        .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+                break;
+            case 2:
+                movies = movieRepository.getMovieByVotesDESC(pageable)
+                        .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+                break;
+            case 3:
+                movies = movieRepository.getMovieByCommentsDESC(pageable)
+                        .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+                break;
+        }
         movies.forEach(m -> {
             int id = Integer.parseInt(m.getId());
-            m.setEpPresent(String.valueOf(epMovieRepository.countAllByMovie_Id(id)));
-            m.setCommentNum(String.valueOf(commentRepository.countAllByMovie_Id(id)));
-            m.setViewNum(String.valueOf(viewRepository.countAllByMovie_Id(id)));
-            m.setGenres(genreRepository.getGenreByMovie(id)
-                    .stream()
-                    .map(g -> AppUtils.mapper.map(g, ShowGenreByMovieResponse.class))
-                    .collect(Collectors.toList()));
+            setInfoMovie(m, id);
         });
         return movies;
     }
 
-    public Page<ShowListMovieResponse> showListMovieByGenre(String idGenre, Pageable pageable) {
-        Page<ShowListMovieResponse> movies = movieRepository.getMovieByGenre(idGenre, pageable).map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+
+
+    public Page<ShowListMovieResponse> showListMovieByGenre(String idGenre, Pageable pageable, int type) {
+        Page<ShowListMovieResponse> movies = movieRepository.getMovieByGenre(idGenre, pageable)
+                .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+        switch (type){
+            case 1:
+                movies = movieRepository.getMovieGenreByViewsDESC(idGenre, pageable)
+                        .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+                break;
+            case 2:
+                movies = movieRepository.getMovieGenreByVotesDESC(idGenre, pageable)
+                        .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+                break;
+            case 3:
+                movies = movieRepository.getMovieGenreByCommentsDESC(idGenre, pageable)
+                        .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+                break;
+        }
         movies.forEach(m -> {
             int id = Integer.parseInt(m.getId());
-            m.setEpPresent(String.valueOf(epMovieRepository.countAllByMovie_Id(id)));
-            m.setCommentNum(String.valueOf(commentRepository.countAllByMovie_Id(id)));
-            m.setViewNum(String.valueOf(viewRepository.countAllByMovie_Id(id)));
-            m.setGenres(genreRepository.getGenreByMovie(id)
-                    .stream()
-                    .map(g -> AppUtils.mapper.map(g, ShowGenreByMovieResponse.class))
-                    .collect(Collectors.toList()));
+            setInfoMovie(m, id);
         });
         return movies;
     }
 
-    public Page<ShowListMovieResponse> showListEpMovie(Pageable pageable) {
+    public Page<ShowListMovieResponse> showListEpMovie(Pageable pageable, int type) {
         Page<ShowListMovieResponse> movies = movieRepository.getMovieSeries(pageable)
                 .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+        switch (type){
+            case 1:
+                movies = movieRepository.getMovieSeriesByViewsDESC(pageable)
+                        .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+                break;
+            case 2:
+                movies = movieRepository.getMovieSeriesByVotesDESC(pageable)
+                        .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+                break;
+            case 3:
+                movies = movieRepository.getMovieSeriesByCommentsDESC(pageable)
+                        .map(e -> AppUtils.mapper.map(e, ShowListMovieResponse.class));
+
+                break;
+        }
         movies.forEach(m -> {
             int id = Integer.parseInt(m.getId());
-            m.setEpPresent(String.valueOf(epMovieRepository.countAllByMovie_Id(id)));
-            m.setCommentNum(String.valueOf(commentRepository.countAllByMovie_Id(id)));
-            m.setViewNum(String.valueOf(viewRepository.countAllByMovie_Id(id)));
-            m.setGenres(genreRepository.getGenreByMovie(id)
-                    .stream()
-                    .map(g -> AppUtils.mapper.map(g, ShowGenreByMovieResponse.class))
-                    .collect(Collectors.toList()));
+            setInfoMovie(m, id);
         });
         return movies;
     }
@@ -186,6 +214,16 @@ public class MovieService {
                     .collect(Collectors.toList()));
         });
         return movies;
+    }
+
+    private void setInfoMovie(ShowListMovieResponse m, int id) {
+        m.setEpPresent(String.valueOf(epMovieRepository.countAllByMovie_Id(id)));
+        m.setCommentNum(String.valueOf(commentRepository.countAllByMovie_Id(id)));
+        m.setViewNum(String.valueOf(viewRepository.countAllByMovie_Id(id)));
+        m.setGenres(genreRepository.getGenreByMovie(id)
+                .stream()
+                .map(g -> AppUtils.mapper.map(g, ShowGenreByMovieResponse.class))
+                .collect(Collectors.toList()));
     }
 
     public List<ShowListRandomMovieResponse> showRandomWithoutMovie(int idMovie) {

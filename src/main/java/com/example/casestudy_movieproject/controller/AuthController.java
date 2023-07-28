@@ -80,10 +80,10 @@ public class AuthController {
         String username = userDetails.getUsername();
         Optional<User> user = userService.findByUsernameIgnoreCase(username);
         if(user.get().getRole().equals(ERole.ROLE_ADMIN)) {
-            return "admin/index";
+            return "redirect:/admin";
         }
         else {
-            return "client/index";
+            return "redirect:/client";
         }
     }
 }
