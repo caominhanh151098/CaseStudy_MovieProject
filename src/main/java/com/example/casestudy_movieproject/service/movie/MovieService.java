@@ -250,18 +250,18 @@ public class MovieService {
         }
 
 
-        for (var person : movieSave.geteKips()) {
-            if (!personRepository.existsByNameIgnoreCase(person.getName())) {
-                Person newPerson = new Person();
-                newPerson.setName(person.getName());
-                personRepository.save(newPerson);
+        if (!movieSave.geteKips().isEmpty()){
+            for (var person : movieSave.geteKips()) {
+                if (!personRepository.existsByNameIgnoreCase(person.getName())) {
+                    Person newPerson = new Person();
+                    newPerson.setName(person.getName());
+                    personRepository.save(newPerson);
 
-            } else {
-                Person person1 = personRepository.findPersonByNameContaining(person.getName());
+                }
             }
-
-
         }
+
+
         Movie movie = AppUtils.mapper.map(movieSave, Movie.class);
         System.out.println(movie);
         String setLink = "../assets/client";
@@ -272,27 +272,31 @@ public class MovieService {
 
         movieRepository.save(movie);
 
-        for (var chapter : movie.getEpMovies()) {
+        if (!movieSave.getEpMovies().isEmpty()){
             for (var chapterSave : movieSave.getEpMovies()) {
-                chapter.setUrl(setLink + "/videos/" + chapterSave.getUrl().getOriginalFilename());
+                chapterSave.setUrlChapter(setLink + "/videos/" + chapterSave.getUrlChapter());
                 Movie movie1 = movieRepository.findById(movie.getId());
-                EpMovie epMovie = new EpMovie(chapterSave.getName(), chapter.getUrl(), movie1);
+                EpMovie epMovie = new EpMovie(chapterSave.getName(), chapterSave.getUrlChapter(), movie1);
                 epMovieRepository.save(epMovie);
             }
         }
 
 
-        for (String genre : movieSave.getMovieGenres()) {
-            Genre genre1 = genreRepository.findById(Integer.parseInt(genre));
-            MovieGenre newMovieGenre = new MovieGenre(movie, genre1);
-            movieGenreRepository.save(newMovieGenre);
+        if (!movieSave.getMovieGenres().isEmpty()){
+            for (String genre : movieSave.getMovieGenres()) {
+                Genre genre1 = genreRepository.findById(Integer.parseInt(genre));
+                MovieGenre newMovieGenre = new MovieGenre(movie, genre1);
+                movieGenreRepository.save(newMovieGenre);
+            }
         }
 
-        for (var ekip : movieSave.geteKips()) {
-            Person person = personRepository.findPersonByNameContaining(ekip.getName());
+        if (!movieSave.geteKips().isEmpty()){
+            for (var ekip : movieSave.geteKips()) {
+                Person person = personRepository.findPersonByNameContaining(ekip.getName());
 
-            EKip eKip = new EKip(person, movie, ERoleEKip.valueOf(ekip.getRole()));
-            eKipRepository.save(eKip);
+                EKip eKip = new EKip(person, movie, ERoleEKip.valueOf(ekip.getRole()));
+                eKipRepository.save(eKip);
+            }
         }
 
     }
@@ -305,14 +309,13 @@ public class MovieService {
         for (var chapter : movieSave.getEpMovies()) {
             saveFile(chapter.getUrl(), appConfig.getUrlStorageChapter());
         }
+
         for (var person : movieSave.geteKips()) {
             if (!personRepository.existsByNameIgnoreCase(person.getName())) {
                 Person newPerson = new Person();
                 newPerson.setName(person.getName());
                 personRepository.save(newPerson);
 
-            } else {
-                Person person1 = personRepository.findPersonByNameContaining(person.getName());
             }
         }
         Movie movie = AppUtils.mapper.map(movieSave, Movie.class);
@@ -327,19 +330,18 @@ public class MovieService {
         movie.setImg_movie(setLink + "/img/movie/" + movieSave.getImgMovie());
         movie.setImg_poster(setLink + "/img/poster/" + movieSave.getImgPoster());
         movie.setUrlTrailer(setLink + "/videos/trailer/" + movieSave.getUrl_trailer());
+
         movieRepository.save(movie);
 
-        for (var chapter:movieSave.getEpMovies()) {
-            if(Integer.parseInt(chapter.getId()) != 0){
-                EpMovie epMovie = epMovieRepository.findById(Integer.parseInt(chapter.getId()));
-                epMovie.setUrl(setLink + "/videos/" + chapter.getUrlChapter());
-                epMovie.setName(chapter.getName());
+        epMovieRepository.deleteEpMovieByMovie_Id(movie.getId());
+        eKipRepository.deleteEKipByMovie_Id(movie.getId());
+        movieGenreRepository.deleteMovieGenreByMovie_Id(movie.getId());
 
-            }
+        for (var chapterSave : movieSave.getEpMovies()) {
+            chapterSave.setUrlChapter(setLink + "/videos/" + chapterSave.getUrlChapter());
+            EpMovie epMovie = new EpMovie(chapterSave.getName(), chapterSave.getUrlChapter(), movie);
+            epMovieRepository.save(epMovie);
         }
-
-
-
 
 
         for (String genre : movieSave.getMovieGenres()) {
@@ -348,17 +350,12 @@ public class MovieService {
             movieGenreRepository.save(newMovieGenre);
         }
 
-
         for (var ekip : movieSave.geteKips()) {
-
             Person person = personRepository.findPersonByNameContaining(ekip.getName());
 
             EKip eKip = new EKip(person, movie, ERoleEKip.valueOf(ekip.getRole()));
             eKipRepository.save(eKip);
         }
-
-
-
     }
 
     @Transactional
@@ -449,7 +446,7 @@ public class MovieService {
         eKipList.forEach(e -> {
             for (var person : eKips) {
                 Person person1 = personRepository.findById(person.getPerson().getId());
-                e.setId(String.valueOf(person.getPerson().getId()));
+                e.setId(String.valueOf(person.getId()));
                 e.setName(person1.getName());
             }
 

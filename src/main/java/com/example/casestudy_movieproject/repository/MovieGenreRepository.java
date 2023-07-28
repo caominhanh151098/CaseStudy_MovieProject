@@ -14,6 +14,13 @@ public interface MovieGenreRepository extends JpaRepository<MovieGenre, Integer>
 
     MovieGenre findTopByMovie_Id(int id);
 
+    MovieGenre findByIdAndMovie_Id(int id, int movie_id);
+
+    MovieGenre findByGenre_IdAndMovie_Id(int genre_id, int movie_id);
+
+    boolean existsByIdAndMovie_Id(int id, int movie_id);
+    boolean existsByGenre_IdAndMovie_Id(int genre_id, int movie_id);
+
     @Modifying
     @Query(value = "delete from MovieGenre mg where mg.movie.id = :movie_id")
     void deleteMovieGenreByMovie_Id(int movie_id);

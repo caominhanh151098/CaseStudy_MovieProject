@@ -13,6 +13,12 @@ import java.util.List;
 public interface EKipRepository extends JpaRepository<EKip, Integer> {
     List<EKip> findAllByMovie_Id(int movie_id);
 
+    boolean existsByMovie_IdAndPerson_Id(int movie_id, int person_id);
+
+    boolean existsById(int id);
+
+    EKip findById(int id);
+
     @Modifying
     @Query(value = "delete from EKip e where e.movie.id = :movie_id")
     void deleteEKipByMovie_Id(int movie_id);

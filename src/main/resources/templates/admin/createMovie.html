@@ -46,17 +46,17 @@
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                             >
-                                <path
-                                        fill-rule="evenodd"
-                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                        clip-rule="evenodd"
-                                ></path>
+<!--                                <path-->
+<!--                                        fill-rule="evenodd"-->
+<!--                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"-->
+<!--                                        clip-rule="evenodd"-->
+<!--                                ></path>-->
                             </svg>
                         </div>
-                        <input
+                        <input style="background: white" readonly
                                 class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
                                 type="text"
-                                placeholder="Search for projects"
+
                                 aria-label="Search"
                         />
                     </div>
@@ -281,56 +281,56 @@
 
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Name Movie</span>
-                            <input
+                            <input pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     th:field="*{name}"
                             />
-                            <!--                            <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"-->
-                            <!--                                  th:errors="*{name}"></span>-->
+                                                        <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"
+                                                              th:errors="*{name}"></span>
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Aired Year</span>
-                            <input type="number"
+                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{airedYear}"
                             />
-                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
-                            <!--                                  th:if="${#fields.hasErrors('airedYear')}"-->
-                            <!--                                  th:errors="*{airedYear}"></span>-->
+                                                        <span class="text-xs text-red-600 dark:text-red-400"
+                                                              th:if="${#fields.hasErrors('airedYear')}"
+                                                              th:errors="*{airedYear}"></span>
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Duration</span>
-                            <input type="number"
+                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{duration}"
                             />
-                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
-                            <!--                                  th:if="${#fields.hasErrors('duration')}"-->
-                            <!--                                  th:errors="*{duration}"></span>-->
+                                                        <span class="text-xs text-red-600 dark:text-red-400"
+                                                              th:if="${#fields.hasErrors('duration')}"
+                                                              th:errors="*{duration}"></span>
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Total Eption</span>
-                            <input type="number"
+                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{totalEp}"
                             />
-                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
-                            <!--                                  th:if="${#fields.hasErrors('totalEp')}"-->
-                            <!--                                  th:errors="*{totalEp}"></span>-->
+                                                        <span class="text-xs text-red-600 dark:text-red-400"
+                                                              th:if="${#fields.hasErrors('totalEp')}"
+                                                              th:errors="*{totalEp}"></span>
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">IMDB Score</span>
-                            <input type="number"
+                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0" step="0.1"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{scoreIMDb}"
                             />
-                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
-                            <!--                                  th:if="${#fields.hasErrors('scoreIMDb')}"-->
-                            <!--                                  th:errors="*{scoreIMDb}"></span>-->
+                                                        <span class="text-xs text-red-600 dark:text-red-400"
+                                                              th:if="${#fields.hasErrors('scoreIMDb')}"
+                                                              th:errors="*{scoreIMDb}"></span>
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">IMG Movie</span>
-                            <input type="file" name="imgMovie"
+                            <input type="file" name="imgMovie" accept="imgage/*"
                                    id="imgMovie"
                                    class="hiddenInput"
                                    th:field="*{img_movie}"
@@ -347,12 +347,10 @@
                                     Click
                                 </button>
                             </div>
-                            <!--              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"-->
-                            <!--                    th:errors="*{duration}"></span>-->
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">IMG Poster</span>
-                            <input type="file" name="imgPoster"
+                            <input type="file" name="imgPoster" accept="image/*"
                                    id="imgPoster"
                                    class="hiddenInput"
                                    th:field="*{img_poster}"
@@ -369,12 +367,10 @@
                                     Click
                                 </button>
                             </div>
-                            <!--              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"-->
-                            <!--                    th:errors="*{duration}"></span>-->
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Trailer</span>
-                                <input type="file" name="urlTrailer"
+                                <input type="file" name="urlTrailer" accept="video/*"
                                        id="urlTrailer"
                                    class="hiddenInput"
                                    th:field="*{urlTrailer}"
@@ -391,8 +387,7 @@
                                     Click
                                 </button>
                             </div>
-                            <!--              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"-->
-                            <!--                    th:errors="*{duration}"></span>-->
+
                         </label>
 
 
@@ -407,6 +402,8 @@
                                         th:text="${quality}"></option>
 
                             </select>
+                                          <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"
+                                                th:errors="*{quality}"></span>
                         </label>
                         <label class="block mt-4 text-sm">
                             <span class="text-gray-700 dark:text-gray-400">
@@ -468,7 +465,7 @@
 
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Name Person</span>
-                                        <input list="personList"
+                                        <input list="personList" pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                th:id="${'person'+iter.index}"
                                                th:value="${ekip.name}"
@@ -519,7 +516,7 @@
                                 <th:block th:each="chap, iter : *{epMovies}">
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
-                                        <input
+                                        <input pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                 th:id="${'chap'+iter.index}"
                                                 th:value="${chap.name}"
@@ -530,13 +527,7 @@
                                     </label>
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">URL</span>
-<!--                                        <input type="file"-->
-<!--                                               class="hiddenInput"-->
-<!--                                               th:id="${'urlFile'+iter.index}"-->
-
-<!--                                               th:name="${'seriesMovie['+ iter.index + '].urlFile'}"-->
-<!--                                        />-->
-                                        <input type="file"
+                                        <input type="file" accept="video/*"
                                                class="hiddenInput"
                                                th:id="${'url'+iter.index}"
                                                th:value="${chap.url}"
@@ -652,7 +643,7 @@
             str += `
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Name Person</span>
-                                        <input  list="personList"
+                                        <input  list="personList" pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                 id="${'name' + index}"
                                                 value="${ekip.name || ''}"
@@ -693,7 +684,7 @@
                 str +=
             `<label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
-            <input
+            <input pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             id="chap${index}"
             value="${chap.name}"
@@ -703,7 +694,7 @@
             </label>
             <label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">URL</span>
-            <input type="file"
+            <input type="file" accept="video/*"
                   class="hiddenInput"
                   id="${'url'+ index}"
                   value="${chap.url}"

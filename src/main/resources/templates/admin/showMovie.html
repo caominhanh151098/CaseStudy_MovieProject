@@ -46,17 +46,17 @@
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                             >
-                                <path
-                                        fill-rule="evenodd"
-                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                        clip-rule="evenodd"
-                                ></path>
+<!--                                <path-->
+<!--                                        fill-rule="evenodd"-->
+<!--                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"-->
+<!--                                        clip-rule="evenodd"-->
+<!--                                ></path>-->
                             </svg>
                         </div>
-                        <input
+                        <input style="background: white" readonly
                                 class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
                                 type="text"
-                                placeholder="Search for projects"
+
                                 aria-label="Search"
                         />
                     </div>
@@ -274,6 +274,31 @@
                 >
                     Movie List
                 </h4>
+                <div
+                        class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
+                >
+                    <div class="absolute inset-y-0 flex items-center pl-2">
+                        <svg
+                                class="w-4 h-4"
+                                aria-hidden="true"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                        >
+                                                            <path
+                                                                    fill-rule="evenodd"
+                                                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                                                    clip-rule="evenodd"
+                                                            ></path>
+                        </svg>
+                    </div>
+                    <input
+                           class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                           type="search"
+                            id="search"
+                           oninput="onSearch()"
+                           aria-label="Search"
+                    />
+                </div>
                 <div class="w-full overflow-hidden rounded-lg shadow-xs">
                     <div class="w-full overflow-x-auto">
                         <table class="w-full whitespace-no-wrap">
@@ -281,11 +306,23 @@
                             <tr
                                     class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                             >
-                                <th class="px-4 py-3">Name Movie</th>
+                                <th class="px-4 py-3">
+                                    <i onclick="onSort('name')" style="cursor: pointer" class="fa-solid fa-sort"></i>
+                                    Name Movie
+                                </th>
                                 <th class="px-4 py-3">Description</th>
-                                <th class="px-4 py-3">Status</th>
-                                <th class="px-4 py-3">Aired Year</th>
-                                <th class="px-4 py-3">Type</th>
+                                <th class="px-4 py-3">
+                                    <i onclick="onSort('status')" style="cursor: pointer" class="fa-solid fa-sort"></i>
+                                    Status
+                                </th>
+                                <th class="px-4 py-3">
+                                    <i onclick="onSort('airedYear')" style="cursor: pointer" class="fa-solid fa-sort"></i>
+                                    Aired Year
+                                </th>
+                                <th class="px-4 py-3">
+                                    <i onclick="onSort('type')" style="cursor: pointer" class="fa-solid fa-sort"></i>
+                                    Type
+                                </th>
                                 <th class="px-4 py-3">Genre</th>
                                 <th class="px-4 py-3">Actions</th>
                             </tr>
@@ -337,16 +374,19 @@
     let size = 10;
     let totalPage = 0;
     let search = "";
+    let sort = {
+        field: 'id',
+        sortBy: 'asc'
+    }
     const API_MOVIE_LIST = `http://localhost:8080/api/admin/movies`;
 
 
     function initData() {
         showMovieList.innerHTML = ``;
         $.ajax({
-            url: API_MOVIE_LIST + `?page=${page || 0}&size=${size || 0}&search=${search || ''}`,
+            url: API_MOVIE_LIST + `?page=${page || 0}&size=${size || 0}&search=${search || ''}&sort=${sort.field},${sort.sortBy}`,
             method: "GET"
         }).done(data => {
-            console.log(API_MOVIE_LIST)
             let str = "";
             movies = data.content;
             totalPage = data.totalPages;
@@ -525,6 +565,21 @@
         }
         page = pageChange - 1;
         // console.log(page);
+        initData();
+    }
+
+    function onSearch(){
+        search = document.getElementById("search").value;
+        console.log(1)
+        initData();
+    }
+    function onSort(value){
+        if (sort.field === value){
+            sort.sortBy = sort.sortBy === 'desc' ? 'asc' : 'desc';
+        }else {
+            sort.field = value;
+            sort.sortBy = 'desc'
+        }
         initData();
     }
 

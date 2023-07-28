@@ -13,10 +13,12 @@ import com.example.casestudy_movieproject.service.movie.request.MovieSaveRequest
 import com.example.casestudy_movieproject.service.person.PersonService;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -69,8 +71,19 @@ public class AdminController {
     }
 
     @PostMapping("/create")
-    public ModelAndView createMovie(@ModelAttribute("movie") MovieSaveRequest movie){
+    public ModelAndView createMovie(@ModelAttribute("movie")@Valid MovieSaveRequest movie, BindingResult bindingResult){
         ModelAndView model = new ModelAndView("redirect:/admin/showMovie");
+        ModelAndView modelAndView = new ModelAndView("/admin/createMovie");
+        if (bindingResult.hasErrors()){
+            modelAndView.addObject("persons",personService.findAll());
+            modelAndView.addObject("qualities", EQuality.values());
+            modelAndView.addObject("types", EType.values());
+            modelAndView.addObject("statuses", EStatus.values());
+            modelAndView.addObject("genres",genreService.findAll());
+            modelAndView.addObject("roles", ERoleEKip.values());
+            modelAndView.addObject("eKips",ekipService.findAll());
+            return modelAndView;
+        }
         MovieSaveRequest movie1 = movie;
 
         movieService.create(movie);
