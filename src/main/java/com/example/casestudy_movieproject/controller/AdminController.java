@@ -113,9 +113,20 @@ public class AdminController {
     }
 
     @PostMapping("/edit")
-    public ModelAndView editMovie(@ModelAttribute("movie") MovieSaveRequest movie){
+    public ModelAndView editMovie(@ModelAttribute("movie")@Valid MovieSaveRequest movie,BindingResult bindingResult){
 
         ModelAndView model = new ModelAndView("redirect:/admin/showMovie");
+        ModelAndView modelAndView = new ModelAndView("/admin/createMovie");
+        if (bindingResult.hasErrors()){
+            modelAndView.addObject("persons",personService.findAll());
+            modelAndView.addObject("qualities", EQuality.values());
+            modelAndView.addObject("types", EType.values());
+            modelAndView.addObject("statuses", EStatus.values());
+            modelAndView.addObject("genres",genreService.findAll());
+            modelAndView.addObject("roles", ERoleEKip.values());
+            modelAndView.addObject("eKips",ekipService.findAll());
+            return modelAndView;
+        }
         movieService.edit(movie);
         return model;
     }

@@ -46,18 +46,18 @@
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                             >
-<!--                                <path-->
-<!--                                        fill-rule="evenodd"-->
-<!--                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"-->
-<!--                                        clip-rule="evenodd"-->
-<!--                                ></path>-->
+                                <!--                                <path-->
+                                <!--                                        fill-rule="evenodd"-->
+                                <!--                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"-->
+                                <!--                                        clip-rule="evenodd"-->
+                                <!--                                ></path>-->
                             </svg>
                         </div>
                         <input style="background: white" readonly
-                                class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                                type="text"
+                               class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                               type="text"
 
-                                aria-label="Search"
+                               aria-label="Search"
                         />
                     </div>
                 </div>
@@ -278,234 +278,251 @@
                     <div
                             class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
                     >
-
-                        <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Name Movie</span>
-                            <input pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    th:field="*{name}"
-                            />
-                                                        <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"
-                                                              th:errors="*{name}"></span>
-                        </label>
-                        <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Aired Year</span>
-                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
-                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                   th:field="*{airedYear}"
-                            />
-                                                        <span class="text-xs text-red-600 dark:text-red-400"
-                                                              th:if="${#fields.hasErrors('airedYear')}"
-                                                              th:errors="*{airedYear}"></span>
-                        </label>
-                        <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Duration</span>
-                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
-                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                   th:field="*{duration}"
-                            />
-                                                        <span class="text-xs text-red-600 dark:text-red-400"
-                                                              th:if="${#fields.hasErrors('duration')}"
-                                                              th:errors="*{duration}"></span>
-                        </label>
-                        <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Total Eption</span>
-                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
-                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                   th:field="*{totalEp}"
-                            />
-                                                        <span class="text-xs text-red-600 dark:text-red-400"
-                                                              th:if="${#fields.hasErrors('totalEp')}"
-                                                              th:errors="*{totalEp}"></span>
-                        </label>
-                        <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">IMDB Score</span>
-                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0" step="0.1"
-                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                   th:field="*{scoreIMDb}"
-                            />
-                                                        <span class="text-xs text-red-600 dark:text-red-400"
-                                                              th:if="${#fields.hasErrors('scoreIMDb')}"
-                                                              th:errors="*{scoreIMDb}"></span>
-                        </label>
-                        <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">IMG Movie</span>
-                            <input type="file" name="imgMovie" accept="imgage/*"
-                                   id="imgMovie"
-                                   class="hiddenInput"
-                                   th:field="*{img_movie}"
-                            />
-                            <div class="relative">
-                                <input type="text" readonly id="movie"
-                                       class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                                       th:field="*{imgMovie}"
+                        <i onclick="displayMovie()" style="cursor: pointer" class="fa-solid fa-sort">Infomation
+                            Movie</i>
+                        <div id="movieeee" style="display: none">
+                            <label class="block text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">Name Movie</span>
+                                <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required
+                                       title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                       th:field="*{name}"
                                 />
-                                <button type="button"
-                                        onclick="chooseFileMovie()"
-                                        class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                >
-                                    Click
-                                </button>
-                            </div>
-                        </label>
-                        <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">IMG Poster</span>
-                            <input type="file" name="imgPoster" accept="image/*"
-                                   id="imgPoster"
-                                   class="hiddenInput"
-                                   th:field="*{img_poster}"
-                            />
-                            <div class="relative">
-                                <input type="text" readonly id="poster"
-                                       class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                                       th:field="*{imgPoster}"
+                                <span class="text-xs text-red-600 dark:text-red-400"
+                                      th:if="${#fields.hasErrors('name')}"
+                                      th:errors="*{name}"></span>
+                            </label>
+                            <label class="block text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">Aired Year</span>
+                                <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
+                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                       th:field="*{airedYear}"
                                 />
-                                <button type="button"
-                                        onclick="chooseFilePoster()"
-                                        class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                >
-                                    Click
-                                </button>
-                            </div>
-                        </label>
-                        <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Trailer</span>
+                                <span class="text-xs text-red-600 dark:text-red-400"
+                                      th:if="${#fields.hasErrors('airedYear')}"
+                                      th:errors="*{airedYear}"></span>
+                            </label>
+                            <label class="block text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">Duration</span>
+                                <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
+                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                       th:field="*{duration}"
+                                />
+                                <span class="text-xs text-red-600 dark:text-red-400"
+                                      th:if="${#fields.hasErrors('duration')}"
+                                      th:errors="*{duration}"></span>
+                            </label>
+                            <label class="block text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">Total Eption</span>
+                                <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
+                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                       th:field="*{totalEp}"
+                                />
+                                <span class="text-xs text-red-600 dark:text-red-400"
+                                      th:if="${#fields.hasErrors('totalEp')}"
+                                      th:errors="*{totalEp}"></span>
+                            </label>
+                            <label class="block text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">IMDB Score</span>
+                                <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0" step="0.1"
+                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                       th:field="*{scoreIMDb}"
+                                />
+                                <span class="text-xs text-red-600 dark:text-red-400"
+                                      th:if="${#fields.hasErrors('scoreIMDb')}"
+                                      th:errors="*{scoreIMDb}"></span>
+                            </label>
+                            <label class="block text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">IMG Movie</span>
+                                <input type="file" name="imgMovie" accept="imgage/*"
+                                       id="imgMovie"
+                                       class="hiddenInput"
+                                       th:field="*{img_movie}"
+                                />
+                                <div class="relative">
+                                    <input type="text" readonly id="movie"
+                                           class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                           th:field="*{imgMovie}"
+                                    />
+                                    <button type="button"
+                                            onclick="chooseFileMovie()"
+                                            class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                    >
+                                        Click
+                                    </button>
+                                </div>
+                            </label>
+                            <label class="block text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">IMG Poster</span>
+                                <input type="file" name="imgPoster" accept="image/*"
+                                       id="imgPoster"
+                                       class="hiddenInput"
+                                       th:field="*{img_poster}"
+                                />
+                                <div class="relative">
+                                    <input type="text" readonly id="poster"
+                                           class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                           th:field="*{imgPoster}"
+                                    />
+                                    <button type="button"
+                                            onclick="chooseFilePoster()"
+                                            class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                    >
+                                        Click
+                                    </button>
+                                </div>
+                            </label>
+                            <label class="block text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">Trailer</span>
                                 <input type="file" name="urlTrailer" accept="video/*"
                                        id="urlTrailer"
-                                   class="hiddenInput"
-                                   th:field="*{urlTrailer}"
-                            />
-                            <div class="relative">
-                                <input type="text" readonly id="trailer"
-                                        class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                                        th:field="*{url_trailer}"
+                                       class="hiddenInput"
+                                       th:field="*{urlTrailer}"
                                 />
-                                <button type="button"
-                                        onclick="chooseFileTrailer()"
-                                        class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                >
-                                    Click
-                                </button>
-                            </div>
+                                <div class="relative">
+                                    <input type="text" readonly id="trailer"
+                                           class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                           th:field="*{url_trailer}"
+                                    />
+                                    <button type="button"
+                                            onclick="chooseFileTrailer()"
+                                            class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                    >
+                                        Click
+                                    </button>
+                                </div>
 
-                        </label>
+                            </label>
 
 
-                        <label class="block mt-4 text-sm">
+                            <label class="block mt-4 text-sm">
                             <span class="text-gray-700 dark:text-gray-400">
                               Quality
                             </span>
-                            <select th:field="*{quality}"
-                                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            >
-                                <option th:each="quality : ${qualities}" th:value="${quality}"
-                                        th:text="${quality}"></option>
+                                <select th:field="*{quality}"
+                                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                >
+                                    <option th:each="quality : ${qualities}" th:value="${quality}"
+                                            th:text="${quality}"></option>
 
-                            </select>
-                                          <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"
-                                                th:errors="*{quality}"></span>
-                        </label>
-                        <label class="block mt-4 text-sm">
+                                </select>
+                                <span class="text-xs text-red-600 dark:text-red-400"
+                                      th:if="${#fields.hasErrors('duration')}"
+                                      th:errors="*{quality}"></span>
+                            </label>
+                            <label class="block mt-4 text-sm">
                             <span class="text-gray-700 dark:text-gray-400">
                               Status
                             </span>
-                            <select th:field="*{status}"
-                                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            >
-                                <option th:each="status : ${statuses}" th:value="${status}"
-                                        th:text="${status}"></option>
+                                <select th:field="*{status}"
+                                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                >
+                                    <option th:each="status : ${statuses}" th:value="${status}"
+                                            th:text="${status}"></option>
 
-                            </select>
-                        </label>
-                        <label class="block mt-4 text-sm">
+                                </select>
+                                <span class="text-xs text-red-600 dark:text-red-400"
+                                      th:if="${#fields.hasErrors('status')}"
+                                      th:errors="*{status}"></span>
+                            </label>
+                            <label class="block mt-4 text-sm">
                             <span class="text-gray-700 dark:text-gray-400">
                               Type
                             </span>
-                            <select th:field="*{type}"
-                                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            >
-                                <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
+                                <select th:field="*{type}"
+                                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                >
+                                    <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
 
 
-                            </select>
-                        </label>
+                                </select>
+                                <span class="text-xs text-red-600 dark:text-red-400"
+                                      th:if="${#fields.hasErrors('type')}"
+                                      th:errors="*{type}"></span>
+                            </label>
 
-                        <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Genre</span>
-                            <th:block th:each="genre : ${genres}">
-                                <input th:value="${genre.id}" name="genre" id="genre" th:field="*{movieGenres}"
-                                       type="checkbox"
-                                       class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                />
-                                <span class="ml-2" th:text="${genre.name}">
+                            <label class="block text-sm">
+                                <th:block th:each="genre : ${genres}">
+                                    <input th:value="${genre.id}" name="genre" id="genre" th:field="*{movieGenres}"
+                                           type="checkbox"
+                                           class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                    />
+                                    <span class="ml-2" th:text="${genre.name}">
 
                                 </span>
-                            </th:block>
+                                </th:block>
+                                <!--                            <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('movieGenres')}"-->
+                                <!--                                  th:errors="*{movieGenres}"></span>-->
 
-                        </label>
 
-                        <label class="block mt-4 text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Description</span>
-                            <textarea th:field="*{description}"
-                                      class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                      rows="3"
-                                      placeholder="Enter description."
-                            ></textarea>
-                        </label>
+                            </label>
+
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">Description</span>
+                                <textarea th:field="*{description}"
+                                          class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                          rows="3"
+                                          placeholder="Enter description."
+                                ></textarea>
+                            </label>
+                        </div>
                         <hr>
-                        <hr>
-                        <hr>
+                        <i onclick="displayEkip()" style="cursor: pointer" class="fa-solid fa-sort">Infomation Ekip</i>
+                        <div id="ekippp" style="display: none">
+                            <div
+                                    class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
+                            >
+                                <span class="text-gray-700 dark:text-gray-400">EKip Movie</span>
+                                <div id="ekip">
+                                    <th:block th:each="ekip, iter : *{eKips}">
 
-                        <div
-                                class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
-                        >
-                            <span class="text-gray-700 dark:text-gray-400">EKip Movie</span>
-                            <div id="ekip">
-                                <th:block th:each="ekip, iter : *{eKips}">
-
-                                    <label class="block text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">Name Person</span>
-                                        <input list="personList" pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
-                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                               th:id="${'person'+iter.index}"
-                                               th:value="${ekip.name}"
-                                               th:name="${'eKips['+ iter.index + '].person'}"
-                                        />
-                                        <!--                                        th:field="*{eKips.person}"-->
-
-                                        <datalist id="personList">
-                                            <option th:each="person : ${persons}"
-                                                    th:name="${person.name}">
-                                            </option>
-                                        </datalist>
-                                        <!--                                        <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('eKips.person')}"-->
-                                        <!--                                              th:errors="*{eKips.person}"></span>-->
-                                    </label>
-                                    <label class="block mt-4 text-sm">
+                                        <label class="block text-sm">
+                                            <span class="text-gray-700 dark:text-gray-400">Name Person</span>
+                                            <input list="personList" pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$"
+                                                   required
+                                                   title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                   th:id="${'name'+iter.index}"
+                                                   th:value="${ekip.name}"
+                                                   th:name="${'eKips['+ iter.index + '].name'}"
+                                            />
+                                            <datalist id="personList">
+                                                <option th:each="person : ${persons}"
+                                                        th:name="${person.name}">
+                                                </option>
+                                            </datalist>
+                                        </label>
+                                        <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
                   Role
                 </span>
-                                        <!--                                        th:field="*{eKips.role}"-->
-                                        <select th:id="${iter.index}" th:value="${ekip.role}"
-                                                th:name="${'eKips[' + iter.index + '].role'}"
-                                                class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                        >
-                                            <option th:each="role : ${roles}" th:value="${role}"
-                                                    th:text="${role}"></option>
+                                            <select th:id="${iter.index}" th:value="${ekip.role}"
+                                                    th:name="${'eKips[' + iter.index + '].role'}"
+                                                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                            >
+                                                <option th:each="role : ${roles}" th:value="${role}"
+                                                        th:text="${role}"></option>
 
-                                        </select>
-                                    </label>
+                                            </select>
+                                        </label>
 
 
-                                </th:block>
+                                    </th:block>
+                                </div>
+                                <button type="button" onclick="addMorePerson()"
+                                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                                >
+                                    Add More
+                                </button>
+
                             </div>
-                            <button type="button" onclick="addMorePerson()"
-                                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                            >
-                                Add More
-                            </button>
+                        </div>
+                        <i onclick="displayChapter()" style="cursor: pointer" class="fa-solid fa-sort">Infomation
+                            Chapter</i>
+                        <div id="chapterrr">
 
                         </div>
+
 
                         <div
                                 class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
@@ -516,14 +533,16 @@
                                 <th:block th:each="chap, iter : *{epMovies}">
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
-                                        <input pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
-                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                                th:id="${'chap'+iter.index}"
-                                                th:value="${chap.name}"
-                                                th:name="${'epMovies['+ iter.index + '].name'}"
+                                        <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required
+                                               title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                               th:id="${'chap'+iter.index}"
+                                               th:value="${chap.name}"
+                                               th:name="${'epMovies['+ iter.index + '].name'}"
                                         />
-                                        <!--                                    <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"-->
-                                        <!--                                          th:errors="*{name}"></span>-->
+                                        <span class="text-xs text-red-600 dark:text-red-400"
+                                              th:if="${#fields.hasErrors('epMovies.name')}"
+                                              th:errors="${chap.name}"></span>
                                     </label>
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">URL</span>
@@ -548,9 +567,7 @@
                                                 Click
                                             </button>
                                         </div>
-<!--                                        onclick="document.getElementById('urlFile'+ '${iter.index}').click()"-->
-                                        <!--                                    <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"-->
-                                        <!--                                          th:errors="*{name}"></span>-->
+
                                     </label>
                                 </th:block>
                             </div>
@@ -643,12 +660,15 @@
             str += `
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Name Person</span>
-                                        <input  list="personList" pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                                        <input  list="personList" pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                                id="${'name' + index}"
+                                                id="name${index}"
+                                                onchange="onChangeNameP(this)"
                                                 value="${ekip.name || ''}"
                                                 name="${'eKips[' + index + '].name'}"
                                         />
+
+
 
                                         <datalist id="personList">
                                             ${strOption}
@@ -676,15 +696,20 @@
         ekip.innerHTML = str;
     }
 
-        function renderChapter() {
+    function onChangeNameP(e) {
+        const person = persons.find(person => person.id === +e.value);
+        console.log(person)
+    }
 
-            let str = "";
+    function renderChapter() {
 
-            seriesMovie.forEach((chap, index) => {
-                str +=
-            `<label class="block text-sm">
+        let str = "";
+
+        seriesMovie.forEach((chap, index) => {
+            str +=
+                `<label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
-            <input pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+            <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             id="chap${index}"
             value="${chap.name}"
@@ -696,16 +721,16 @@
             <span class="text-gray-700 dark:text-gray-400">URL</span>
             <input type="file" accept="video/*"
                   class="hiddenInput"
-                  id="${'url'+ index}"
+                  id="${'url' + index}"
                   value="${chap.url}"
-                  name="${'epMovies['+ index + '].url'}"
+                  name="${'epMovies[' + index + '].url'}"
                       />
                       <div class="relative">
                           <input type="text" readonly
                                                    class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                                                    id="${'urlChapter' + index}"
                                                    value="${chap.urlChapter || ''}"
-                                                   name="${'epMovies['+ index + '].urlChapter'}"
+                                                   name="${'epMovies[' + index + '].urlChapter'}"
                                             />
                           <button type="button"
                                                     onclick="chooseFileChapter(${index})"
@@ -723,63 +748,80 @@
             Delete
             </button>`
 
-            })
-            chapter.innerHTML = str;
-        }
+        })
+        chapter.innerHTML = str;
+    }
 
-        function removeMovie(index) {
-            seriesMovie.splice(index, 1);
-            renderChapter();
-        }
-
-        function chooseFileChapter(index){
-            document.getElementById("url" + index).click();
-            document.getElementById("url" + index).addEventListener("change", function (){
-                let path = this.value.split("\\");
-                let fileName = path[path.length - 1];
-
-                document.getElementById("urlChapter" + index).value = fileName;
-            })
-        }
-
-        function removePerson(index) {
-            ekips.splice(index, 1);
-            renderPerson();
-        }
-
-        function chooseFileTrailer(){
-            document.getElementById("urlTrailer").click();
-            document.getElementById("urlTrailer").addEventListener("change" , function (){
-                // console.log(this.value)
-                let path = this.value.split("\\");
-                let fileName = path[path.length - 1];
-                // console.log(fileName);
-
-                document.getElementById("trailer").value = fileName;
-            })
-        }
-        function chooseFilePoster(){
-            document.getElementById("imgPoster").click();
-            document.getElementById("imgPoster").addEventListener("change",function (){
-                let path = this.value.split("\\");
-                let fileName = path[path.length - 1];
-
-                document.getElementById("poster").value = fileName;
-            })
-        }
-        function chooseFileMovie(){
-            document.getElementById("imgMovie").click();
-            document.getElementById("imgMovie").addEventListener("change",function (){
-                let path = this.value.split("\\");
-                let fileName = path[path.length - 1];
-
-                document.getElementById("movie").value = fileName;
-            })
-        }
-
-
-        renderPerson();
+    function removeMovie(index) {
+        seriesMovie.splice(index, 1);
         renderChapter();
+    }
+
+    function chooseFileChapter(index) {
+        document.getElementById("url" + index).click();
+        document.getElementById("url" + index).addEventListener("change", function () {
+            let path = this.value.split("\\");
+            let fileName = path[path.length - 1];
+
+            document.getElementById("urlChapter" + index).value = fileName;
+        })
+    }
+
+    function removePerson(index) {
+        ekips.splice(index, 1);
+        renderPerson();
+    }
+
+    function chooseFileTrailer() {
+        document.getElementById("urlTrailer").click();
+        document.getElementById("urlTrailer").addEventListener("change", function () {
+            // console.log(this.value)
+            let path = this.value.split("\\");
+            let fileName = path[path.length - 1];
+            // console.log(fileName);
+
+            document.getElementById("trailer").value = fileName;
+        })
+    }
+
+    function chooseFilePoster() {
+        document.getElementById("imgPoster").click();
+        document.getElementById("imgPoster").addEventListener("change", function () {
+            let path = this.value.split("\\");
+            let fileName = path[path.length - 1];
+
+            document.getElementById("poster").value = fileName;
+        })
+    }
+
+    function chooseFileMovie() {
+        document.getElementById("imgMovie").click();
+        document.getElementById("imgMovie").addEventListener("change", function () {
+            let path = this.value.split("\\");
+            let fileName = path[path.length - 1];
+
+            document.getElementById("movie").value = fileName;
+        })
+    }
+
+    function displayMovie() {
+        let value = document.getElementById("movieeee");
+        value.style.display = value.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function displayEkip() {
+        let value = document.getElementById("ekippp");
+        value.style.display = value.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function displayChapter() {
+        let value = document.getElementById("chapterrr");
+        value.style.display = value.style.display === 'none' ? 'block' : 'none';
+    }
+
+
+    renderPerson();
+    renderChapter();
 </script>
 
 </body>

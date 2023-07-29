@@ -274,29 +274,30 @@
                 >
                     Edit Movie
                 </h4>
-                <form th:object="${movie}" method="post" th:action="@{/admin/create}" enctype="multipart/form-data">
+                <form th:object="${movie}" method="post" th:action="@{/admin/edit}" enctype="multipart/form-data">
                     <div
                             class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
                     >
+                        <input type="hidden" th:field="*{id}">
 
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Name Movie</span>
-                            <input pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                            <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{name}"
                             />
-                            <!--                            <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"-->
-                            <!--                                  th:errors="*{name}"></span>-->
+                            <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('name')}"
+                                  th:errors="*{name}"></span>
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Aired Year</span>
-                            <input type="number"
+                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{airedYear}"
                             />
-                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
-                            <!--                                  th:if="${#fields.hasErrors('airedYear')}"-->
-                            <!--                                  th:errors="*{airedYear}"></span>-->
+                            <span class="text-xs text-red-600 dark:text-red-400"
+                                  th:if="${#fields.hasErrors('airedYear')}"
+                                  th:errors="*{airedYear}"></span>
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Duration</span>
@@ -304,9 +305,9 @@
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{duration}"
                             />
-                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
-                            <!--                                  th:if="${#fields.hasErrors('duration')}"-->
-                            <!--                                  th:errors="*{duration}"></span>-->
+                            <span class="text-xs text-red-600 dark:text-red-400"
+                                  th:if="${#fields.hasErrors('duration')}"
+                                  th:errors="*{duration}"></span>
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Total Eption</span>
@@ -314,19 +315,19 @@
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{totalEp}"
                             />
-                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
-                            <!--                                  th:if="${#fields.hasErrors('totalEp')}"-->
-                            <!--                                  th:errors="*{totalEp}"></span>-->
+                            <span class="text-xs text-red-600 dark:text-red-400"
+                                  th:if="${#fields.hasErrors('totalEp')}"
+                                  th:errors="*{totalEp}"></span>
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">IMDB Score</span>
-                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
+                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0" step="0.1"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{scoreIMDb}"
                             />
-                            <!--                            <span class="text-xs text-red-600 dark:text-red-400"-->
-                            <!--                                  th:if="${#fields.hasErrors('scoreIMDb')}"-->
-                            <!--                                  th:errors="*{scoreIMDb}"></span>-->
+                            <span class="text-xs text-red-600 dark:text-red-400"
+                                  th:if="${#fields.hasErrors('scoreIMDb')}"
+                                  th:errors="*{scoreIMDb}"></span>
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">IMG Movie</span>
@@ -347,8 +348,6 @@
                                     Click
                                 </button>
                             </div>
-                            <!--              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"-->
-                            <!--                    th:errors="*{duration}"></span>-->
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">IMG Poster</span>
@@ -391,8 +390,6 @@
                                     Click
                                 </button>
                             </div>
-                            <!--              <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"-->
-                            <!--                    th:errors="*{duration}"></span>-->
                         </label>
 
 
@@ -407,6 +404,8 @@
                                         th:text="${quality}"></option>
 
                             </select>
+                            <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"
+                                  th:errors="*{quality}"></span>
                         </label>
                         <label class="block mt-4 text-sm">
                             <span class="text-gray-700 dark:text-gray-400">
@@ -419,6 +418,8 @@
                                         th:text="${status}"></option>
 
                             </select>
+                            <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('status')}"
+                                  th:errors="*{status}"></span>
                         </label>
                         <label class="block mt-4 text-sm">
                             <span class="text-gray-700 dark:text-gray-400">
@@ -431,10 +432,12 @@
 
 
                             </select>
+                            <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('type')}"
+                                  th:errors="*{type}"></span>
                         </label>
 
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Genre</span>
+
                             <th:block th:each="genre : ${genres}">
                                 <input th:value="${genre.id}" name="genre" id="genre" th:field="*{movieGenres}"
                                        type="checkbox"
@@ -468,27 +471,22 @@
 
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Name Person</span>
-                                        <input list="personList" pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                                        <input list="personList" pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                th:id="${'person'+iter.index}"
                                                th:value="${ekip.name}"
                                                th:name="${'eKips['+ iter.index + '].person'}"
                                         />
-                                        <!--                                        th:field="*{eKips.person}"-->
-
                                         <datalist id="personList">
                                             <option th:each="person : ${persons}"
                                                     th:name="${person.name}">
                                             </option>
                                         </datalist>
-                                        <!--                                        <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('eKips.person')}"-->
-                                        <!--                                              th:errors="*{eKips.person}"></span>-->
                                     </label>
                                     <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
                   Role
                 </span>
-                                        <!--                                        th:field="*{eKips.role}"-->
                                         <select th:id="${iter.index}" th:value="${ekip.role}"
                                                 th:name="${'eKips[' + iter.index + '].role'}"
                                                 class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
@@ -519,7 +517,7 @@
                                 <th:block th:each="chap, iter : *{epMovies}">
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
-                                        <input pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                                        <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                th:id="${'chap'+iter.index}"
                                                th:value="${chap.name}"
@@ -648,7 +646,7 @@
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Name Person</span>
                                         <input type="hidden" id="${'id' + index || ''}" value="${ekip.id || ''}" name="${'eKips[' + index + '].id' || ''}">
-                                        <input  list="personList" pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                                        <input  list="personList" pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                 id="${'name' + index}"
                                                 value="${ekip.name || ''}"
@@ -691,7 +689,7 @@
             `<label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
             <input type="hidden" id="id${index || '0'}" value="${chap.id || '0'}" name="${'epMovies[' + index + '].id' || '0'}">
-            <input pattern="[A-Za-z]+.*" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+            <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             id="chap${index}"
             value="${chap.name}"
