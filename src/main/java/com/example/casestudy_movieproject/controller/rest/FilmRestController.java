@@ -36,8 +36,8 @@ public class FilmRestController {
     }
 
     @GetMapping("/show/all/{type}")
-    public Page<ShowListMovieResponse> showListMovie(@PageableDefault(size = 12) Pageable pageable, @PathVariable int type) {
-                return movieService.showListMovie(pageable, type);
+    public Page<ShowListMovieResponse> showListMovie(@PageableDefault(size = 12) Pageable pageable, @PathVariable int type, @RequestParam(defaultValue = "") String search) {
+                return movieService.showListMovie(search, pageable, type);
     }
 
     @GetMapping("/show/{idGenre}/{type}")

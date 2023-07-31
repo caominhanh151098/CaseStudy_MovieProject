@@ -21,15 +21,10 @@ public class CommentRestController {
     private final UserService userService;
 
     static User user;
+
     @GetMapping("/{id}")
     public Page<ShowCommentResponse> commentAtMovie(@PathVariable int id, Pageable pageable) {
         return commentService.getCommentByMovieId(id, pageable);
-    }
-
-    @GetMapping
-    private boolean checkUser(){
-        user = userService.getUser();
-        return user == null ? false : true;
     }
 
     @PostMapping

@@ -40,13 +40,13 @@ public class AdminController {
     ServletContext context;
 
     @GetMapping
-    public ModelAndView adminPage(){
+    public ModelAndView adminPage() {
         ModelAndView model = new ModelAndView("admin/index");
         return model;
     }
 
     @GetMapping("/showMovie")
-    public ModelAndView showMovieList(){
+    public ModelAndView showMovieList() {
 
         String absolutePath = context.getRealPath("/");
         ModelAndView model = new ModelAndView("/admin/showMovie");
@@ -55,36 +55,35 @@ public class AdminController {
     }
 
     @GetMapping("/create")
-    public ModelAndView showMovieCreate(){
+    public ModelAndView showMovieCreate() {
         ModelAndView model = new ModelAndView("/admin/createMovie");
-        model.addObject("movie",new MovieSaveRequest());
+        model.addObject("movie", new MovieSaveRequest());
 //        model.addObject("seriesMovie",new ArrayList<>());
         List<Person> s = personService.findAll();
-        model.addObject("persons",personService.findAll());
+        model.addObject("persons", personService.findAll());
         model.addObject("qualities", EQuality.values());
         model.addObject("types", EType.values());
         model.addObject("statuses", EStatus.values());
-        model.addObject("genres",genreService.findAll());
+        model.addObject("genres", genreService.findAll());
         model.addObject("roles", ERoleEKip.values());
-        model.addObject("eKips",ekipService.findAll());
+        model.addObject("eKips", ekipService.findAll());
         return model;
     }
 
     @PostMapping("/create")
-    public ModelAndView createMovie(@ModelAttribute("movie")@Valid MovieSaveRequest movie, BindingResult bindingResult){
+    public ModelAndView createMovie(@ModelAttribute("movie") @Valid MovieSaveRequest movie, BindingResult bindingResult) {
         ModelAndView model = new ModelAndView("redirect:/admin/showMovie");
         ModelAndView modelAndView = new ModelAndView("/admin/createMovie");
-        if (bindingResult.hasErrors()){
-            modelAndView.addObject("persons",personService.findAll());
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("persons", personService.findAll());
             modelAndView.addObject("qualities", EQuality.values());
             modelAndView.addObject("types", EType.values());
             modelAndView.addObject("statuses", EStatus.values());
-            modelAndView.addObject("genres",genreService.findAll());
+            modelAndView.addObject("genres", genreService.findAll());
             modelAndView.addObject("roles", ERoleEKip.values());
-            modelAndView.addObject("eKips",ekipService.findAll());
+            modelAndView.addObject("eKips", ekipService.findAll());
             return modelAndView;
         }
-        MovieSaveRequest movie1 = movie;
 
         movieService.create(movie);
 
@@ -92,39 +91,38 @@ public class AdminController {
     }
 
     @GetMapping("{id}")
-    public ModelAndView showEditPage(@PathVariable int id){
+    public ModelAndView showEditPage(@PathVariable int id) {
         ModelAndView model = new ModelAndView("/admin/editMovie");
 
 
-        model.addObject("movie",movieService.showEdit(id));
-        model.addObject("persons",personService.findAll());
+        model.addObject("movie", movieService.showEdit(id));
+        model.addObject("persons", personService.findAll());
         model.addObject("qualities", EQuality.values());
         model.addObject("types", EType.values());
         model.addObject("statuses", EStatus.values());
-        model.addObject("genres",genreService.findAll());
+        model.addObject("genres", genreService.findAll());
         model.addObject("roles", ERoleEKip.values());
-        model.addObject("eKips",ekipService.findAll());
+        model.addObject("eKips", ekipService.findAll());
 
         MovieSaveRequest movieSaveRequest = movieService.showEdit(id);
-
 
 
         return model;
     }
 
     @PostMapping("/edit")
-    public ModelAndView editMovie(@ModelAttribute("movie")@Valid MovieSaveRequest movie,BindingResult bindingResult){
+    public ModelAndView editMovie(@ModelAttribute("movie") @Valid MovieSaveRequest movie, BindingResult bindingResult) {
 
         ModelAndView model = new ModelAndView("redirect:/admin/showMovie");
         ModelAndView modelAndView = new ModelAndView("/admin/createMovie");
-        if (bindingResult.hasErrors()){
-            modelAndView.addObject("persons",personService.findAll());
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("persons", personService.findAll());
             modelAndView.addObject("qualities", EQuality.values());
             modelAndView.addObject("types", EType.values());
             modelAndView.addObject("statuses", EStatus.values());
-            modelAndView.addObject("genres",genreService.findAll());
+            modelAndView.addObject("genres", genreService.findAll());
             modelAndView.addObject("roles", ERoleEKip.values());
-            modelAndView.addObject("eKips",ekipService.findAll());
+            modelAndView.addObject("eKips", ekipService.findAll());
             return modelAndView;
         }
         movieService.edit(movie);

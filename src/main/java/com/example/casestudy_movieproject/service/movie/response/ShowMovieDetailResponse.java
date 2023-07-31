@@ -31,4 +31,5 @@ public class ShowMovieDetailResponse {
     private String type;
     private String totalEp;
     private List<ShowListEpisodeResponse> seriesMovie;
+    private String urlTrailer;
 }

@@ -69,12 +69,31 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    Bạn phải đăng nhập để sử dụng tính năng này!
+                <div class="modal-body" id="message">
+                    Bạn cần đăng nhập để sử dụng tính năng này!
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="location.href='/login'">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalPlayTrailer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-left: -150px !important;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="width: 175%">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTrailerLabel">Trailer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" >
+                    <video id="videoPlayer" width="847" height="476.4375" frameborder="0" allowfullscreen="" controls>
+                    </video>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

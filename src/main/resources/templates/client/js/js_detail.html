@@ -13,6 +13,7 @@
         initData();
         renderHeaderBar(0);
 
+
         function displayStatus(text) {
             if (text == "COMPLETE")
                 return "Hoàn thành";
@@ -40,9 +41,11 @@
                 movie.status = displayStatus(data.status);
                 movie.quality = displayQuality(data.quality);
                 let episodeMovie = "";
-                firstEp = movie.seriesMovie[0].id;
+                if (movie.seriesMovie.length != 0)
+                    firstEp = movie.seriesMovie[0].id;
+
                 movie.seriesMovie.forEach(f => {
-                    episodeMovie += `<a href="/xem-phim/${movieId + "-" + f.id}">${f.name}</a>`;
+                    episodeMovie += `<a href="/client/xem-phim/${movieId + "-" + f.id}">${f.name}</a>`;
                 })
                 episode.innerHTML = episodeMovie;
                 showDetail.innerHTML = `
@@ -71,7 +74,7 @@
                                     <ul>
                                         <li><span>Năm phát hành:</span>${movie.airedYear}</li>
                                         <li><span>Thể loại:</span>${movie.movieGenres}</li>
-                                        <li><span>Chất lượng:</span>${movie.quality}</li>
+                                        ${movie.status == "Sắp khởi chiếu" ? "" : `<li><span>Chất lượng:</span>${movie.quality}</li>`}
                                         <li><span>Tình trạng:</span>${movie.status}</li>
                                     </ul>
                                 </div>
@@ -91,7 +94,7 @@
                         <div class="anime__details__btn">
                             <a id="likeButton" class="follow-btn btn btn-outline-success" onclick="likeMovie()"><i class="fa fa-heart-o"></i>Theo dõi</a>
                             <a class="watch-btn"><span onclick="watchFilm()" style="cursor: pointer">Xem Ngay</span>
-                                <i class="fa fa-angle-right" ></i>
+                                <i class="fa fa-angle-right" onclick="watchTrailer()"></i>
                             </a>
                         </div>
                     </div>
@@ -122,18 +125,32 @@
         }
 
         function likeMovie() {
-            $.ajax({
-                url: `http://localhost:8080/api/follow/like/${movieId}`,
-                method: "GET"
-            }).done(boolean => {
-                if (!boolean) {
-                    myModal.show();
-                } else renderLikeButton();
-            })
+            if (!userLogin) {
+                document.getElementById("message").innerHTML = "Bạn cần đăng nhập để sử dụng tính năng này";
+                myModal.show();
+            } else
+                $.ajax({
+                    url: `http://localhost:8080/api/follow/like/${movieId}`,
+                    method: "GET"
+                }).done(renderLikeButton())
         }
 
         function watchFilm() {
-            location.href = `/client/xem-phim/${movieId}-${firstEp}`;
+            if (firstEp == undefined) {
+                document.getElementById("message").innerHTML = "Phim sắp khởi chiều. Mời bạn quay lại lần sau";
+                myModal.show();
+            } else
+                location.href = `/client/xem-phim/${movieId}-${firstEp}`;
+        }
+
+        function watchTrailer() {
+            const modal = new bootstrap.Modal(document.getElementById("modalPlayTrailer"));
+            let video = document.querySelector("video")
+            document.getElementById("videoPlayer").innerHTML = `<source src="${movie.urlTrailer}">`;
+            modal.show();
+            $('#modalPlayTrailer').on('hidden.bs.modal', function () {
+                video.pause()
+            })
         }
     </script>
 </div>

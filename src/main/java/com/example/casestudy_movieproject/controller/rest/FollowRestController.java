@@ -30,12 +30,10 @@ public class FollowRestController {
     }
 
     @GetMapping("/like/{id}")
-    public boolean likeOrDisLikeMovie(@PathVariable int id) {
+    public void likeOrDisLikeMovie(@PathVariable int id) {
         user = userService.getUser();
         if (user != null) {
             followService.likeOrDisLikeMovie(user, id);
-            return true;
-        } else
-            return false;
+        }
     }
 }

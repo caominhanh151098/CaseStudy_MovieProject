@@ -35,6 +35,12 @@ public class AuthController {
         return "client/login";
     }
 
+    @GetMapping("/logout")
+    public String showLogout(Model model){
+        LoginRequest user = new LoginRequest();
+        return "client/login";
+    }
+
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute("user") LoginRequest request,
                                BindingResult result,

@@ -10,20 +10,56 @@
 <section class="hero">
     <div class="container">
         <div class="hero__slider owl-carousel" id="randomPoster">
-            <th:block th:each="movie : ${randomMovie}">
-                <div th:data-setbg="${movie.img_poster}" class="hero__items set-bg">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="hero__text">
-                                <div class="label" th:text="${movie.gender}"></div>
-                                <h2 th:text="${movie.name}"></h2>
-                                <p>After 30 days of travel across the world...</p>
-                                <a th:href="@{/client/phim/{id}(id=${movie.id})}"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
-                            </div>
+<!--            <th:block th:each="movie : ${randomMovie}">-->
+<!--                <div th:data-setbg="${movie.img_poster}" class="hero__items set-bg">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-lg-6">-->
+<!--                            <div class="hero__text">-->
+<!--                                <div class="label" th:text="${movie.gender}"></div>-->
+<!--                                <h2 th:text="${movie.name}"></h2>-->
+<!--                                <p>After 30 days of travel across the world...</p>-->
+<!--                                <a th:href="@{/client/phim/{id}(id=${movie.id})}"><span>Xem ngay</span> <i class="fa fa-angle-right"></i></a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </th:block>-->
+            <div data-setbg="/assets/client/img/poster/review-transformers-quai-thu-troi-day-2.jpg" class="hero__items set-bg">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="hero__text">
+                            <a href="/client/the-loai/1" class="label">Hành động</a>
+                            <h2>TRANSFORMERS: QUÁI THÚ TRỖI DẬY</h2>
+                            <p>Transformers: Quái Thú Trỗi Dậy dựa trên sự kiện Beast Wars ...</p>
+                            <a href="/client/phim/1"><span>Xem ngay</span> <i class="fa fa-angle-right"></i></a>
                         </div>
                     </div>
                 </div>
-            </th:block>
+            </div>
+            <div data-setbg="/assets/client/img/poster/john-wick-4-poster-641-preview.jpg" class="hero__items set-bg">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="hero__text">
+                            <a href="/client/the-loai/1" class="label">Hành động</a>
+                            <h2>SÁT THỦ JOHN WICK 4</h2>
+                            <p>Sát Thủ John Wick 4 là câu chuyện với cái giá phải trả ngày càng tăng ...</p>
+                            <a href="/client/phim/11"><span>Xem ngay</span> <i class="fa fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-setbg="/assets/client/img/poster/guardians-of-the-galaxy-vol-3-movie-cast-wallpaper-2560x1600_7.jpg" class="hero__items set-bg">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="hero__text">
+                            <a href="/client/the-loai/2" class="label">Phiêu lưu</a>
+                            <h2>Vệ binh Dải Ngân Hà</h2>
+                            <p>Vệ Binh Dải Ngân Hà 3 kể về Peter Quill, vẫn quay cuồng vì mất Gamora ...</p>
+                            <a href="/client/phim/2"><span>Xem ngay</span> <i class="fa fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

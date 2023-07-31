@@ -618,23 +618,12 @@
 
     function addMorePerson() {
         const data = {
-            person: '',
-            role: ''
+            name: '',
+            role: 'ACTOR'
         }
         ekips.push(data);
         renderPerson();
         currentSizeEkip++;
-    }
-
-    function addMoreMovie() {
-        const data = {
-            name: '',
-            url: ''
-
-        };
-        seriesMovie.push(data);
-        renderChapter();
-        currentSizeSerie++;
     }
 
     function renderPerson() {
@@ -643,18 +632,18 @@
         ekips.forEach((ekip, index) => {
             let strOption = "";
             let strRole = "";
-            roles.forEach(role => {
-                if (role === ekip.role) {
-                    strRole += `<option value="${role}" selected>${ekip.role}</option>`
-                } else {
-                    strRole += `<option value="${role}">${role}</option>`
-                }
-            })
             persons.forEach(person => {
                 if (person.id === +ekip.id) {
                     strOption += `<option value="${person.name}" selected></option>`
                 } else {
                     strOption += `<option value="${person.name}"></option>`
+                }
+            })
+            roles.forEach(role => {
+                if (role === ekip.role) {
+                    strRole += `<option value="${role}" selected>${ekip.role}</option>`
+                } else {
+                    strRole += `<option value="${role}">${role}</option>`
                 }
             })
             str += `
@@ -663,7 +652,7 @@
                                         <input  list="personList" pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                 id="name${index}"
-                                                onchange="onChangeNameP(this)"
+                                                onchange="onChangeNamePerson(this)"
                                                 value="${ekip.name || ''}"
                                                 name="${'eKips[' + index + '].name'}"
                                         />
@@ -679,7 +668,7 @@
                                         <span class="text-gray-700 dark:text-gray-400">
                                           Role
 
-                                        <select id="${index}" value="${ekip.role}" name="${'eKips[' + index + '].role'}"
+                                        <select id="${index}" onchange="onChangeRolePerson(this)" value="${ekip.role}" name="${'eKips[' + index + '].role'}"
                                                 class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                         >
                                             ${strRole}
@@ -696,9 +685,33 @@
         ekip.innerHTML = str;
     }
 
-    function onChangeNameP(e) {
-        const person = persons.find(person => person.id === +e.value);
-        console.log(person)
+    function onChangeNamePerson(e) {
+        let person = persons.find(person => person.name === e.value);
+        if (person == undefined)
+            person = {
+                id: 0,
+                name: e.value,
+            }
+        let index = e.id.replace("name", "");
+        ekips[index].name = person.name
+    }
+
+    function onChangeRolePerson(e) {
+        let role = roles.find(role => role === e.value);
+        let index = e.id.replace("name", "");
+        ekips[index].role = role;
+
+    }
+
+    function addMoreMovie() {
+        const data = {
+            name: '',
+            url: ''
+
+        };
+        seriesMovie.push(data);
+        renderChapter();
+        currentSizeSerie++;
     }
 
     function renderChapter() {
@@ -712,6 +725,7 @@
             <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             id="chap${index}"
+            onchange="onChangeNameChapter(this)"
             value="${chap.name}"
             name="${'epMovies[' + index + '].name'}"
             />
@@ -721,6 +735,7 @@
             <span class="text-gray-700 dark:text-gray-400">URL</span>
             <input type="file" accept="video/*"
                   class="hiddenInput"
+                  onchange="onChangeUrl(this)"
                   id="${'url' + index}"
                   value="${chap.url}"
                   name="${'epMovies[' + index + '].url'}"
@@ -750,6 +765,11 @@
 
         })
         chapter.innerHTML = str;
+    }
+
+    function onChangeNameChapter(e) {
+        let index = e.id.replace("chap", "");
+        seriesMovie[index].name = e.value;
     }
 
     function removeMovie(index) {

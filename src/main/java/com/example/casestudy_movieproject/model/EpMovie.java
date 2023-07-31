@@ -22,6 +22,8 @@ public class EpMovie {
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
+    private boolean type;
+
     public EpMovie(String name, String url, Movie movie) {
         this.name = name;
         this.url = url;

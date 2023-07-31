@@ -11,4 +11,5 @@ public class WatchMovieResponse {
     private String name;
     private String url;
     private String movie;
+    private String type;
 }

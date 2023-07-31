@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -47,6 +48,13 @@ public class ClientController {
     public ModelAndView showEpMovie() {
         ModelAndView model = new ModelAndView("client/list_movie");
         model.addObject("showList", 3);
+        return model;
+    }
+    @GetMapping("client/tim-kiem")
+    public ModelAndView searchMovie(@RequestParam(defaultValue = "") String search) {
+        ModelAndView model = new ModelAndView("client/list_movie");
+        model.addObject("showList", 4);
+        model.addObject("search", search);
         return model;
     }
     @GetMapping("client/phim/{id}")

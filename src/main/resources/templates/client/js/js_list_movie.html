@@ -6,8 +6,9 @@
         let pagination = document.getElementById("pagination");
         let movies = [];
         let url = location.href;
-        let urlListMovie = ""
+        let urlListMovie = "";
         let sortType = 0;
+        let search = [[${search}]];
 
         let totalPages = 0;
         let page = 0;
@@ -30,6 +31,11 @@
                     renderHeaderBar(2);
                     urlListMovie = `http://localhost:8080/api/movie/show/seriesM/${sortType}?page=${page}&size=12&sort=id,desc`;
                     renderTag(3);
+                    break;
+                case 4:
+                    renderHeaderBar(0);
+                    urlListMovie = `http://localhost:8080/api/movie/show/all/${sortType}?search=${search}&page=${page}&size=12&sort=id,desc`;
+                    renderTag(4);
                     break;
             }
             renderListMovie();
@@ -103,6 +109,10 @@
                 case 3:
                     document.getElementById("category").innerHTML = "Phim bộ";
                     document.getElementById("genreTag").innerHTML = "Phim bộ"
+                    break;
+                case 4:
+                    document.getElementById("category").innerHTML = "Tìm kiếm";
+                    document.getElementById("genreTag").innerHTML = `Tìm kiếm theo tên: ${search}`;
                     break;
             }
 

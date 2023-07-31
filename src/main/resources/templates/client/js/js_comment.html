@@ -22,7 +22,7 @@
                     commentArea.innerHTML += `
                         <div class="anime__review__item">
                             <div class="anime__review__item__pic">
-                                <img src="${c.user.avatar || ""}" alt="avatar">
+                                <img src="${c.user.avatar || "/assets/client/img/avatar/default.jpg"}" alt="avatar">
                             </div>
                             <div class="anime__review__item__text">
                                 <h6>${c.user.name} - <span>${time}</span></h6>
@@ -34,6 +34,7 @@
                 })
             })
         }
+
         function submitComment(e) {
             e.preventDefault();
             let inputComment = document.getElementById("comment");
@@ -42,28 +43,25 @@
             const data = Object.fromEntries(formInput.entries());
             data.movieId = movieId;
             data.content = inputComment.value;
-            $.ajax({
-                url: 'http://localhost:8080/api/comment',
-                method: 'GET',
-            }).done(boolean => {
-                if (!boolean)
-                    myModal.show();
-                else {
-                    $.ajax({
-                        url: 'http://localhost:8080/api/comment',
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        data: JSON.stringify(data),
-                    }).done(e => {
-                        renderComment();
-                        initData();
-                    })
-                }
-            })
+            inputComment.value = "";
 
+            if (!userLogin) {
+                document.getElementById("message").innerHTML = "Bạn cần đăng nhập để sử dụng tính năng này";
+                myModal.show();
+            } else {
+                $.ajax({
+                    url: 'http://localhost:8080/api/comment',
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify(data),
+                }).done(e => {
+                    renderComment();
+                    initData();
+                })
+            }
         }
 
         function countDownTime(sec) {

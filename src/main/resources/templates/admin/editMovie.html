@@ -46,18 +46,18 @@
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                             >
-<!--                                <path-->
-<!--                                        fill-rule="evenodd"-->
-<!--                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"-->
-<!--                                        clip-rule="evenodd"-->
-<!--                                ></path>-->
+                                <!--                                <path-->
+                                <!--                                        fill-rule="evenodd"-->
+                                <!--                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"-->
+                                <!--                                        clip-rule="evenodd"-->
+                                <!--                                ></path>-->
                             </svg>
                         </div>
                         <input style="background: white" readonly
-                                class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                                type="text"
+                               class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                               type="text"
 
-                                aria-label="Search"
+                               aria-label="Search"
                         />
                     </div>
                 </div>
@@ -282,7 +282,8 @@
 
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Name Movie</span>
-                            <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                            <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required
+                                   title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                    th:field="*{name}"
                             />
@@ -404,7 +405,8 @@
                                         th:text="${quality}"></option>
 
                             </select>
-                            <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('duration')}"
+                            <span class="text-xs text-red-600 dark:text-red-400"
+                                  th:if="${#fields.hasErrors('duration')}"
                                   th:errors="*{quality}"></span>
                         </label>
                         <label class="block mt-4 text-sm">
@@ -471,7 +473,8 @@
 
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Name Person</span>
-                                        <input list="personList" pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                                        <input list="personList" pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required
+                                               title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                th:id="${'person'+iter.index}"
                                                th:value="${ekip.name}"
@@ -517,7 +520,8 @@
                                 <th:block th:each="chap, iter : *{epMovies}">
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
-                                        <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                                        <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required
+                                               title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                th:id="${'chap'+iter.index}"
                                                th:value="${chap.name}"
@@ -680,13 +684,13 @@
         ekip.innerHTML = str;
     }
 
-        function renderChapter() {
+    function renderChapter() {
 
-            let str = "";
+        let str = "";
 
-            seriesMovie.forEach((chap, index) => {
-                str +=
-            `<label class="block text-sm">
+        seriesMovie.forEach((chap, index) => {
+            str +=
+                `<label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
             <input type="hidden" id="id${index || '0'}" value="${chap.id || '0'}" name="${'epMovies[' + index + '].id' || '0'}">
             <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
@@ -701,16 +705,16 @@
             <span class="text-gray-700 dark:text-gray-400">URL</span>
             <input type="file"
             class="hiddenInput"
-            id="${'url'+ index}"
+            id="${'url' + index}"
             value="${chap.url}"
-            name="${'epMovies['+ index + '].url'}"
+            name="${'epMovies[' + index + '].url'}"
             />
             <div class="relative">
             <input type="text" readonly
             class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
             id="${'urlChapter' + index}"
             value="${chap.urlChapter || ''}"
-            name="${'epMovies['+ index + '].urlChapter'}"
+            name="${'epMovies[' + index + '].urlChapter'}"
             />
             <button type="button"
             onclick="chooseFileChapter(${index})"
@@ -728,63 +732,65 @@
             Delete
             </button>`
 
-            })
-            chapter.innerHTML = str;
-        }
+        })
+        chapter.innerHTML = str;
+    }
 
-        function removeMovie(index) {
-            seriesMovie.splice(index, 1);
-            renderChapter();
-        }
-
-        function chooseFileChapter(index){
-            document.getElementById("url" + index).click();
-            document.getElementById("url" + index).addEventListener("change", function (){
-                let path = this.value.split("\\");
-                let fileName = path[path.length - 1];
-
-                document.getElementById("urlChapter" + index).value = fileName;
-            })
-        }
-
-        function removePerson(index) {
-            ekips.splice(index, 1);
-            renderPerson();
-        }
-
-        function chooseFileTrailer(){
-            document.getElementById("urlTrailer").click();
-            document.getElementById("urlTrailer").addEventListener("change" , function (){
-                // console.log(this.value)
-                let path = this.value.split("\\");
-                let fileName = path[path.length - 1];
-                // console.log(fileName);
-
-                document.getElementById("trailer").value = fileName;
-            })
-        }
-        function chooseFilePoster(){
-            document.getElementById("imgPoster").click();
-            document.getElementById("imgPoster").addEventListener("change",function (){
-                let path = this.value.split("\\");
-                let fileName = path[path.length - 1];
-
-                document.getElementById("poster").value = fileName;
-            })
-        }
-        function chooseFileMovie(){
-            document.getElementById("imgMovie").click();
-            document.getElementById("imgMovie").addEventListener("change",function (){
-                let path = this.value.split("\\");
-                let fileName = path[path.length - 1];
-
-                document.getElementById("movie").value = fileName;
-            })
-        }
-
-
-        renderPerson();
+    function removeMovie(index) {
+        seriesMovie.splice(index, 1);
         renderChapter();
+    }
+
+    function chooseFileChapter(index) {
+        document.getElementById("url" + index).click();
+        document.getElementById("url" + index).addEventListener("change", function () {
+            let path = this.value.split("\\");
+            let fileName = path[path.length - 1];
+
+            document.getElementById("urlChapter" + index).value = fileName;
+        })
+    }
+
+    function removePerson(index) {
+        ekips.splice(index, 1);
+        renderPerson();
+    }
+
+    function chooseFileTrailer() {
+        document.getElementById("urlTrailer").click();
+        document.getElementById("urlTrailer").addEventListener("change", function () {
+            // console.log(this.value)
+            let path = this.value.split("\\");
+            let fileName = path[path.length - 1];
+            // console.log(fileName);
+
+            document.getElementById("trailer").value = fileName;
+        })
+    }
+
+    function chooseFilePoster() {
+        document.getElementById("imgPoster").click();
+        document.getElementById("imgPoster").addEventListener("change", function () {
+            let path = this.value.split("\\");
+            let fileName = path[path.length - 1];
+
+            document.getElementById("poster").value = fileName;
+        })
+    }
+
+    function chooseFileMovie() {
+        document.getElementById("imgMovie").click();
+        document.getElementById("imgMovie").addEventListener("change", function () {
+            let path = this.value.split("\\");
+            let fileName = path[path.length - 1];
+            console.log(fileName)
+            document.getElementById("movie").value = fileName;
+        })
+    }
+
+
+    renderPerson();
+    renderChapter();
 </script>
 
 </body>

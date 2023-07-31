@@ -7,11 +7,10 @@
         let videoPlayer = document.querySelector('video');
         const myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
         let url = location.href;
-        let id = url.replace("http://localhost:8080/client/xem-phim/","");
+        let id = url.replace("http://localhost:8080/client/xem-phim/", "");
         let movieId = id.split('-')[0];
         let idEp = id.split('-')[1];
         let movie;
-        let userId = "6";
         renderHeaderBar(0);
         initData();
         if (movieId == "")
@@ -29,8 +28,8 @@
                  <div class="breadcrumb__links">
                     <a href="/"><i class="fa fa-home"></i> Trang chủ</a>
                     <a href="#">Thể loại</a>
-                    <a href="/the-loai/${movie.genre.id}">${movie.genre.name || ""}</a>
-                    <a href="/phim/${movie.id}">${movie.name}</a>
+                    <a href="/client/the-loai/${movie.genre.id}">${movie.genre.name || ""}</a>
+                    <a href="/client/phim/${movie.id}">${movie.name}</a>
                     <span id="nameEp"></span>
                 </div>`
                 let episodeMovie = "";
@@ -45,20 +44,25 @@
                     method: "GET"
                 }).done(data => {
                     let film = data;
-                    // videoPlayer.innerHTML = `<source src="/assets/client/videos/Transformers7.mp4">`
-                    playVideo.innerHTML = `
+                    console.log(film)
+                    if (film.type == "true")
+                        videoPlayer.innerHTML = `<source src="${film.url}">`
+                    else playVideo.innerHTML = `
                     <iframe id="iframePlayer" src="${film.url}" id="videoPlayer" width="847" height="476.4375" frameborder="0" allowfullscreen="">
                     </iframe>`
                     document.getElementById("nameEp").innerHTML = `${film.name}`
+                    addEvent(film.type);
                 })
             })
-            addEvent()
         }
 
-        function addEvent() {
-            videoPlayer.addEventListener("play", startPlaying)
-            videoPlayer.addEventListener("pause", pausePlaying)
-            // document.getElementById("player_container").addEventListener("click", upView);
+        function addEvent(type) {
+            if (type == 0)
+                document.getElementById("player_container").addEventListener("click", upView);
+            else {
+                videoPlayer.addEventListener("play", startPlaying)
+                videoPlayer.addEventListener("pause", pausePlaying)
+            }
         }
 
         function checkIdMovie(id) {

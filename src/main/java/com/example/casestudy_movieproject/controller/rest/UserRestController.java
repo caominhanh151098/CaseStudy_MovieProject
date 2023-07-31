@@ -11,17 +11,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/user")
+@RequestMapping("/api/user")
 public class UserRestController {
     @Autowired
     private UserService userService;
-    @GetMapping("")
+    @GetMapping("/admin")
     public ResponseEntity<?> getAll(){
         List<User> users = userService.findAll();
         return ResponseEntity.ok(users);
-
     }
 
-
-
+    @GetMapping("/client")
+    public boolean checkUser() {
+        User user = userService.getUser();
+        if (user == null)
+            return false;
+        return true;
+    }
 }

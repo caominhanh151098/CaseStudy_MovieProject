@@ -2,8 +2,34 @@
 <div th:fragment="js">
     <script th:inline="javascript">
         const headerBar = document.getElementById("header_menu");
+        const headerInfo = document.getElementById("header_info");
         genreId = 0;
         let genreList = [];
+        let userLogin = false;
+        checkUser();
+        renderUserHeader()
+        function checkUser() {
+            $.ajax({
+                url: `http://localhost:8080/api/user/client`,
+                async: false,
+                method: "GET"
+            }).done(boolean => {
+                if(boolean)
+                    userLogin = true;
+            })
+        }
+
+        function renderUserHeader() {
+            headerInfo.innerHTML = "";
+            if (userLogin) {
+                headerInfo.innerHTML = `
+                        <a class="search-switch" style="cursor: pointer"><span class="icon_search"></span> Search</a>
+                        <a href="/client/thong-tin-ca-nhat"><span class="icon_cog"></span> Info</a>
+                        <a href="/logout"><span class="icon_profile"></span> Logout</a>`
+            } else headerInfo.innerHTML = `
+                        <a class="search-switch" style="cursor: pointer"><span class="icon_search"></span> Search</a>
+                        <a href="/login"><span class="icon_profile"></span> Login</a>`
+        }
 
         function renderHeaderBar(typePage) {
             $.ajax({
