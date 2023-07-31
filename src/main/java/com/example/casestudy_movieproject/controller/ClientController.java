@@ -64,7 +64,13 @@ public class ClientController {
     }
     @GetMapping("client/xem-phim/{id}-{idEp}")
     public ModelAndView watchMovie(@PathVariable int id, @PathVariable int idEp) {
-        ModelAndView model = new ModelAndView("client/watch-film");
+        ModelAndView model = new ModelAndView("client/watch_film");
+        return model;
+    }
+
+    @GetMapping("client/thong-tin-ca-nhan")
+    public ModelAndView infoUser() {
+        ModelAndView model = new ModelAndView("client/info_user");
         return model;
     }
 }
