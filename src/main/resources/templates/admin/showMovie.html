@@ -829,6 +829,7 @@
 
     const renderPagination = () => {
         const pagination = $('#pagination');
+        console.log(totalPage)
         pagination.empty();
         pagination.append(`<li onclick="onPageChange(${page})">
                         <button

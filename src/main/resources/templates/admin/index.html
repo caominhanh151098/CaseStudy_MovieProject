@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="admin/layout.html :: header_layout">
+<head th:replace="admin/layout :: header_layout">
 </head>
 <body>
 <div
@@ -8,7 +8,7 @@
         :class="{ 'overflow-hidden': isSideMenuOpen }"
 >
     <!-- Desktop sidebar -->
-    <th:block th:replace="admin/layout.html :: head_bar"></th:block>
+    <th:block th:replace="admin/layout :: head_bar"></th:block>
     <div class="flex flex-col flex-1 w-full">
         <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
             <div
@@ -178,7 +178,7 @@
                         >
                             <img
                                     class="object-cover w-8 h-8 rounded-full"
-                                    src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+                                    src="https://w7.pngwing.com/pngs/34/536/png-transparent-emoji-art-emoji-sticker-computer-icons-emoji-heart-smiley-emoticon.png"
                                     alt=""
                                     aria-hidden="true"
                             />
@@ -271,7 +271,7 @@
                 <h2
                         class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
                 >
-                    User
+                    List User
                 </h2>
                 <!-- CTA -->
 
@@ -287,13 +287,13 @@
                                     class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                             >
                                 <th class="px-4 py-3">Name</th>
-                                <th class="px-4 py-3">User</th>
-                                <th class="px-4 py-3">PassWord</th>
+                                <th class="px-4 py-3">UserName</th>
                                 <th class="px-4 py-3">Email</th>
+                                <th class="px-4 py-3">PassWord</th>
                             </tr>
                             </thead>
-                            <tbody
-                                    class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
+                            <tbody id="body"
+                                   class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                             >
                             <tr class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3">
@@ -670,14 +670,140 @@
                             class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
                     >
                 <span class="flex items-center col-span-3">
-                  Showing 21-30 of 100
+                  Showing
                 </span>
                         <span class="col-span-2"></span>
                         <!-- Pagination -->
                         <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                   <nav aria-label="Table navigation">
-                    <ul class="inline-flex items-center">
-                      <li>
+                    <ul class="inline-flex items-center" id="pagination" name="pagination">
+<!--                      <li>-->
+                        <!--                        <button-->
+                        <!--                                class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"-->
+                        <!--                                aria-label="Previous"-->
+                        <!--                        >-->
+                        <!--                          <svg-->
+                        <!--                                  aria-hidden="true"-->
+                        <!--                                  class="w-4 h-4 fill-current"-->
+                        <!--                                  viewBox="0 0 20 20"-->
+                        <!--                          >-->
+                        <!--                            <path-->
+                        <!--                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"-->
+                        <!--                                    clip-rule="evenodd"-->
+                        <!--                                    fill-rule="evenodd"-->
+                        <!--                            ></path>-->
+                        <!--                          </svg>-->
+                        <!--                        </button>-->
+                        <!--                      </li>-->
+                        <!--                      <li>-->
+                        <!--                        <button-->
+                        <!--                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"-->
+                        <!--                        >-->
+                        <!--                          1-->
+                        <!--                        </button>-->
+                        <!--                      </li>-->
+                        <!--                      <li>-->
+                        <!--                        <button-->
+                        <!--                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"-->
+                        <!--                        >-->
+                        <!--                          2-->
+                        <!--                        </button>-->
+                        <!--                      </li>-->
+                        <!--                      <li>-->
+                        <!--                        <button-->
+                        <!--                                class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple"-->
+                        <!--                        >-->
+                        <!--                          3-->
+                        <!--                        </button>-->
+                        <!--                      </li>-->
+                        <!--                      <li>-->
+                        <!--                        <button-->
+                        <!--                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"-->
+                        <!--                        >-->
+                        <!--                          4-->
+                        <!--                        </button>-->
+                        <!--                      </li>-->
+                        <!--                      <li>-->
+                        <!--                        <span class="px-3 py-1">...</span>-->
+                        <!--                      </li>-->
+                        <!--                      <li>-->
+                        <!--                        <button-->
+                        <!--                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"-->
+                        <!--                        >-->
+                        <!--                          8-->
+                        <!--                        </button>-->
+                        <!--                      </li>-->
+                        <!--                      <li>-->
+                        <!--                        <button-->
+                        <!--                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"-->
+                        <!--                        >-->
+                        <!--                          9-->
+                        <!--                        </button>-->
+                        <!--                      </li>-->
+                        <!--                      <li>-->
+                        <!--                        <button-->
+                        <!--                                class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"-->
+                        <!--                                aria-label="Next"-->
+                        <!--                        >-->
+                        <!--                          <svg-->
+                        <!--                                  class="w-4 h-4 fill-current"-->
+                        <!--                                  aria-hidden="true"-->
+                        <!--                                  viewBox="0 0 20 20"-->
+                        <!--                          >-->
+                        <!--                            <path-->
+                        <!--                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"-->
+                        <!--                                    clip-rule="evenodd"-->
+                        <!--                                    fill-rule="evenodd"-->
+                        <!--                            ></path>-->
+                        <!--                          </svg>-->
+                        <!--                        </button>-->
+                        <!--                      </li>-->
+                    </ul>
+                  </nav>
+                </span>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+
+
+            </div>
+        </main>
+    </div>
+</div>
+<script src="/assets/client/js/jquery-3.3.1.min.js"></script>
+<script>
+    // const body = document.getElementById('body');
+    let totalPages = 0;
+    let userData = [];
+    let page = 0;
+    let size = 3;
+
+    function renderDatas() {
+
+        $.ajax({
+            url: "http://localhost:8080/api/admin/user",
+            type: 'GET',
+            success: function (users) {
+                userData = users;
+                console.log(users)
+                drawTable();
+            },
+            errors: function (errors) {
+
+            }
+        });
+    }
+
+    // renderDatas();
+
+    const renderPagination = () => {
+        const pagination = $('#pagination');
+        pagination.empty();
+        //dom cai ul ve
+        //cho ul empty
+        //u
+        pagination.append(`<li onclick="onPageChange(${page})">
                         <button
                                 class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
                                 aria-label="Previous"
@@ -694,56 +820,22 @@
                             ></path>
                           </svg>
                         </button>
-                      </li>
-                      <li>
+                      </li>`)
+        for (let i = 1; i <= totalPage; i++) {
+            console.log(i)
+            pagination.append(` <li onclick="onPageChange(${i})">
                         <button
                                 class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
                         >
-                          1
+                            ${i}
                         </button>
-                      </li>
-                      <li>
+                      </li>`)
+
+        }
+        pagination.append(`<li onclick="onPageChange(${page + 2})">
                         <button
-                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                        >
-                          2
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                                class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple"
-                        >
-                          3
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                        >
-                          4
-                        </button>
-                      </li>
-                      <li>
-                        <span class="px-3 py-1">...</span>
-                      </li>
-                      <li>
-                        <button
-                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                        >
-                          8
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                        >
-                          9
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                                class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
-                                aria-label="Next"
+                                class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
+                                aria-label="Previous"
                         >
                           <svg
                                   class="w-4 h-4 fill-current"
@@ -757,19 +849,78 @@
                             ></path>
                           </svg>
                         </button>
-                      </li>
-                    </ul>
-                  </nav>
-                </span>
-                    </div>
-                </div>
+                      </li>`)
+    }
+    const onPageChange = (pageChange) => {
+        if (pageChange < 1 || pageChange > totalPage || pageChange === page + 1) {
+            return;
+        }
+        //console.log(page);
+        page = pageChange - 1;
+        renderUsers();
+    }
 
-                <!-- Charts -->
+
+    const renderUsers = () => {
+        body.innerHTML = ``;
+
+        $.ajax({
+            url: `http://localhost:8080/api/admin/user?page=${page || 0}&size=${size || 0}`,
+            method: 'GET'
+        }).done(data => {
+            userData = data.content;
+            totalPage = data.totalPages;
+            let str = ""
+            userData.forEach((user, ndex) => {
+                str += `<tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3">
+                                    <div class="flex items-center text-sm">
+                                        <!-- Avatar with inset shadow -->
+                                        <div
+                                                class="relative hidden w-8 h-8 mr-3 rounded-full md:block"
+                                        >
+                                            <img
+                                                    class="object-cover w-full h-full rounded-full"
+                                                    src="https://i.pinimg.com/564x/e9/c2/c5/e9c2c5c10beda12fe489ae2a783e36b8.jpg"
+                                                    alt=""
+                                                    loading="lazy"
+                                            />
+                                            <div
+                                                    class="absolute inset-0 rounded-full shadow-inner"
+                                                    aria-hidden="true"
+                                            ></div>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold">${user.name}</p>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">
+
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 text-sm">${user.username}
+
+                                </td>
+                                <td class="px-4 py-3 text-xs">
+                        <span
+                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+                        >${user.email}
 
 
-            </div>
-        </main>
-    </div>
-</div>
+                            </tr>`
+
+            })
+            renderPagination();
+            body.innerHTML = str;
+            if (page > 0 && userData.length === 0) {
+                page = 0;
+                renderUsers();
+            }
+        })
+    }
+    renderUsers();
+
+
+</script>
 </body>
 </html>

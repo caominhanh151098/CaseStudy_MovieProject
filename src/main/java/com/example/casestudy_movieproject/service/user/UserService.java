@@ -3,9 +3,16 @@ package com.example.casestudy_movieproject.service.user;
 import com.example.casestudy_movieproject.model.User;
 import com.example.casestudy_movieproject.repository.UserRepository;
 import com.example.casestudy_movieproject.service.request.UserSaveRequest;
+import com.example.casestudy_movieproject.service.user.response.UserListResponse;
 import com.example.casestudy_movieproject.util.AppUtils;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,6 +44,9 @@ public class UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         return userRepository.findByUsername(username);
+    }
+    public Page<UserListResponse>finAllpaging(Pageable pageable) {
+        return userRepository.findAll(pageable).map(user -> AppUtils.mapper.map(user, UserListResponse.class));
     }
 
 
