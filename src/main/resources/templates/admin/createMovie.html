@@ -97,77 +97,8 @@
                             </template>
                         </button>
                     </li>
-                    <!-- Notifications menu -->
-                    <li class="relative">
-                        <button
-                                class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
-                                @click="toggleNotificationsMenu"
-                                @keydown.escape="closeNotificationsMenu"
-                                aria-label="Notifications"
-                                aria-haspopup="true"
-                        >
-                            <svg
-                                    class="w-5 h-5"
-                                    aria-hidden="true"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                            >
-                                <path
-                                        d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
-                                ></path>
-                            </svg>
-                            <!-- Notification badge -->
-                            <span
-                                    aria-hidden="true"
-                                    class="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"
-                            ></span>
-                        </button>
-                        <template x-if="isNotificationsMenuOpen">
-                            <ul
-                                    x-transition:leave="transition ease-in duration-150"
-                                    x-transition:leave-start="opacity-100"
-                                    x-transition:leave-end="opacity-0"
-                                    @click.away="closeNotificationsMenu"
-                                    @keydown.escape="closeNotificationsMenu"
-                                    class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700"
-                            >
-                                <li class="flex">
-                                    <a
-                                            class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                            href="#"
-                                    >
-                                        <span>Messages</span>
-                                        <span
-                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600"
-                                        >
-                          13
-                        </span>
-                                    </a>
-                                </li>
-                                <li class="flex">
-                                    <a
-                                            class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                            href="#"
-                                    >
-                                        <span>Sales</span>
-                                        <span
-                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600"
-                                        >
-                          2
-                        </span>
-                                    </a>
-                                </li>
-                                <li class="flex">
-                                    <a
-                                            class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                            href="#"
-                                    >
-                                        <span>Alerts</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </template>
-                    </li>
+
+
                     <!-- Profile menu -->
                     <li class="relative">
                         <button
@@ -216,33 +147,11 @@
                                         <span>Profile</span>
                                     </a>
                                 </li>
+
                                 <li class="flex">
-                                    <a
-                                            class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                            href="#"
-                                    >
-                                        <svg
-                                                class="w-4 h-4 mr-3"
-                                                aria-hidden="true"
-                                                fill="none"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                        >
-                                            <path
-                                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                                            ></path>
-                                            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        </svg>
-                                        <span>Settings</span>
-                                    </a>
-                                </li>
-                                <li class="flex">
-                                    <a
-                                            class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                            href="#"
+                                    <a th:href="@{/logout}"
+                                       class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                       href="#"
                                     >
                                         <svg
                                                 class="w-4 h-4 mr-3"
@@ -278,306 +187,302 @@
                     <div
                             class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
                     >
-                        <i onclick="displayMovie()" style="cursor: pointer" class="fa-solid fa-sort">Infomation
-                            Movie</i>
-                        <div id="movieeee" style="display: none">
-                            <label class="block text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">Name Movie</span>
-                                <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required
-                                       title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
-                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                       th:field="*{name}"
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Name Movie</span>
+                            <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required
+                                   title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   th:field="*{name}"
+                            />
+                            <span class="text-xs text-red-600 dark:text-red-400"
+                                  th:if="${#fields.hasErrors('name')}"
+                                  th:errors="*{name}"></span>
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Aired Year</span>
+                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
+                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   th:field="*{airedYear}"
+                            />
+                            <span class="text-xs text-red-600 dark:text-red-400"
+                                  th:if="${#fields.hasErrors('airedYear')}"
+                                  th:errors="*{airedYear}"></span>
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Duration</span>
+                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
+                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   th:field="*{duration}"
+                            />
+                            <span class="text-xs text-red-600 dark:text-red-400"
+                                  th:if="${#fields.hasErrors('duration')}"
+                                  th:errors="*{duration}"></span>
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Total Eption</span>
+                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
+                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   th:field="*{totalEp}"
+                            />
+                            <span class="text-xs text-red-600 dark:text-red-400"
+                                  th:if="${#fields.hasErrors('totalEp')}"
+                                  th:errors="*{totalEp}"></span>
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">IMDB Score</span>
+                            <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0" step="0.1"
+                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   th:field="*{scoreIMDb}"
+                            />
+                            <span class="text-xs text-red-600 dark:text-red-400"
+                                  th:if="${#fields.hasErrors('scoreIMDb')}"
+                                  th:errors="*{scoreIMDb}"></span>
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">IMG Movie</span>
+                            <input type="file" name="imgMovie" accept="imgage/*"
+                                   id="imgMovie"
+                                   class="hiddenInput"
+                                   th:field="*{img_movie}"
+                            />
+                            <div class="relative">
+                                <input type="text" readonly id="movie"
+                                       class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                       th:field="*{imgMovie}"
                                 />
-                                <span class="text-xs text-red-600 dark:text-red-400"
-                                      th:if="${#fields.hasErrors('name')}"
-                                      th:errors="*{name}"></span>
-                            </label>
-                            <label class="block text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">Aired Year</span>
-                                <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
-                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                       th:field="*{airedYear}"
+                                <button type="button"
+                                        onclick="chooseFileMovie()"
+                                        class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                >
+                                    Click
+                                </button>
+                            </div>
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">IMG Poster</span>
+                            <input type="file" name="imgPoster" accept="image/*"
+                                   id="imgPoster"
+                                   class="hiddenInput"
+                                   th:field="*{img_poster}"
+                            />
+                            <div class="relative">
+                                <input type="text" readonly id="poster"
+                                       class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                       th:field="*{imgPoster}"
                                 />
-                                <span class="text-xs text-red-600 dark:text-red-400"
-                                      th:if="${#fields.hasErrors('airedYear')}"
-                                      th:errors="*{airedYear}"></span>
-                            </label>
-                            <label class="block text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">Duration</span>
-                                <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
-                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                       th:field="*{duration}"
+                                <button type="button"
+                                        onclick="chooseFilePoster()"
+                                        class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                >
+                                    Click
+                                </button>
+                            </div>
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Trailer</span>
+                            <input type="file" name="urlTrailer" accept="video/*"
+                                   id="urlTrailer"
+                                   class="hiddenInput"
+                                   th:field="*{urlTrailer}"
+                            />
+                            <div class="relative">
+                                <input type="text" readonly id="trailer"
+                                       class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                       th:field="*{url_trailer}"
                                 />
-                                <span class="text-xs text-red-600 dark:text-red-400"
-                                      th:if="${#fields.hasErrors('duration')}"
-                                      th:errors="*{duration}"></span>
-                            </label>
-                            <label class="block text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">Total Eption</span>
-                                <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0"
-                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                       th:field="*{totalEp}"
-                                />
-                                <span class="text-xs text-red-600 dark:text-red-400"
-                                      th:if="${#fields.hasErrors('totalEp')}"
-                                      th:errors="*{totalEp}"></span>
-                            </label>
-                            <label class="block text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">IMDB Score</span>
-                                <input type="number" min="0" required title="Không được nhập số nhỏ hơn 0" step="0.1"
-                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                       th:field="*{scoreIMDb}"
-                                />
-                                <span class="text-xs text-red-600 dark:text-red-400"
-                                      th:if="${#fields.hasErrors('scoreIMDb')}"
-                                      th:errors="*{scoreIMDb}"></span>
-                            </label>
-                            <label class="block text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">IMG Movie</span>
-                                <input type="file" name="imgMovie" accept="imgage/*"
-                                       id="imgMovie"
-                                       class="hiddenInput"
-                                       th:field="*{img_movie}"
-                                />
-                                <div class="relative">
-                                    <input type="text" readonly id="movie"
-                                           class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                                           th:field="*{imgMovie}"
-                                    />
-                                    <button type="button"
-                                            onclick="chooseFileMovie()"
-                                            class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                    >
-                                        Click
-                                    </button>
-                                </div>
-                            </label>
-                            <label class="block text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">IMG Poster</span>
-                                <input type="file" name="imgPoster" accept="image/*"
-                                       id="imgPoster"
-                                       class="hiddenInput"
-                                       th:field="*{img_poster}"
-                                />
-                                <div class="relative">
-                                    <input type="text" readonly id="poster"
-                                           class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                                           th:field="*{imgPoster}"
-                                    />
-                                    <button type="button"
-                                            onclick="chooseFilePoster()"
-                                            class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                    >
-                                        Click
-                                    </button>
-                                </div>
-                            </label>
-                            <label class="block text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">Trailer</span>
-                                <input type="file" name="urlTrailer" accept="video/*"
-                                       id="urlTrailer"
-                                       class="hiddenInput"
-                                       th:field="*{urlTrailer}"
-                                />
-                                <div class="relative">
-                                    <input type="text" readonly id="trailer"
-                                           class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                                           th:field="*{url_trailer}"
-                                    />
-                                    <button type="button"
-                                            onclick="chooseFileTrailer()"
-                                            class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                    >
-                                        Click
-                                    </button>
-                                </div>
+                                <button type="button"
+                                        onclick="chooseFileTrailer()"
+                                        class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                >
+                                    Click
+                                </button>
+                            </div>
 
-                            </label>
+                        </label>
 
 
-                            <label class="block mt-4 text-sm">
+                        <label class="block mt-4 text-sm">
                             <span class="text-gray-700 dark:text-gray-400">
                               Quality
                             </span>
-                                <select th:field="*{quality}"
-                                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                >
-                                    <option th:each="quality : ${qualities}" th:value="${quality}"
-                                            th:text="${quality}"></option>
+                            <select th:field="*{quality}"
+                                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            >
+                                <option th:each="quality : ${qualities}" th:value="${quality}"
+                                        th:text="${quality}"></option>
 
-                                </select>
-                                <span class="text-xs text-red-600 dark:text-red-400"
-                                      th:if="${#fields.hasErrors('duration')}"
-                                      th:errors="*{quality}"></span>
-                            </label>
-                            <label class="block mt-4 text-sm">
+                            </select>
+                            <span class="text-xs text-red-600 dark:text-red-400"
+                                  th:if="${#fields.hasErrors('duration')}"
+                                  th:errors="*{quality}"></span>
+                        </label>
+                        <label class="block mt-4 text-sm">
                             <span class="text-gray-700 dark:text-gray-400">
                               Status
                             </span>
-                                <select th:field="*{status}"
-                                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                >
-                                    <option th:each="status : ${statuses}" th:value="${status}"
-                                            th:text="${status}"></option>
+                            <select th:field="*{status}"
+                                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            >
+                                <option th:each="status : ${statuses}" th:value="${status}"
+                                        th:text="${status}"></option>
 
-                                </select>
-                                <span class="text-xs text-red-600 dark:text-red-400"
-                                      th:if="${#fields.hasErrors('status')}"
-                                      th:errors="*{status}"></span>
-                            </label>
-                            <label class="block mt-4 text-sm">
+                            </select>
+                            <span class="text-xs text-red-600 dark:text-red-400"
+                                  th:if="${#fields.hasErrors('status')}"
+                                  th:errors="*{status}"></span>
+                        </label>
+                        <label class="block mt-4 text-sm">
                             <span class="text-gray-700 dark:text-gray-400">
                               Type
                             </span>
-                                <select th:field="*{type}"
-                                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                >
-                                    <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
+                            <select th:field="*{type}"
+                                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            >
+                                <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
 
 
-                                </select>
-                                <span class="text-xs text-red-600 dark:text-red-400"
-                                      th:if="${#fields.hasErrors('type')}"
-                                      th:errors="*{type}"></span>
-                            </label>
+                            </select>
+                            <span class="text-xs text-red-600 dark:text-red-400"
+                                  th:if="${#fields.hasErrors('type')}"
+                                  th:errors="*{type}"></span>
+                        </label>
 
-                            <label class="block text-sm">
-                                <th:block th:each="genre : ${genres}">
-                                    <input th:value="${genre.id}" name="genre" id="genre" th:field="*{movieGenres}"
-                                           type="checkbox"
-                                           class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                    />
-                                    <span class="ml-2" th:text="${genre.name}">
+                        <label class="block text-sm">
+                            <th:block th:each="genre : ${genres}">
+                                <input th:value="${genre.id}" name="genre" id="genre" th:field="*{movieGenres}"
+                                       type="checkbox"
+                                       class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                />
+                                <span class="ml-2" th:text="${genre.name}">
 
                                 </span>
-                                </th:block>
-                                <!--                            <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('movieGenres')}"-->
-                                <!--                                  th:errors="*{movieGenres}"></span>-->
+                            </th:block>
+                            <!--                            <span class="text-xs text-red-600 dark:text-red-400" th:if="${#fields.hasErrors('movieGenres')}"-->
+                            <!--                                  th:errors="*{movieGenres}"></span>-->
 
 
-                            </label>
+                        </label>
 
-                            <label class="block mt-4 text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">Description</span>
-                                <textarea th:field="*{description}"
-                                          class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                          rows="3"
-                                          placeholder="Enter description."
-                                ></textarea>
-                            </label>
-                        </div>
+                        <label class="block mt-4 text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Description</span>
+                            <textarea th:field="*{description}"
+                                      class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                      rows="3"
+                                      placeholder="Enter description."
+                            ></textarea>
+                        </label>
                         <hr>
-                        <i onclick="displayEkip()" style="cursor: pointer" class="fa-solid fa-sort">Infomation Ekip</i>
+                        <i onclick="displayEkip()" style="cursor: pointer" class="fa-solid fa-sort">Infomation Ekip</i> <br>
+                        <i onclick="displayChapter()" style="cursor: pointer" class="fa-solid fa-sort">Infomation
+                            Chapter</i>
                         <div id="ekippp" style="display: none">
                             <div
                                     class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
                             >
-                                <span class="text-gray-700 dark:text-gray-400">EKip Movie</span>
-                                <div id="ekip">
-                                    <th:block th:each="ekip, iter : *{eKips}">
+                            <span class="text-gray-700 dark:text-gray-400">EKip Movie</span>
+                            <div id="ekip">
+                                <th:block th:each="ekip, iter : *{eKips}">
 
-                                        <label class="block text-sm">
-                                            <span class="text-gray-700 dark:text-gray-400">Name Person</span>
-                                            <input list="personList" pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$"
-                                                   required
-                                                   title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
-                                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                                   th:id="${'name'+iter.index}"
-                                                   th:value="${ekip.name}"
-                                                   th:name="${'eKips['+ iter.index + '].name'}"
-                                            />
-                                            <datalist id="personList">
-                                                <option th:each="person : ${persons}"
-                                                        th:name="${person.name}">
-                                                </option>
-                                            </datalist>
-                                        </label>
-                                        <label class="block mt-4 text-sm">
+                                    <label class="block text-sm">
+                                        <span class="text-gray-700 dark:text-gray-400">Name Person</span>
+                                        <input list="personList" pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$"
+                                               required
+                                               title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                               th:id="${'name'+iter.index}"
+                                               th:value="${ekip.name}"
+                                               th:name="${'eKips['+ iter.index + '].name'}"
+                                        />
+                                        <datalist id="personList">
+                                            <option th:each="person : ${persons}"
+                                                    th:name="${person.name}">
+                                            </option>
+                                        </datalist>
+                                    </label>
+                                    <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
                   Role
                 </span>
-                                            <select th:id="${iter.index}" th:value="${ekip.role}"
-                                                    th:name="${'eKips[' + iter.index + '].role'}"
-                                                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                            >
-                                                <option th:each="role : ${roles}" th:value="${role}"
-                                                        th:text="${role}"></option>
+                                        <select th:id="${iter.index}" th:value="${ekip.role}"
+                                                th:name="${'eKips[' + iter.index + '].role'}"
+                                                class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                        >
+                                            <option th:each="role : ${roles}" th:value="${role}"
+                                                    th:text="${role}"></option>
 
-                                            </select>
+                                        </select>
+                                    </label>
+
+
+                                </th:block>
+                            </div>
+                            </div>
+                            <button type="button" onclick="addMorePerson()"
+                                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                            >
+                                Add More
+                            </button>
+                        </div>
+
+                        <div id="chapterrr" style="display: none">
+                            <div
+                                    class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
+                            >
+                                <span class="text-gray-700 dark:text-gray-400">Chapter</span>
+                                <div id="chapter">
+
+                                    <th:block th:each="chap, iter : *{epMovies}">
+                                        <label class="block text-sm">
+                                            <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
+                                            <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required
+                                                   title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+                                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                   th:id="${'chap'+iter.index}"
+                                                   th:value="${chap.name}"
+                                                   th:name="${'epMovies['+ iter.index + '].name'}"
+                                            />
+                                            <span class="text-xs text-red-600 dark:text-red-400"
+                                                  th:if="${#fields.hasErrors('epMovies.name')}"
+                                                  th:errors="${chap.name}"></span>
                                         </label>
+                                        <label class="block text-sm">
+                                            <span class="text-gray-700 dark:text-gray-400">URL</span>
+                                            <input type="file" accept="video/*"
+                                                   class="hiddenInput"
+                                                   th:id="${'url'+iter.index}"
+                                                   th:value="${chap.url}"
+                                                   th:name="${'epMovies['+ iter.index + '].url'}"
 
+                                            />
+                                            <div class="relative">
+                                                <input type="text" readonly
+                                                       class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                                       th:id="${'urlChapter' + iter.index}"
+                                                       th:value="${chap.urlChapter}"
+                                                       th:name="${'epMovies['+ iter.index + '].urlChapter'}"
+                                                />
+                                                <button type="button"
+                                                        onclick="chooseFileChapter()"
+                                                        class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                                >
+                                                    Click
+                                                </button>
+                                            </div>
 
+                                        </label>
                                     </th:block>
                                 </div>
-                                <button type="button" onclick="addMorePerson()"
-                                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                                >
-                                    Add More
-                                </button>
 
-                            </div>
-                        </div>
-                        <i onclick="displayChapter()" style="cursor: pointer" class="fa-solid fa-sort">Infomation
-                            Chapter</i>
-                        <div id="chapterrr">
-
-                        </div>
-
-
-                        <div
-                                class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
-                        >
-                            <span class="text-gray-700 dark:text-gray-400">Chapter</span>
-                            <div id="chapter">
-
-                                <th:block th:each="chap, iter : *{epMovies}">
-                                    <label class="block text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
-                                        <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required
-                                               title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
-                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                               th:id="${'chap'+iter.index}"
-                                               th:value="${chap.name}"
-                                               th:name="${'epMovies['+ iter.index + '].name'}"
-                                        />
-                                        <span class="text-xs text-red-600 dark:text-red-400"
-                                              th:if="${#fields.hasErrors('epMovies.name')}"
-                                              th:errors="${chap.name}"></span>
-                                    </label>
-                                    <label class="block text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">URL</span>
-                                        <input type="file" accept="video/*"
-                                               class="hiddenInput"
-                                               th:id="${'url'+iter.index}"
-                                               th:value="${chap.url}"
-                                               th:name="${'epMovies['+ iter.index + '].url'}"
-
-                                        />
-                                        <div class="relative">
-                                            <input type="text" readonly
-                                                   class="block w-full pl-20 mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                                                   th:id="${'urlChapter' + iter.index}"
-                                                   th:value="${chap.urlChapter}"
-                                                   th:name="${'epMovies['+ iter.index + '].urlChapter'}"
-                                            />
-                                            <button type="button"
-                                                    onclick="chooseFileChapter()"
-                                                    class="absolute inset-y-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                            >
-                                                Click
-                                            </button>
-                                        </div>
-
-                                    </label>
-                                </th:block>
                             </div>
                             <button type="button" onclick="addMoreMovie()"
                                     class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                             >
                                 Add More
                             </button>
-
                         </div>
+
+
+
 
 
                     </div>
@@ -632,18 +537,19 @@
         ekips.forEach((ekip, index) => {
             let strOption = "";
             let strRole = "";
+            roles.forEach(role => {
+                if (role === ekip.role) {
+                    strRole += `<option value="${role}" selected>${ekip.role}</option>`
+
+                } else {
+                    strRole += `<option value="${role}">${role}</option>`
+                }
+            })
             persons.forEach(person => {
                 if (person.id === +ekip.id) {
                     strOption += `<option value="${person.name}" selected></option>`
                 } else {
                     strOption += `<option value="${person.name}"></option>`
-                }
-            })
-            roles.forEach(role => {
-                if (role === ekip.role) {
-                    strRole += `<option value="${role}" selected>${ekip.role}</option>`
-                } else {
-                    strRole += `<option value="${role}">${role}</option>`
                 }
             })
             str += `
