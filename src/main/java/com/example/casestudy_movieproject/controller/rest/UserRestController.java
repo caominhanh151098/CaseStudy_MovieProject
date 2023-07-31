@@ -11,9 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
 
@@ -23,11 +29,13 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/admin")
-    public ResponseEntity<?> getAll() {
-        List<User> users = userService.findAll();
-        return ResponseEntity.ok(users);
-    }
+
+//    @GetMapping("/admin")
+//    public ResponseEntity<?> getAll() {
+//        List<User> users = userService.findAll();
+//        return ResponseEntity.ok(users);
+//    }
+
 
     @GetMapping("/client")
     public boolean checkUser() {
@@ -42,6 +50,7 @@ public class UserRestController {
         return userService.showInfoUserClient();
     }
 
+
     @PutMapping("/client/info")
     public void editInfo(@Valid @RequestBody SaveUserInfoRequest request, BindingResult result){
         if (result.hasErrors()) {
@@ -55,7 +64,10 @@ public class UserRestController {
     }
 
 
-    @GetMapping
+
+
+
+        @GetMapping("/admin")
     public Page<UserListResponse> findAll(Pageable pageable) {
 
         return userService.finAllpaging(pageable);

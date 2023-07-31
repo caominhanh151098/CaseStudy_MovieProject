@@ -774,7 +774,7 @@
         body.innerHTML = ``;
 
         $.ajax({
-            url: `http://localhost:8080/api/admin/user?page=${page || 0}&size=${size || 0}`,
+            url: `http://localhost:8080/api/user/admin?page=${page || 0}&size=${size || 0}`,
             method: 'GET'
         }).done(data => {
             userData = data.content;
@@ -790,7 +790,7 @@
                                         >
                                             <img
                                                     class="object-cover w-full h-full rounded-full"
-                                                    src="https://i.pinimg.com/564x/e9/c2/c5/e9c2c5c10beda12fe489ae2a783e36b8.jpg"
+                                                    src="${user.avatar || "https://cdn-icons-png.flaticon.com/512/1500/1500458.png"}"
                                                     alt=""
                                                     loading="lazy"
                                             />
