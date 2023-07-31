@@ -1,0 +1,57 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="js">
+    <script th:inline="javascript">
+        let userInfo;
+        renderInfoUser()
+
+        function renderInfoUser() {
+            $.ajax({
+                url: `http://localhost:8080/api/user/client/info`,
+                method: "GET"
+            }).done(data => {
+                userInfo = data;
+                if (userInfo != "") {
+                    document.getElementById("idInfo").value = userInfo.id;
+                    document.getElementById("username").value = userInfo.username;
+                    document.getElementById("email").value = userInfo.email;
+                    document.getElementById("password").placeholder = "Nhìn gì mà nhìn???"
+                    document.getElementById("name").value = userInfo.name;
+                    document.getElementById("idInfoAvatar").value = userInfo.id;
+                    document.getElementById("avatar").src = userInfo.avatar || "/assets/client/img/avatar/default.jpg";
+                }
+                // else location.href = "/client";
+            })
+        }
+
+        function inputChangeAvatar() {
+            document.getElementById("inputAvatar").click();
+        }
+
+        function changeAvatar() {
+            document.getElementById("form").addEventListener("submit", submitChangeAvatar(event));
+            document.getElementById("form").submit();
+        }
+
+        function submitChangeAvatar(e){
+            e.preventDefault();
+        }
+
+        function submitEditInfo(e) {
+            e.preventDefault();
+            const form = document.getElementById("formInfo");
+            const formInput = new FormData(form);
+            const data = Object.fromEntries(formInput.entries());
+            $.ajax({
+                url: `http://localhost:8080/api/user/client/info`,
+                method: "PUT",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(data),
+            }).done(e => {
+                alert("Thay đổi thông tin thành công!");
+            })
+        }
+    </script>
+</div>

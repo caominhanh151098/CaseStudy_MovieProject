@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zxx">
+
+<th:block th:replace="client/layout :: header_layout"></th:block>
+
+<body>
+<!-- Page Preloder -->
+<th:block th:replace="client/layout :: head_bar"></th:block>
+
+<!-- Normal Breadcrumb Begin -->
+<section class="normal-breadcrumb set-bg" data-setbg="/assets/client/img/normal-breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="normal__breadcrumb__text">
+                    <h2>Thông tin</h2>
+                    <p id="labelName">Chào mừng</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Normal Breadcrumb End -->
+
+<!-- Login Section Begin -->
+<section class="signup spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login__form">
+                    <h3>Thông tin cá nhân</h3>
+                    <form onsubmit="submitEditInfo(event)" id="formInfo">
+                        <input type="hidden" id="idInfo" name="id">
+                        <div class="input__item">
+                            <input type="text" placeholder="User Name" name="username" id="username" disabled>
+                            <span class="icon_profile"></span>
+                        </div>
+                        <div class="input__item">
+                            <input type="email" placeholder="Email" name="email" id="email" disabled>
+                            <span class="icon_mail"></span>
+                        </div>
+                        <div class="input__item">
+                            <input type="password" name="password" placeholder="Password" id="password">
+                            <span class="icon_lock"></span>
+                        </div>
+                        <div class="input__item">
+                            <input type="text" placeholder="Name" name="name" id="name">
+                            <span class="icon_bag"></span>
+                        </div>
+
+                        <button type="submit" class="site-btn">Sửa thông tin</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login__social__links">
+                    <h3>Avatar</h3>
+                    <div>
+                        <img src="/assets/client/img/avatar/user_2.jpg"
+                             style="height: 250px; width: 250px; border-radius: 50%" alt="avatar" id="avatar"
+                             onclick="inputChangeAvatar()">
+                        <form enctype="multipart/form-data" id="form">
+                            <input type="hidden" name="id" id="idInfoAvatar">
+                            <input type="file" name="avatar" accept="image/*" style="display: none" id="inputAvatar"
+                                   onchange="changeAvatar()">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Login Section End -->
+
+<!-- Footer Section Begin -->
+<th:block th:replace="client/layout :: footer_layout"></th:block>
+<th:block th:replace="client/js/js_info_user.html :: js"></th:block>
+<script>renderHeaderBar(0)</script>
+</body>
+
+</html>
