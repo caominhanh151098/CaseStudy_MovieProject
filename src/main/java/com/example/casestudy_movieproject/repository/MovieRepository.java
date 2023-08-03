@@ -14,6 +14,8 @@ import java.util.List;
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
     Movie findById(int id);
 
+    void removeById(int id);
+
     @Query(value = "select m from Movie  m where lower(m.name) like lower(:search) or " +
                                                 "lower(m.type) like lower(:search) ")
     Page<Movie> searchAllWithPage(String search , Pageable pageable);

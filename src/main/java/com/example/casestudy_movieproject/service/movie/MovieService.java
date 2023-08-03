@@ -276,6 +276,7 @@ public class MovieService {
                 chapterSave.setUrlChapter(setLink + "/videos/" + chapterSave.getUrlChapter());
                 Movie movie1 = movieRepository.findById(movie.getId());
                 EpMovie epMovie = new EpMovie(chapterSave.getName(), chapterSave.getUrlChapter(), movie1);
+                epMovie.setType(true);
                 epMovieRepository.save(epMovie);
             }
         }
@@ -339,6 +340,7 @@ public class MovieService {
         for (var chapterSave : movieSave.getEpMovies()) {
             chapterSave.setUrlChapter(setLink + "/videos/" + chapterSave.getUrlChapter());
             EpMovie epMovie = new EpMovie(chapterSave.getName(), chapterSave.getUrlChapter(), movie);
+            epMovie.setType(true);
             epMovieRepository.save(epMovie);
         }
 
@@ -395,7 +397,7 @@ public class MovieService {
         epMovieRepository.deleteEpMovieByMovie_Id(id);
         eKipRepository.deleteEKipByMovie_Id(id);
         movieGenreRepository.deleteMovieGenreByMovie_Id(id);
-        movieRepository.deleteById(id);
+        movieRepository.removeById(id);
 
 
     }

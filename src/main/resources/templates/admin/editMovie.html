@@ -563,6 +563,7 @@
                                         <input  list="personList" pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
                                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                 id="${'name' + index}"
+                                                onchange="onChangeNamePerson(this)"
                                                 value="${ekip.name || ''}"
                                                 name="${'eKips[' + index + '].name'}"
                                         />
@@ -577,7 +578,7 @@
                                           Role
                                         </span>
 
-            <select id="${index}" value="${ekip.role}" name="${'eKips[' + index + '].role'}"
+            <select id="${index}" value="${ekip.role}" name="${'eKips[' + index + '].role'}" onchange="onChangeRolePerson(this)"
             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
             >
             ${strRole}
@@ -620,10 +621,11 @@
                 `<label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Name Chapter</span>
             <input type="hidden" id="id${index || '0'}" value="${chap.id || '0'}" name="${'epMovies[' + index + '].id' || '0'}">
-            <input pattern="^[a-zA-ZÀ-Ỹà-ỹ]+( [a-zA-ZÀ-Ỹà-ỹ]+)*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
+            <input pattern="^[a-zA-ZÀ-Ỹà-ỹ ]+( [a-zA-ZÀ-Ỹà-ỹ]+)[0-9]+*$" required title="Tên không được bắt đầu bằng khoảng trống và có kí tự đặc biệt"
             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             id="chap${index}"
             value="${chap.name}"
+            onchange="onChangeNameChapter(this)"
             name="${'epMovies[' + index + '].name'}"
             />
 

@@ -14,7 +14,7 @@
                     document.getElementById("idInfo").value = userInfo.id;
                     document.getElementById("username").value = userInfo.username;
                     document.getElementById("email").value = userInfo.email;
-                    document.getElementById("password").placeholder = "Nhìn gì mà nhìn???"
+                    // document.getElementById("password").value = "Nhìn gì mà nhìn???"
                     document.getElementById("name").value = userInfo.name;
                     document.getElementById("idInfoAvatar").value = userInfo.id;
                     document.getElementById("avatar").src = userInfo.avatar || "/assets/client/img/avatar/default.jpg";
@@ -38,9 +38,12 @@
 
         function submitEditInfo(e) {
             e.preventDefault();
+            if(!confirm("Bạn có muốn sửa thông tin này?"))
+                return;
             const form = document.getElementById("formInfo");
             const formInput = new FormData(form);
             const data = Object.fromEntries(formInput.entries());
+
             $.ajax({
                 url: `http://localhost:8080/api/user/client/info`,
                 method: "PUT",

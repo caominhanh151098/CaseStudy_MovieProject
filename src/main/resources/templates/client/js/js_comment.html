@@ -10,9 +10,8 @@
         renderComment();
 
         function renderComment() {
-            let count = 0;
             $.ajax({
-                url: `http://localhost:8080/api/comment/${movieId}?sort=${soft.sortField},${soft.sortBy}`,
+                url: `http://localhost:8080/api/comment/${movieId}?size=8&sort=${soft.sortField},${soft.sortBy}`,
                 method: "GET"
             }).done(data => {
                 comments = data.content;
@@ -29,8 +28,6 @@
                                 <p>${c.content}</p>
                             </div>
                         </div>`;
-                    if (++count == 7)
-                        return;
                 })
             })
         }
